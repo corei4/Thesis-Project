@@ -1,2 +1,2 @@
 # Thesis-Project
-Website/application to help promote non-profit organizations
+Website/application to help promote non-profit organizations.
