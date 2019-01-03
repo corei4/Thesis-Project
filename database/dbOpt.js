@@ -6,10 +6,10 @@ var knex = require('knex')({
     client: 'mysql',
     connection: {
 			host: "db4free.net",
-			user: "corei4",
-			password: 'corei4corei4',
+			user: "qusay97",
+			password: '12345678',
 			insecureAuth: true,
-			database: 'charity_rbk'
+			database: 'test_charity'
     }
   });
 
@@ -170,11 +170,33 @@ var knex = require('knex')({
 			});
         },
         donationsToCharity: function(req, res){
-            knex('Donations')
-            .innerJoin('charities','Donations.donated_to',"charities.id")
-            .where('Donations.donated_to', req.body.charities_id)
+            knex('charities')
+			.innerJoin('Donations', 'Donations.donation_to','charities.id')
+			.innerJoin('payments','payments.id','Donations.donated_amount')
+            .where('charities.id', req.body.charities_id)
             .then(function(data){
                 res.send(data);
             });
-        }
+		},
+		DonationAmountSummed: function(req, res){
+            knex('charities').sum('payments.amount_pay')
+			.innerJoin('Donations', 'Donations.donation_to','charities.id')
+			.innerJoin('payments','payments.id','Donations.donated_amount')
+            .where('charities.id', req.body.charities_id)
+            .then(function(data){
+                res.send(data);
+            });
+		},
+
+		// donationsMadeByUser: function(req, res){
+        //     knex('Donations')
+        //     .innerJoin('charities','Donations.donation_to',"charities.id")
+        //     .where('Donations.donation_to', req.body.charities_id)
+        //     .then(function(data){
+        //         res.send(data);
+        //     });
+		// }
   }
+//   SELECT * FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
+// SELECT sum(payments.amount_pay) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
+// SELECT sum(payments.amount_pay) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
