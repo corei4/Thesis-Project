@@ -9,7 +9,7 @@ var chaiHttp = require('chai-http');
 var request = require('supertest');
 chai.use(chaiHttp);
 
-// test the server connection
+// test the localhost:3000 connection
 describe('Server Test', function () {
   var user = {
     "telephone": "09990909",
@@ -17,53 +17,28 @@ describe('Server Test', function () {
     "name": "Ghazi",
     "password": "1234"
   }
-
-  var userCredentials = {
-    email: 'Ghaz@Ghazi.com', 
-    password: '1234'
-  }
-
-    it('should do the sign up request', (done) => {
-      chai.request(server)
-      .post('/account/signup')
-      .send(user)
-      .end((err, res) => {
-        should.not.exist(err);
-        res.redirects.length.should.eql(0);
-        res.should.have.status(200);
-        res.type.should.eql('application/json');
-        res.body.should.include.keys('status', 'token');
-        res.body.status.should.eql('success');
+  it('should do the sign up request', function (done) {
+    chai.request(server).post('/account/signup').send(user).end(function(err, res){
+     res.should.have.status(200);
+     done();
+   })
+  })
+// right path
+var userCredentials = {
+  email: 'Ghaz@Ghazi.com', 
+  password: '1234'
+}
+//now let's login the user before we run any tests
+it('Should login ', function (done) {
+  var authenticatedUser = request.agent(server);
+    authenticatedUser
+      .post('/account/signin')
+      .send(userCredentials)
+      .end(function(err, response){
+        expect(response.statusCode).to.equal(200);
         done();
       });
-    });
-
-
-
-    // it('should do the sign up request', function (done) {
-    //   chai.request(server).post('/account/signup').send(user).end(function(err, res){
-    //    res.should.have.status(200);
-    //    done();
-    //  })
-    // })
-
-
-      it('Should login ', function (done) {
-        var authenticatedUser = request.agent(server);
-          authenticatedUser
-            .post('/account/signin')
-            .send(userCredentials)
-            .end(function(err, response){
-              expect(response.statusCode).to.equal(200);
-              done();
-            });
-          })
-
-
-
-
-//now let's login the user before we run any tests
-
+    })
 
 
 
@@ -85,13 +60,21 @@ describe('Server Test', function () {
 
 
 
-  // describe('Database Test', function () {
-  //       it('Should get all Charities', function(done){
-  //         var all = dbOpt.getAllChar();
-  //          all.should.have.status(200);
-  //          done();
-  //        })
-  //     })
+  describe('Database Test', function () {
+    // right path
+        it('Should get all Charities', function(done){
+          this.timeout(20000);
+           dbOpt.getAllChar(function(result, err){
+             if (err) {
+               console.log(err)
+              //  done(err)
+             } else {
+               expect(result).to.be.not.null;
+               done()
+             }
+           })
+         })
+      })
 
 
 
