@@ -75,7 +75,7 @@ module.exports = {
 					"description":req.body.description,
 					"location": req.body.location,
 					"image": req.body.image,
-					"owner_id": 1
+					"owner_id": req.body.owner_id
 				}).then(result => {
 					console.log(`successful insert ${result}`)
 				}).catch(err => {
@@ -95,7 +95,7 @@ module.exports = {
 		});
 	},
 	getUserChar: function (req, res) {
-		knex('charities').select().where('owner_id', 1).then((err, result) => {
+		knex('charities').select().where('owner_id', req.body.owner_id).then((err, result) => {
 			console.log('Get user charities');
 			if (result) {
 				res.send(result)
@@ -104,22 +104,22 @@ module.exports = {
 			}
 		});
 	},
-	addCharity: function (req, res) {
-		console.log(req.body, 'here add charities DB')
-		knex('charities').insert({
-			"name": req.body.name,
-			"amount": req.body.amount,
-			// "amount_received": 0,
-			"description": req.body.description,
-			"location": req.body.location,
-			"image": req.body.image,
-			"owner_id": 1
-		}).then(result => {
-			console.log(`successful insert ${result}`)
-		}).catch(err => {
-			console.log(`error => ${err}`)
-		});
-	},
+	// addCharity: function (req, res) {
+	// 	console.log(req.body, 'here add charities DB')
+	// 	knex('charities').insert({
+	// 		"name": req.body.name,
+	// 		"amount": req.body.amount,
+	// 		// "amount_received": 0,
+	// 		"description": req.body.description,
+	// 		"location": req.body.location,
+	// 		"image": req.body.image,
+	// 		"owner_id": 1
+	// 	}).then(result => {
+	// 		console.log(`successful insert ${result}`)
+	// 	}).catch(err => {
+	// 		console.log(`error => ${err}`)
+	// 	});
+	// },
 	delChar: function (req, res) {
 		knex('charities')
 			.del()
@@ -233,6 +233,15 @@ module.exports = {
 			console.log(decoded)
 			res.json(decoded.result)
 		})
-	}
+	},
+	userOrganizations: function(req, res){
+		knex('users')
+		.innerJoin('usertype','users.userTypeId',"usertype.id")
+		.where('usertype.user_type', "organization")
+		// .select('users')
+		.then(function(data){
+		res.send(data);
+		});
+		}
 	
 }

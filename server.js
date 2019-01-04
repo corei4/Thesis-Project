@@ -142,8 +142,14 @@ app.put('/editUserInfo',function(req, res) {
   dbOpt.editUserInfo(req, res)
 });
 
+//JWT decode token
 app.post('/decodeToken', function(req, res) {
   dbOpt.decodeJwt(req, res)
-})
+});
+
+// Get all the organizations
+app.get('/userOrganizations',function(req, res) {
+  dbOpt.userOrganizations(req, res)
+  });
 
 module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));

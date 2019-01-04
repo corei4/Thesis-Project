@@ -58,7 +58,7 @@ class UserProfile extends React.Component {
   }
   componentDidMount() {
     console.log()
-    var data = { owner_id: 1 };
+    var data = { owner_id: window.localStorage.getItem('id') };
     console.log("here owner_id: 1", data);
     var charAll = $.ajax({
       url: "/userCharities",
@@ -105,7 +105,7 @@ class UserProfile extends React.Component {
       amount: this.state.amount,
       description: this.state.description,
       location: this.state.location,
-      owner_id: 1,
+      owner_id: window.localStorage.getItem('id'),
       image: this.state.image
       
     };
