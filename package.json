@@ -9,6 +9,7 @@
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
+    "@material-ui/core": "^3.7.1",
     "axios": "^0.18.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
@@ -24,9 +25,12 @@
     "node-mysql-importer": "0.0.10",
     "react": "^16.6.3",
     "react-chartjs-2": "^2.1.0",
+    "react-credit-cards": "^0.7.0",
     "react-dom": "^16.7.0",
     "react-file-base64": "^1.0.3",
     "react-router-dom": "^4.3.1",
+    "react-stripe-elements": "^2.0.1",
+    "stripe": "^6.20.0",
     "superagent": "^4.1.0",
     "supertest": "^3.3.0"
   },

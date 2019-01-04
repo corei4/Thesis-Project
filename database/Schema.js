@@ -13,7 +13,7 @@ importer.config({
 
 module.exports = {
   initializeDB: function(req, res){
-    importer.importSQL('/Users/rbk12/Desktop/Thesis-Project/database/Initialize.sql').then( () => {
+    importer.importSQL('./database/Initialize.sql').then( () => {
       console.log('Initialized successfully');
       return res.json({
         code: 1

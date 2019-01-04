@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS charities  (
       id INTEGER NOT NULL AUTO_INCREMENT,
       name VARCHAR(30) NOT NULL,
       amount INTEGER(155) NOT NULL,
-      amount_received INTEGER(155) NOT NULL,
       description MEDIUMTEXT NOT NULL,
       location VARCHAR(155) NOT NULL,
       owner_id integer,
