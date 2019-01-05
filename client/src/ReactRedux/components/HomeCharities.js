@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 //import to creat cards
+import {Bar, Line, Pie} from 'react-chartjs-2'
+
 import {
   Card,
   CardTitle,
@@ -14,9 +16,16 @@ class HomeCharities extends Component {
     this.state = {
     };
   }
+  static defaultProps = {
+    displayTitle:true,
+    displayLegend: true,
+    legendPosition:'right',
+  }
   componentDidMount() { }
   render() {
     return (
+        <Fragment>
+
       <Row >
         <Col sm="6">
           <Card body>
@@ -24,9 +33,55 @@ class HomeCharities extends Component {
             <CardTitle>{this.props.item.name}</CardTitle>
             <img width="100%" src={this.props.item.image} alt="Card image cap" />
             <Button>Start Fundraising</Button>
-          </Card>
-        </Col>
-      </Row>
+            <div>
+          <Pie
+          data={{
+        labels: ['Amount', 'Found'],
+        datasets:[
+          {
+            label:'Amount',
+            data:[
+              this.props.item.amount,
+              5000,
+             
+             
+            ],
+            backgroundColor:[
+              'rgba(255, 99, 132, 0.6)',
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 206, 86, 0.6)',
+              // 'rgba(75, 192, 192, 0.6)',
+              // 'rgba(153, 102, 255, 0.6)',
+              // 'rgba(255, 159, 64, 0.6)',
+              // 'rgba(255, 99, 132, 0.6)'
+            ]
+          }
+        ]
+      }}
+          //data.datasets.data[0] ={this.props.item.amount}
+          options={{
+            title:{
+              display:this.props.displayTitle,
+              
+              text:'Amount VS. Found',
+              fontSize:25
+            },
+            legend:{
+              display:this.props.displayLegend,
+              position:this.props.legendPosition
+            }
+          }}
+        />
+          </div>
+          
+          <Button>Start Fundraising</Button>
+        </Card>
+      </Col>
+      
+     
+    </Row>
+        
+        </Fragment>
     );
   }
 }

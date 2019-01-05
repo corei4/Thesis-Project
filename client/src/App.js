@@ -8,6 +8,7 @@ import Signup from './ReactRedux/components/Signup'
 import SignIn from './ReactRedux/components/SignIn'
 import UserProfile from './ReactRedux/components/userProfile/UserProfile';
 import creditCard from './ReactRedux/components/payment/creditCard'
+import AllCharities from './ReactRedux/components/AllCharities'
 
 class App extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class App extends Component {
             <Route path='/profile' component={UserProfile} />
             <Route path='/create' component={CreateEvent} />
             <Route path='/creditcard' component={creditCard} />
+            <Route path='/AllCharities' component={AllCharities} />
           </Switch>
         </div>
       </BrowserRouter>
