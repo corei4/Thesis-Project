@@ -121,7 +121,7 @@ app.put('/account/usertype', function (req, res) {
 });
 
 //Delete charities
-app.delete('/charities', function (req, res) {
+app.delete('/delCharities',function(req, res) {
   dbOpt.delChar(req, res)
 });
 
@@ -136,5 +136,14 @@ app.post('/addDonation', function (req, res) {
 app.post('/totalDonation', function (req, res) {
   dbOpt.sumDonationByCharId(req, res)
 });
+
+//Update user information
+app.put('/editUserInfo',function(req, res) {
+  dbOpt.editUserInfo(req, res)
+});
+
+app.post('/decodeToken', function(req, res) {
+  dbOpt.decodeJwt(req, res)
+})
 
 module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));

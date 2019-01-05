@@ -3,7 +3,7 @@ import { Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import redone from './redone.jpg';
-import HomeCharities from '../HomeCharities.js';
+import HomeCharities from './HomeCharities.js';
 import $ from "jquery";
 
 class Home extends React.Component {

@@ -7,8 +7,9 @@ class MyNavBar extends Component {
     super(props);
 
   }
-  signOut = (event) => {
+  signOut = () => {
     localStorage.removeItem('token');
+    window.location.href = '/';
   }
   render() {
     if (localStorage.getItem('token')) {
@@ -35,7 +36,6 @@ class MyNavBar extends Component {
               <li><Link to="/Organizations" style={{ textDecoration: 'none', color: "white" }}>Organizations</Link></li>
               <li><Link to="/Signin" style={{ textDecoration: 'none', color: "white" }}>Log In</Link></li>
               <li><Link to="/Signup" style={{ textDecoration: 'none', color: "white" }}>Sign Up</Link></li>
-              <li><Link to="/profile" style={{ textDecoration: 'none', color: "white" }}>Profile</Link></li>
             </ul>
           </nav>
         </div>
