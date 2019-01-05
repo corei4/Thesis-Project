@@ -5,7 +5,7 @@ import PrivateRoute from './PrivateRoute'
 import organizations from './ReactRedux/components/organizations'
 import CreateEvent from './ReactRedux/components/createEvent';
 import MyNavBar from './ReactRedux/components/NavBar/MyNavBar.js';
-import Home from './ReactRedux/components/SlideShow/Home';
+import Home from './ReactRedux/components/Home/Home';
 import Signup from './ReactRedux/components/Signup'
 import SignIn from './ReactRedux/components/SignIn'
 import UserProfile from './ReactRedux/components/userProfile/UserProfile';
