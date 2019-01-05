@@ -1,0 +1,57 @@
+.transitionEnter {
+  transform: scale(0);
+}
+.transitionEnterActive {
+  transform: scale(1);
+  transition: transform 1000ms ease;
+}
+.transitionExit {
+  transform: scale(1);
+}
+.transitionExitActive {
+  transform: scale(0);
+  transition: transform 1000ms ease;
+}
+.donation{
+  padding: inherit;
+  color :rgb(236,181,13);
+  text-shadow: 2px;
+  text-align: center;
+  -webkit-text-decoration: peru solid overline;
+  text-decoration: peru solid overline;
+
+
+}
+element.style {
+  color:white;
+}
+.styles_modal__gNwvD{
+  background-color: rgb(74,20,140);
+  opacity: 0.8;
+  border: 2px solid;
+  border-radius: 10px;
+
+
+}
+.button_donate{
+  display: inline-block;
+  text-align: center;
+  text-decoration: solid;
+    /* create a small space when buttons wrap on 2 lines */
+  margin: 2px 0;
+
+  /* invisible border (will be colored on hover/focus) */
+  border: solid 1px transparent;
+  border-radius: 4px;
+
+  /* size comes from text & padding (no width/height) */
+  padding: 0.5em 1em;
+  /* make sure colors have enough contrast! */
+  color: #ffffff;
+  background-color: #9c1f00;
+}
+.button_donate:hover {
+  color: #9555af;
+  border-color: currentColor;
+  background-color: white;
+}
