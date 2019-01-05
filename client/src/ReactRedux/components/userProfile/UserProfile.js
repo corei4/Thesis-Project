@@ -24,10 +24,21 @@ import Tabs from "./tabs.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 
+const jwtDecode = require('jwt-decode');
+
+
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     //var result = getAllCh();
+    var userData = jwtDecode(localStorage.getItem('token')).result
+
+    const email = userData[0].email
+    const firstName = userData[0].firstName
+    const lastName = userData[0].lastName;
+    const telephone = userData[0].telephone;
+    const imgUrl = userData[0].imgUrl;
+
 
     var result = [{ id: 1, name: "Azhar" }];
     var exampleItems = result.map(i => ({
@@ -45,11 +56,11 @@ class UserProfile extends React.Component {
       image: "",
       activeTab: "1",
       modalEP: false,
-      email: window.localStorage.getItem('email'),
-      firstName: window.localStorage.getItem('firstName'),
-      lastName: window.localStorage.getItem('lastName'),
-      telephone: window.localStorage.getItem('telephone'),
-      imgUrl: window.localStorage.getItem('imgUrl'),
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      telephone: telephone,
+      imgUrl: imgUrl,
     };
     this.toggle = this.toggle.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
