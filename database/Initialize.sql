@@ -71,3 +71,14 @@ CREATE TABLE IF NOT EXISTS Donations (
       FOREIGN KEY (payment_id) REFERENCES payments(id),
       PRIMARY KEY (id)
     );
+
+CREATE TABLE IF NOT EXISTS Request (
+      id INTEGER AUTO_INCREMENT NOT NULL,
+      about VARCHAR(255) NOT NULL,
+      name VARCHAR(255) NOT NULL,
+      description VARCHAR(255) NOT NULL,
+      location VARCHAR(255) NOT NULL,
+      user_id integer,
+      FOREIGN KEY (user_id) REFERENCES users(id), 
+      PRIMARY KEY (id)
+    );

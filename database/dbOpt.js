@@ -242,6 +242,33 @@ module.exports = {
 		.then(function(data){
 		res.send(data);
 		});
+	},
+	// becomeOrganization
+	becomeOrganization: function (req, res) {
+		console.log(req.body, 'here add charities DB')
+			knex('Request').insert({
+				"name": req.body.name,
+				"about": req.body.about,
+				// "amount_received": 0,
+				"description":req.body.description,
+				"location": req.body.location,
+				"user_id": Number(req.body.userId)
+			}).then(result => {
+				console.log(`successful insert ${result}`)
+			}).catch(err => {
+				console.log(`error => ${err}`)
+			});
+
+},
+getRequests: function (req, res) {
+	knex.select().table('Request').then((err, result) => {
+		console.log('Get all Request');
+		if (result) {
+			res.send(result)
+			return result;
+		} else {
+			res.send(err)
 		}
-	
+	});
+}
 }

@@ -152,4 +152,13 @@ app.get('/userOrganizations',function(req, res) {
   dbOpt.userOrganizations(req, res)
   });
 
+  
+app.post('/becomeOganization', function(req, res) {
+  dbOpt.becomeOrganization(req, res)
+  });
+
+  app.get('/getRequests', function(req, res) {
+    dbOpt.getRequests(req, res)
+    });
+
 module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));
