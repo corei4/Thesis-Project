@@ -1,6 +1,14 @@
 import React from 'react';
 import axios from 'axios';
+import FavCard from "./FavCard.js";
+import './style.css';
+import Pagination from './Pagination';
 // import organizations from '../organizations';
+// Row
+import {
+  Card, CardText, CardBody, CardLink,
+  CardTitle, CardSubtitle, Row, Col, Container
+} from 'reactstrap';
 
 export default class Tabs extends React.Component {
   constructor(props) {
@@ -9,7 +17,9 @@ export default class Tabs extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1',
-      exampleItems: []
+      exampleItems: [],
+      pageOfItems: []
+
     };
     this.onChangePage = this.onChangePage.bind(this);
   }
@@ -44,23 +54,23 @@ export default class Tabs extends React.Component {
   }
 
   render() {
-    if (this.state.exampleItems) {
-      console.log(this.state.exampleItems, 'skajdhaskdhj')
-      return (
-        <div>
-          {this.state.exampleItems !== [] && this.state.exampleItems.map(item => {
-            return (
-              <organizations item={item} />
-            )
-          }
-          )}
-        </div>
-      )
-    } else {
-      return (
-        <div>akhdkjashdjk</div>
-      )
-    }
-
+    return (
+      <div className="centerTab">
+            <Row>
+              <Col sm="12">
+              {/* <h4 className="h4pagi">Charities</h4> */}
+              <Row>
+              {this.state.pageOfItems.map(item =>
+				        <FavCard key={item.id} item={item}/>	
+                )}
+			      </Row>
+			      <div>
+            <Pagination items={this.state.exampleItems} onChangePage={this.onChangePage} />
+            </div>
+              </Col>
+            </Row>
+         
+      </div>
+    );
   }
 }

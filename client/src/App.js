@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Redirect, Switch, Router } from "react-router-dom";
+import PrivateRoute from './PrivateRoute'
+
 import organizations from './ReactRedux/components/organizations'
 import CreateEvent from './ReactRedux/components/createEvent';
 import MyNavBar from './ReactRedux/components/NavBar/MyNavBar.js';
@@ -7,7 +9,7 @@ import Home from './ReactRedux/components/SlideShow/Home';
 import Signup from './ReactRedux/components/Signup'
 import SignIn from './ReactRedux/components/SignIn'
 import UserProfile from './ReactRedux/components/userProfile/UserProfile';
-import creditCard from './ReactRedux/components/payment/creditCard'
+import creditCard from './ReactRedux/components/payment/creditCard';
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +18,17 @@ class App extends Component {
       modal: false,
       test: [],
     };
+  }
+
+  isLoggedIn = (nextState, replace) => {
+    console.log('token test');
+    console.log(localStorage.getItem('token'));
+    if (!localStorage.getItem('token')){
+      console.log('not logged in');
+      replace({
+        pathname: '/SignIn'
+      })
+    }
   }
 
   render() {
@@ -28,7 +41,7 @@ class App extends Component {
             <Route path='/organizations' component={organizations} />
             <Route path='/Signup' component={Signup} />
             <Route path='/SignIn' component={SignIn} />
-            <Route path='/profile' component={UserProfile} />
+            <PrivateRoute path='/profile' component={UserProfile} />
             <Route path='/create' component={CreateEvent} />
             <Route path='/creditcard' component={creditCard} />
           </Switch>
@@ -37,5 +50,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App
