@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import axios from 'axios';
+const jwtDecode = require('jwt-decode');
+
+
 
 class SignIn extends Component {
   state = {
@@ -11,6 +15,25 @@ class SignIn extends Component {
     })
   }
   handleSubmit = (e) => {
+    let obj = {
+      email: this.state.email,
+      password: this.state.password
+    }
+    axios({
+      method: 'post',
+      url: '/account/signin',
+      data: obj
+    })
+    .then(function (response) {
+      localStorage.setItem('token', response.data.token);
+      console.log('TOKEN', jwtDecode(localStorage.getItem('token')))
+      this.setState({
+        isLoggedIn: true
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
     e.preventDefault();
     console.log(this.state)
   }

@@ -2,21 +2,8 @@ import React from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 import FileBase64 from "react-file-base64";
-import FavCard from "./FavCard.js";
-import {
-  Row,
-  Col,
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink
-} from "reactstrap";
 import $ from "jquery";
 import UserInfo from "./UserInfo.js";
-import Pagination from "./Pagination";
 import Tabs from './tabs.js'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
@@ -25,10 +12,7 @@ import "./style.css";
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
-    //var result = getAllCh();
     var result = [{ id: 1, name: "Azhar" }];
-
-    console.log("hhhhhhhhhh", result);
     var exampleItems = result.map(i => ({
       id: i.id,
       name: i.name
@@ -48,7 +32,6 @@ class UserProfile extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChangePage = this.onChangePage.bind(this);
   }
-
   componentDidMount() {
     var data = { owner_id: 1 };
     console.log("here owner_id: 1", data);
@@ -57,14 +40,14 @@ class UserProfile extends React.Component {
       type: "POST",
       data: JSON.stringify(data),
       contentType: "application/json",
-      success: function(data) {
+      success: function (data) {
         console.log(data, "/charities/charities/charities/charities");
         this.setState({
           test: data
         });
         return data;
       }.bind(this),
-      error: function(xhr, status, err) {
+      error: function (xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
@@ -78,7 +61,7 @@ class UserProfile extends React.Component {
 
   handleSubmit() {
     this.toggle();
-    console.log("handleSubmit");
+    // console.log("handleSubmit");
     const charityObj = {
       name: this.state.name,
       amount: this.state.amount,
@@ -87,17 +70,15 @@ class UserProfile extends React.Component {
       owner_id: 1,
       image: this.state.image
     };
-
-    console.log("charityObj: ", charityObj);
     $.ajax({
-      url: "/charities",
+      url: "/addCharities",
       type: "POST",
       data: JSON.stringify(charityObj),
       contentType: "application/json",
-      success: function(data) {
+      success: function (data) {
         console.log("ad charities in Db", data);
       },
-      error: function(error) {
+      error: function (error) {
         console.error("errorrrrrr", error);
       }
     });
@@ -112,7 +93,6 @@ class UserProfile extends React.Component {
       [name]: value
     });
   }
-
   getFiles(files) {
     this.setState({ files: files[0].base64 });
     var baseStr = files[0].base64.substr(22);
@@ -133,18 +113,14 @@ class UserProfile extends React.Component {
           image: data.data.link
         });
       },
-      error: function(error) {
+      error: function (error) {
         console.error("image not uploaded", error);
       }
     });
-    // window.location.reload()
   }
-
   onChangePage(pageOfItems) {
-    // update state with new page of items
     this.setState({ pageOfItems: pageOfItems });
   }
-
   render() {
     return (
       <div>
@@ -155,13 +131,9 @@ class UserProfile extends React.Component {
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
-          className={this.props.className}
-        >
+          className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Add Charities</ModalHeader>
           <ModalBody>
-            {/* <input type="text"/>
-           <input type="text"/> */}
-
             <form>
               <div class="form-group">
                 <label for="exampleInputEmail1">Name</label>
@@ -171,11 +143,7 @@ class UserProfile extends React.Component {
                   id="name"
                   placeholder="input the name of charity"
                   value={this.state.name}
-                  onChange={this.handleInputChange}
-                />
-                {/* <small id="emailHelp" class="form-text text-muted">
-                  We'll never share your email with anyone else.
-                </small> */}
+                  onChange={this.handleInputChange} />
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Amount</label>
@@ -185,8 +153,7 @@ class UserProfile extends React.Component {
                   id="amount"
                   placeholder="input amount"
                   value={this.state.amount}
-                  onChange={this.handleInputChange}
-                />
+                  onChange={this.handleInputChange} />
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Description</label>
@@ -217,9 +184,6 @@ class UserProfile extends React.Component {
                   class="form-check-input"
                   id="exampleCheck1"
                 />
-                {/* <label class="form-check-label" for="exampleCheck1">
-                  Check me out
-                </label> */}
               </div>
               <Button
                 color="primary"
@@ -233,13 +197,12 @@ class UserProfile extends React.Component {
               </Button>
             </form>
 
-            {/* name, amount, description, location, owner_id */}
           </ModalBody>
           <ModalFooter />
         </Modal>
 
         <UserInfo />
-       <Tabs />
+        <Tabs />
       </div>
     );
   }

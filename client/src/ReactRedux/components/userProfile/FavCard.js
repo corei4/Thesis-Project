@@ -1,89 +1,66 @@
 import React from 'react';
-import { Card, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle, Row, Col, Container } from 'reactstrap';
+import {
+  Card, CardText, CardBody, CardLink,
+  CardTitle, CardSubtitle, Row, Col, Container
+} from 'reactstrap';
 import PropTypes from 'prop-types';
 import './style.css';
 import $ from "jquery";
 
-// import chArr from '../Services/Charities';
-
-
-class FavCard extends React.Component{
+class FavCard extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state ={
+    this.state = {
       toggle: false
     }
-
   }
-
-  handleRemove = (event) =>{
-    console.log("removeBTN",event.target.id)
-    // $.ajax({
-    //   url: '/charities',
-    //   dataType: 'json',
-    //   type: "delete",
-    //   success: function(data) {
-    //       console.log(data,"/charities/charities/charities/charities")
-    //       this.setState({
-    //         test: data
-    //       })
-    //    return data;
-    //   }.bind(this),
-    //   error: function(xhr, status, err) {
-    //     console.error(this.props.url, status, err.toString());
-    //   }.bind(this)
-    // });
-    
+  handleRemove = (event) => {
+    console.log("removeBTN", event.target.id)
     const target = event.target;
     const id = JSON.parse(target.id);
     $.ajax({
       type: "DELETE",
       url: "/charities", /* THIS URL IS CALLING CORRECTLY ie. /items/8 */
       dataType: "json",
-      data: {id:id},
-      success: function(response) {
-          console.log("successfully deleted");
+      data: { id: id },
+      success: function (response) {
+        console.log("successfully deleted");
       },
       error: function () {
-          console.log("error");
+        console.log("error");
       }
-  });
-  window.location.reload()
+    });
+    window.location.reload()
   }
   render() {
-      return (
-            <Col sm='3'>
-              <Card body>
-              <CardBody>
-                <CardTitle>{this.props.item.name}</CardTitle>
-                <CardSubtitle>{this.props.item.name}</CardSubtitle>
-              </CardBody>
-              <img width="100%" src={this.props.item.image} alt="Card image cap" />
-              <CardBody>
-                <CardText>{this.props.item.name}</CardText>
-                <CardText>{this.props.item.description}</CardText>
-                <CardText>{this.props.item.amount}</CardText>
-                <CardText>{this.props.item.location}</CardText>
+    return (
+      <Col sm='3'>
+        <Card body>
+          <CardBody>
+            <CardTitle>{this.props.item.name}</CardTitle>
+            <CardSubtitle>{this.props.item.name}</CardSubtitle>
+          </CardBody>
+          <img width="100%" src={this.props.item.image} alt="Card image cap" />
+          <CardBody>
+            <CardText>{this.props.item.name}</CardText>
+            <CardText>{this.props.item.description}</CardText>
+            <CardText>{this.props.item.amount}</CardText>
+            <CardText>{this.props.item.location}</CardText>
+            <CardLink href="#">View</CardLink>
+            <button href="#" id={this.props.item.id} onClick={this.handleRemove}>Remove</button>
+          </CardBody >
+        </Card>
+      </Col>
 
-
-
-                <CardLink href="#">View</CardLink>
-                <button href="#" id={this.props.item.id} onClick={this.handleRemove}>Remove</button>
-              </CardBody >
-              </Card>
-              </Col>
-            
-      );
-    }
+    );
+  }
 };
 
 
 
 
 Container.propTypes = {
-  fluid:  PropTypes.bool
+  fluid: PropTypes.bool
   // applies .container-fluid class
 }
 
