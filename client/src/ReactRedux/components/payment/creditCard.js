@@ -41,7 +41,7 @@ class creditCard extends Component {
     const { open } = this.state;
     return (
       <div style={{ styles }}>
-        <button className="button_donate" onClick={this.onOpenModal}>Donate </button>
+        <button className="button_donate btn btn-danger" onClick={this.onOpenModal}>Donate </button>
         <Modal
           open={open}
           onClose={this.onCloseModal}

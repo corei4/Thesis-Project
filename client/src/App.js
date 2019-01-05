@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect, Switch, Router } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import PrivateRoute from './PrivateRoute'
 
 import organizations from './ReactRedux/components/organizations'
@@ -10,6 +10,7 @@ import Signup from './ReactRedux/components/Signup'
 import SignIn from './ReactRedux/components/SignIn'
 import UserProfile from './ReactRedux/components/userProfile/UserProfile';
 import creditCard from './ReactRedux/components/payment/creditCard';
+import success from './ReactRedux/components/payment/success'
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class App extends Component {
   isLoggedIn = (nextState, replace) => {
     console.log('token test');
     console.log(localStorage.getItem('token'));
-    if (!localStorage.getItem('token')){
+    if (!localStorage.getItem('token')) {
       console.log('not logged in');
       replace({
         pathname: '/SignIn'
@@ -44,6 +45,7 @@ class App extends Component {
             <PrivateRoute path='/profile' component={UserProfile} />
             <Route path='/create' component={CreateEvent} />
             <Route path='/creditcard' component={creditCard} />
+            <Route path='/success' component={success} />
           </Switch>
         </div>
       </BrowserRouter>
