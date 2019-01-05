@@ -10,6 +10,7 @@ class creditCard extends Component {
     name: '',
     expiry: '',
     cvc: '',
+    amount: '',
     focused: '',
     open: false
   }
@@ -73,6 +74,7 @@ class creditCard extends Component {
                 <div >
                   <input type="tel" id="expiry" style={{ color: 'white' }} placeholder="Valid Thru" maxLength='6' minLength='6' onChange={this.handleChange} onClick={this.handleClick} required />
                   <input type="tel" id="cvc" style={{ color: 'white' }} placeholder="CVC" maxLength='4' minLength='4' onChange={this.handleChange} onClick={this.handleClick} required />
+                  <input type="tel" id="amount" style={{ color: 'white' }} placeholder="$Amount" maxLength='6' minLength='1' onChange={this.handleChange} required />
                 </div>
                 <button className='btn btn-warning center'> submit</button>
               </form>
