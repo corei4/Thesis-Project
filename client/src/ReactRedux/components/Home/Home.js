@@ -44,11 +44,14 @@ class Home extends React.Component {
         <div>
           <Row>
             <div className="HomeCards">
-              {this.state.test.map(item => (
+              {this.state.test.slice(0, 6).map(item => (
                 < HomeCharities key={item.id} item={item} />
               ))}
               </div>
           </Row>
+        </div>
+        <div className="ButtonRaise">
+              <button>See All Charities</button>
         </div>
       </div>
     )

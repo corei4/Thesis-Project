@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import './MyNavBar.css'
+import './MyNavBar.css'
 import { Link, withRouter } from "react-router-dom";
 
 class MyNavBar extends Component {
@@ -14,7 +14,7 @@ class MyNavBar extends Component {
   render() {
     if (localStorage.getItem('token')) {
       return (
-        <div className="navbar-fixed">
+        <div className="navbar-fixed container-fluid">
           <nav className="nav-wrapper purple darken-4 col s1">
             <Link to='/' className=" brand-logo " style={{ textDecoration: 'none', color: "white" }}>Charitable</Link>
             <ul className=" right"  >

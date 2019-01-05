@@ -6,10 +6,10 @@ var knex = require('knex')({
 	client: 'mysql',
 	connection: {
 		host: "db4free.net",
-		user: "corei4",
-		password: 'corei4corei4',
+		user: "qusay97",
+		password: '12345678',
 		insecureAuth: true,
-		database: 'charity_rbk'
+		database: 'test_charity'
 	}
 });
 
