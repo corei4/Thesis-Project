@@ -14,7 +14,9 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
-import { TabContent, TabPane, Card, CardTitle, CardText } from "reactstrap";
+import { Card, CardImg, CardText, CardBody, CardLink,
+  CardTitle, CardSubtitle } from 'reactstrap';
+import { TabContent, TabPane } from "reactstrap";
 import classnames from "classnames";
 
 import $ from "jquery";
@@ -61,6 +63,9 @@ class UserProfile extends React.Component {
       lastName: lastName,
       telephone: telephone,
       imgUrl: imgUrl,
+      modalOR: false,
+      requests: [],
+      admin: window.localStorage.getItem("userTypeId") === 1 ? true : false
     };
     this.toggle = this.toggle.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -69,7 +74,7 @@ class UserProfile extends React.Component {
   }
   componentDidMount() {
     console.log()
-    var data = { owner_id: 1 };
+    var data = { owner_id: window.localStorage.getItem('id') };
     console.log("here owner_id: 1", data);
     var charAll = $.ajax({
       url: "/userCharities",
@@ -87,6 +92,25 @@ class UserProfile extends React.Component {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
+
+    var charAll = $.ajax({
+      url: '/getRequests',
+      dataType: 'json',
+      type: "GET",
+      success: function (data) {
+        console.log(data, "app in ajax ")
+        this.setState({
+          requests: data
+          
+        })
+        console.log("all charities",this.state.test)
+        return data;
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  
   }
 
   toggle() {
@@ -108,6 +132,12 @@ class UserProfile extends React.Component {
     });
   };
 
+  toggleOR = () => {
+    this.setState({
+      modalOR: !this.state.modalOR
+    });
+  };
+
   handleSubmit() {
     this.toggle();
     // console.log("handleSubmit");
@@ -116,7 +146,7 @@ class UserProfile extends React.Component {
       amount: this.state.amount,
       description: this.state.description,
       location: this.state.location,
-      owner_id: 1,
+      owner_id: window.localStorage.getItem('id'),
       image: this.state.image
       
     };
@@ -176,7 +206,47 @@ class UserProfile extends React.Component {
     this.setState({
       [name]: value
     });
+  };
+
+  //handle post to become ORgaanization
+  handleInputChangeOR = (event) => {
+    console.log('hi')
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    this.setState({
+      [name]: value
+    });
+    console.log('this.state.nameOR', this.state.nameOR)
   }
+
+  // Post request to become organization
+  handleSubmitOR = () => {
+    this.toggleOR();
+    console.log("handleSubmit");
+    const profileObj = {
+      name: this.state.nameOR,
+      about: this.state.aboutOR,
+      location: this.state.locationOR,
+      description: this.state.descriptionOR,
+      userId: window.localStorage.getItem('id')
+    };
+
+    console.log("profileObj: ", profileObj);
+    $.ajax({
+      url: "/becomeOganization",
+      type: "POST",
+      data: JSON.stringify(profileObj),
+      contentType: "application/json",
+      success: function(data) {
+        console.log("ad charities in Db", data);
+      },
+      error: function(error) {
+        console.error("errorrrrrr", error);
+      }
+    });
+    // window.location.reload();
+  };
 
   // handleInputChangeEP(event) {
   //   const target = event.target;
@@ -215,6 +285,14 @@ class UserProfile extends React.Component {
   onChangePage(pageOfItems) {
     this.setState({ pageOfItems: pageOfItems });
   }
+ handleAccept= () => {
+   console.log("accept")
+ };
+
+ handleDecline= () => {
+  console.log("decline")
+}
+              
   render() {
     return (
       <div className="container-fluid">
@@ -250,6 +328,17 @@ class UserProfile extends React.Component {
                 Charities
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink
+              disabled={this.state.admin}
+                className={classnames({ active: this.state.activeTab === "4", admin: this.state.admin })}
+                onClick={() => {
+                  this.toggleTab("4");
+                }}
+              >
+                Requests
+              </NavLink>
+            </NavItem>
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
@@ -279,9 +368,9 @@ class UserProfile extends React.Component {
                           {this.props.buttonLabel}
                           Edit profile
                         </Button>
-                        <a href="#" className="btn btn-primary">
+                        <Button href="#" className="btn btn-primary" onClick={this.toggleOR}>
                           Become an Organization
-                        </a>
+                        </Button>
 
                         {/* modal add charity */}
                         <Button className="btn btn-success" onClick={this.toggle}>
@@ -458,6 +547,88 @@ class UserProfile extends React.Component {
                         {/* modal edit profil */}
 
 
+
+
+{/* modal become an OR */}
+
+                        <Modal
+                          isOpen={this.state.modalOR}
+                          toggle={this.toggleOR}
+                          className={this.props.className}
+                        >
+                          <ModalHeader toggle={this.toggleOR}>
+                            Become an Organization
+                          </ModalHeader>
+                          <ModalBody>
+                            <form>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Name of Organization</label>
+                                <input
+                                  type="text"
+                                  name="nameOR"
+                                  id="nameOR"
+                                  placeholder="input the name of charity"
+                                  value={this.state.nameOR}
+                                  onChange={this.handleInputChangeOR}
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">
+                                  About the Organization
+                                </label>
+                                <input
+                                  type="text"
+                                  name="aboutOR"
+                                  id="aboutOR"
+                                  placeholder="input details"
+                                  value={this.state.aboutOR}
+                                  onChange={this.handleInputChangeOR}
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">
+                                  Acceptance Reason
+                                </label>
+                                <input
+                                  type="text"
+                                  name="descriptionOR"
+                                  id="descriptionOR"
+                                  placeholder="input description"
+                                  value={this.state.descriptionOR}
+                                  onChange={this.handleInputChangeOR}
+                                />
+                              </div>
+                              
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">
+                                  Location
+                                </label>
+                                <input
+                                  type="text"
+                                  name="locationOR"
+                                  id="locationOR"
+                                  placeholder="input location"
+                                  value={this.state.locationOR}
+                                  onChange={this.handleInputChangeOR}
+                                />
+                              </div>
+                              <Button
+                                color="primary"
+                                onClick={this.handleSubmitOR}
+                              >
+                                Submit
+                              </Button>{" "}
+                              <Button color="secondary" onClick={this.toggleOR}>
+                                Cancel
+                              </Button>
+                            </form>
+
+                            {/* name, amount, description, location, owner_id */}
+                          </ModalBody>
+                          <ModalFooter />
+                        </Modal>
+                        {/* modal become an org */}
+
                       </div>
                     </div>
                   </div>
@@ -470,6 +641,27 @@ class UserProfile extends React.Component {
             <TabPane tabId="3">
               <Tabs />
             </TabPane>
+            {/* 
+             */}
+             <TabPane tabId="4">
+             <div>
+              {this.state.requests.map(item => (
+                <Card>
+        <CardBody>
+          <CardTitle>{item.name}</CardTitle>
+          <CardSubtitle>{item.location}</CardSubtitle>
+        
+          <CardText>{item.description}</CardText>
+          <CardLink href="#" color="success" onClick={this.handleAccept}>Accept</CardLink>
+          <CardLink href="#" onClick={this.handleDecline}>Decline</CardLink>
+        </CardBody>
+      </Card>
+              ))}
+              
+      
+    </div>
+            </TabPane>
+            
           </TabContent>
         </div>
       </div>
