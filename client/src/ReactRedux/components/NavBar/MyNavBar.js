@@ -2,25 +2,18 @@ import React, { Component } from 'react'
 // import './MyNavBar.css'
 import { Link, withRouter, Redirect } from "react-router-dom";
 
+
 class MyNavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isSignedOut: false
-    };
   }
   signOut = () => {
     localStorage.removeItem('token');
     // window.location.href = '/';
-    this.setState({
-      isSignedOut: true
-    });
+    this.props.history.push('/');
   };
 
   render() {
-    // if (this.state.isSignedOut){
-    //   return <Redirect to='/' />
-    // }
     if (localStorage.getItem('token')) {
       return (
         <div className="navbar-fixed container-fluid">
@@ -52,4 +45,4 @@ class MyNavBar extends Component {
     }
   }
 }
-export default MyNavBar;
+export default withRouter(MyNavBar);

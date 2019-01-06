@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect, Switch, Router } from "react-router-dom";
+import { BrowserRouter, Route, Redirect, Switch, Router, withRouter } from "react-router-dom";
 import PrivateRoute from './PrivateRoute'
 
 import organizations from './ReactRedux/components/organizations'

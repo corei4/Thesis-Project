@@ -217,7 +217,7 @@ class UserProfile extends React.Component {
   }
   render() {
     return (
-      <div class="container-fluid">
+      <div className="container-fluid">
         <div>
           <Nav tabs>
             <NavItem>
@@ -257,8 +257,8 @@ class UserProfile extends React.Component {
                 <Col sm="12">
                   {/* <h4>Tab 1 Contents</h4> */}
 
-                  <div class="card text-center">
-                    <div class="card-header">
+                  <div className="card text-center">
+                    <div className="card-header">
                       <div className="card-body" id="profile">
                         <div>
                           <img
@@ -268,23 +268,23 @@ class UserProfile extends React.Component {
                           />
                         </div>
                         <div />
-                        <h4 class="card-title">
+                        <h4 className="card-title">
                           {" "}
                           <strong>{this.state.firstName}</strong>{" "}
                         </h4>
-                        <h5 class="card-text"> {this.state.email} </h5>
-                        <h5 class="card-text"> {this.state.telephone} </h5>
+                        <h5 className="card-text"> {this.state.email} </h5>
+                        <h5 className="card-text"> {this.state.telephone} </h5>
                         
-                        <Button class="btn btn-success" onClick={this.toggleEP}>
+                        <Button className="btn btn-success" onClick={this.toggleEP}>
                           {this.props.buttonLabel}
                           Edit profile
                         </Button>
-                        <a href="#" class="btn btn-primary">
-                          Become an O rganization
+                        <a href="#" className="btn btn-primary">
+                          Become an Organization
                         </a>
 
                         {/* modal add charity */}
-                        <Button class="btn btn-success" onClick={this.toggle}>
+                        <Button className="btn btn-success" onClick={this.toggle}>
                           {this.props.buttonLabel}
                           Add Charity
                         </Button>
@@ -298,7 +298,7 @@ class UserProfile extends React.Component {
                           </ModalHeader>
                           <ModalBody>
                             <form>
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label for="exampleInputEmail1">Name</label>
                                 <input
                                   type="text"
@@ -309,7 +309,7 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChange}
                                 />
                               </div>
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label for="exampleInputPassword1">
                                   Amount
                                 </label>
@@ -322,7 +322,7 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChange}
                                 />
                               </div>
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label for="exampleInputPassword1">
                                   Description
                                 </label>
@@ -339,7 +339,7 @@ class UserProfile extends React.Component {
                                 multiple={true}
                                 onDone={this.getFiles.bind(this)}
                               />
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label for="exampleInputPassword1">
                                   Location
                                 </label>
@@ -352,7 +352,7 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChange}
                                 />
                               </div>
-                              <div class="form-group form-check">
+                              <div className="form-group form-check">
                                 <input
                                   type="checkbox"
                                   class="form-check-input"
@@ -397,7 +397,7 @@ class UserProfile extends React.Component {
            <input type="text"/> */}
 
                             <form>
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label for="exampleInputEmail1">
                                   First Name
                                 </label>
@@ -412,7 +412,7 @@ class UserProfile extends React.Component {
                   We'll never share your email with anyone else.
                 </small> */}
                               </div>
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label for="exampleInputPassword1">
                                   Last Name
                                 </label>
@@ -424,7 +424,7 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChangeEP}
                                 />
                               </div>
-                              <div class="form-group">
+                              <div className="form-group">
                                 <label for="exampleInputPassword1">
                                   Phone Number
                                 </label>
