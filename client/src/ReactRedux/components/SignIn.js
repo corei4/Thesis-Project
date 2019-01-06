@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import { Redirect } from "react-router-dom";
+
 const jwtDecode = require('jwt-decode');
 
 
 class SignIn extends Component {
-  state = {
-    email: '',
-    password: ''
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      isLoggedIn: false
+    };
   }
+
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
@@ -18,6 +25,7 @@ class SignIn extends Component {
       email: this.state.email,
       password: this.state.password
     }
+    var that = this;
     axios({
       method: 'post',
       url: '/account/signin',
@@ -27,9 +35,9 @@ class SignIn extends Component {
       localStorage.setItem('token', response.data.token);
       var userData = jwtDecode(localStorage.getItem('token')).result
 
-      window.location.href = '/profile';
+      // window.location.href = '/profile';
 
-      this.setState({
+      that.setState({
         isLoggedIn: true
       })
     })
@@ -40,6 +48,9 @@ class SignIn extends Component {
     console.log(this.state)
   }
   render() {
+    if(this.state.isLoggedIn){
+      return <Redirect to='/profile' />
+    }
     return (
       <div className="container ">
       <h3 className='row black-text'>Sign In</h3>

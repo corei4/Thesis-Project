@@ -10,7 +10,7 @@
 
 .img-container img {
     width: 98% ;
-    height: auto ;
+    height: auto;
 }
 
 .img-container .btn {
@@ -87,4 +87,8 @@
 .ButtonRaise button:hover {
     background-color: rgba(231, 169, 0, 0.986);
     color: black;
+}
+
+.row {
+    display: contents !important;
 }

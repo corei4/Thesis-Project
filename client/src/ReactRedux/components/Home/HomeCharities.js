@@ -30,7 +30,7 @@ class HomeCharities extends Component {
             </div>
             <CardSubtitle>Amount to raise: {this.props.item.amount}</CardSubtitle>
             <Progress color="success" value={this.progress()} />
-            <CardSubtitle>Total recieved: {this.props.item.amount_received}</CardSubtitle>
+            <CardSubtitle>Total received: {this.props.item.amount_received}</CardSubtitle>
             <Button>Donate</Button>
           </Card>
         </Col>

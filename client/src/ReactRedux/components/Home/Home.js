@@ -38,7 +38,7 @@ class Home extends React.Component {
       <div className="img-container">
         <Link to="/CharityCard" style={{ textDecoration: 'none', color: "white" }}>
           <img src={redone} alt='not loading' />
-          <button className='btn btn-lg' >Fundraising</button>
+          <button className='btn btn-lg' >Start Fundraising</button>
         </Link>
       </div>
         <div>

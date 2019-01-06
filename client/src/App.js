@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect, Switch, Router } from "react-router-dom";
+import { BrowserRouter, Route, Redirect, Switch, Router, withRouter } from "react-router-dom";
 import PrivateRoute from './PrivateRoute'
 
 import organizations from './ReactRedux/components/organizations'
@@ -38,6 +38,7 @@ class App extends Component {
           <MyNavBar />
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route path ='/Home' component={Home} />
             <Route path='/organizations' component={organizations} />
             <Route path='/Signup' component={Signup} />
             <Route path='/SignIn' component={SignIn} />

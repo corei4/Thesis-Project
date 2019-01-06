@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
-import './MyNavBar.css'
-import { Link, withRouter } from "react-router-dom";
+// import './MyNavBar.css'
+import { Link, withRouter, Redirect } from "react-router-dom";
+
 
 class MyNavBar extends Component {
   constructor(props) {
     super(props);
-
   }
   signOut = () => {
     localStorage.removeItem('token');
-    window.location.href = '/';
-  }
+    // window.location.href = '/';
+    this.props.history.push('/');
+  };
+
   render() {
     if (localStorage.getItem('token')) {
       return (
@@ -43,4 +45,4 @@ class MyNavBar extends Component {
     }
   }
 }
-export default MyNavBar;
+export default withRouter(MyNavBar);
