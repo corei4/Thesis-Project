@@ -1,5 +1,5 @@
 # Charitable
-Website/application to help promote non-profit organizations
+Charitable is a platform built to help promote non-profit organizations and people who need help raising funds for a charitable cause.
 
 ## Getting Started
 
@@ -33,15 +33,15 @@ yarn dev
 This will run the server and the client in a development environment
 
 ## Running the tests
-
+```
 npm run test
-
+```
 ### Break down into end to end tests
 
-Used database test/mocha test for MySQL
+Used database test/chai test for MySQL
 
 ```
-Testing if it saves correctly to the database
+Testing if user can log in
 ```
 
 ## Deployment
