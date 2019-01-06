@@ -13,6 +13,14 @@ var knex = require('knex')({
 	}
 });
 
+function generateJwt() {
+	return jwt.sign({
+		id: this._id,
+		email: this.email,
+		firstName: this.firstName,
+		lastName: this.lastName,
+	}, config.jwtSecret);};
+
 function generateHashPassword(password) {
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
@@ -187,12 +195,12 @@ module.exports = {
 				console.log(`error => ${err}`)
 				res.send(err)
 			});
-
         },
         donationsToCharity: function(req, res){
-            knex('Donations')
-            .innerJoin('charities','Donations.donated_to',"charities.id")
-            .where('Donations.donated_to', req.body.charities_id)
+            knex('charities')
+			.innerJoin('Donations', 'Donations.donation_to','charities.id')
+			.innerJoin('payments','payments.id','Donations.donated_amount')
+            .where('charities.id', req.body.charities_id)
             .then(function(data){
                 res.send(data);
             });
@@ -214,14 +222,6 @@ module.exports = {
 				res.send(err)
 			});
 		},
-	// donationsToCharity: function (req, res) {
-	// 	knex('Donations')
-	// 		.innerJoin('charities', 'Donations.donated_to', "charities.id")
-	// 		.where('Donations.donated_to', req.body.charities_id)
-	// 		.then(function (data) {
-	// 			res.send(data);
-	// 		});
-	// },
 	getUserInfo: function(req, res) {
 		var email = req.body.email;
 		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'email': email})
@@ -270,5 +270,33 @@ getRequests: function (req, res) {
 			res.send(err)
 		}
 	});
-}
+},
+	DonationAmountSummed: function(req, res){
+		knex('charities').sum('payments.amount_pay')
+		.innerJoin('Donations', 'Donations.donation_to','charities.id')
+		.innerJoin('payments','payments.id','Donations.donated_amount')
+		.where('charities.id', req.body.charities_id)
+		.then(function(data){
+			res.send(data);
+		});
+	},
+	getUserInfo: function(req, res) {
+		var email = req.body.email;
+		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'email': email})
+	}
+
+
+	// donationsMadeByUser: function(req, res){
+	//     knex('Donations')
+	//     .innerJoin('charities','Donations.donation_to',"charities.id")
+	//     .where('Donations.donation_to', req.body.charities_id)
+	//     .then(function(data){
+	//         res.send(data);
+	//     });
+	// }
+
+//   SELECT * FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
+// SELECT sum(payments.amount_pay) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
+// SELECT sum(payments.amount_pay) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
+	
 }
