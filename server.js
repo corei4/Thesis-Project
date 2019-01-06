@@ -125,8 +125,15 @@ app.put('/charities', function (req, res) {
 
 //Update usertype
 app.put('/account/usertype', function (req, res) {
+  dbOpt.updateRequestTypeAccept(req, res);
+console.log('req.body', req.body)
   dbOpt.updateUserType(req, res)
 });
+
+app.put('/updateRequestTypeDecline', function (req, res) {
+  dbOpt.updateRequestTypeDecline(req, res);
+});
+
 
 //Delete charities
 app.delete('/delCharities',function(req, res) {
@@ -168,20 +175,15 @@ app.post('/becomeOganization', function(req, res) {
   //get all requests to admin
   app.get('/getRequests', function(req, res) {
     dbOpt.getRequests(req, res)
-    });
+  });
 
-//get bending requests to admin
-    app.get('/getBendingRequests', function(req, res) {
-      dbOpt.getBendingRequests(req, res)
-      });
-
-//Update request type to accepted
-app.put('/updateRequestTypeAccept',function(req, res) {
-  dbOpt.updateRequestTypeAccept(req, res)
-});
+// //Update request type to accepted
+// app.put('/updateRequestTypeAccept',function(req, res) {
+//   dbOpt.updateRequestTypeAccept(req, res)
+// });
 
 //Update request type to decline
-app.put('/updateRequestTypeDecline',function(req, res) {
-  dbOpt.updateRequestTypeDecline(req, res)
-});
+// app.put('/updateRequestTypeDecline',function(req, res) {
+//   dbOpt.updateRequestTypeDecline(req, res)
+// });
 module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));

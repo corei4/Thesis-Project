@@ -61,6 +61,8 @@ module.exports = {
 						if (isMatch) {
 							knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId','id').from('users').where({'email': email})
 							.then(function(result) {
+								console.log(result , "/*/*/*/*//*/*/*/*//*/*/*/*resulttttttt");
+								
 								return res.send({
 									success: true,
 									message: 'Password is correct.',
@@ -185,7 +187,7 @@ module.exports = {
 	},
 	updateUserType: function (req, res) {
 		knex('users')
-			.where({ 'email': req.body.email })
+			.where({ 'id': req.body.user_id })
 			.update({
 				userTypeId: 3
 			}).then(result => {
@@ -253,7 +255,7 @@ module.exports = {
 				"description":req.body.description,
 				"location": req.body.location,
 				"user_id": Number(req.body.userId),
-				"request_type":"pending" 
+				"status":"pending" 
 
 			}).then(result => {
 				console.log(`successful insert ${result}`)
@@ -299,57 +301,31 @@ getRequests: function (req, res) {
 	},
 	updateRequestTypeAccept: function (req, res) {
 		knex('Request')
-			.where({ 'email': req.body.email })
+			.where({ 'user_id': req.body.user_id})
 			.update({
-				userTypeId: "accepted"
+				status: "accepted"
 			}).then(result => {
-				console.log(`successful update ${result}`)
-				res.send("update suc.")
+				console.log(`successful update status ${result}`)
+				// res.send("update suc.")
 			}).catch(err => {
 				console.log(`error => ${err}`)
-				res.send(err)
+				// res.send(err)
 			});
 		},
-		updateRequestTypeAccept: function (req, res) {
-		knex('Request')
-			.where({ 'email': req.body.email })
-			.update({
-				userTypeId: "accepted"
-			}).then(result => {
-				console.log(`successful update ${result}`)
-				res.send("update suc.")
-			}).catch(err => {
-				console.log(`error => ${err}`)
-				res.send(err)
-			});
-		},
-		updateRequestTypeAccept: function (req, res) {
+		updateRequestTypeDecline: function (req, res) {
 			knex('Request')
-				.where({ 'email': req.body.email })
-				.update({
-					requesttypeId: "accepted"
-				}).then(result => {
-					console.log(`successful update ${result}`)
-					res.send("update suc.")
-				}).catch(err => {
-					console.log(`error => ${err}`)
-					res.send(err)
-				});
-			},
-			updateRequestTypeDecline: function (req, res) {
-				knex('Request')
-					.where({ 'email': req.body.email })
-					.update({
-						requesttypeId: "Decline"
-					}).then(result => {
-						console.log(`successful update ${result}`)
-						res.send("update suc.")
-					}).catch(err => {
-						console.log(`error => ${err}`)
-						res.send(err)
-					});
-				}
-
+			.where({ 'user_id': req.body.user_id})
+			.update({
+				status: "decline"
+			}).then(result => {
+				console.log(`successful update status ${result}`)
+				// res.send("update suc.")
+			}).catch(err => {
+				console.log(`error => ${err}`)
+				// res.send(err)
+			});
+		}
+		
 	// donationsMadeByUser: function(req, res){
 	//     knex('Donations')
 	//     .innerJoin('charities','Donations.donation_to',"charities.id")

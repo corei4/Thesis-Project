@@ -34,12 +34,16 @@ class UserProfile extends React.Component {
     super(props);
     //var result = getAllCh();
     var userData = jwtDecode(localStorage.getItem('token')).result
+    console.log("userData",userData)
 
     const email = userData[0].email
     const firstName = userData[0].firstName
     const lastName = userData[0].lastName;
     const telephone = userData[0].telephone;
     const imgUrl = userData[0].imgUrl;
+    const user_id = userData[0].id;
+    //userTypeId
+  const userType_id = userData[0].userTypeId;
 
 
     var result = [{ id: 1, name: "Azhar" }];
@@ -65,7 +69,9 @@ class UserProfile extends React.Component {
       imgUrl: imgUrl,
       modalOR: false,
       requests: [],
-      admin: window.localStorage.getItem("userTypeId") === 1 ? true : false
+      admin:  userType_id == 1 ? true : false,
+      userButton:  userType_id == 2 ? true : false
+
     };
     this.toggle = this.toggle.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -99,8 +105,14 @@ class UserProfile extends React.Component {
       type: "GET",
       success: function (data) {
         console.log(data, "app in ajax ")
+        let arrayNew = [];
+        for(var i = 0; i<data.length; i++) {
+          if (data[i].status==="pending") {
+            arrayNew.push(data[i])
+          }
+        }
         this.setState({
-          requests: data
+          requests: arrayNew
           
         })
         console.log("all charities",this.state.test)
@@ -229,8 +241,7 @@ class UserProfile extends React.Component {
       about: this.state.aboutOR,
       location: this.state.locationOR,
       description: this.state.descriptionOR,
-      userId: window.localStorage.getItem('id'),
-      email: window.localStorage.getItem('email'),
+      userId: jwtDecode(localStorage.getItem('token')).result[0].id
 
       // status: "pending"
     };
@@ -290,15 +301,16 @@ class UserProfile extends React.Component {
   }
 
  handleAccept= (event) => {
-   const email = event.target.value
-   console.log("accept", email)
+   const user_id = event.target.id
+   console.log("accept event", user_id)
     $.ajax({
-      url: 'updateRequestTypeAccept',
+      url: 'account/usertype',
       type: "PUT",
-      data: JSON.stringify(email),
+      data: JSON.stringify({"user_id":user_id
+      }),
       contentType: "application/json",
       success: function(data) {
-        console.log("ad charities in Db", data);
+        console.log("/account/usertype", data);
       },
       error: function(error) {
         console.error("errorrrrrr", error);
@@ -306,8 +318,23 @@ class UserProfile extends React.Component {
     });
  };
 
- handleDecline= () => {
+ handleDecline= (event) => {
   console.log("decline")
+  const user_id = event.target.id
+  console.log("accept event", user_id)
+   $.ajax({
+     url: '/updateRequestTypeDecline',
+     type: "PUT",
+     data: JSON.stringify({"user_id":user_id
+     }),
+     contentType: "application/json",
+     success: function(data) {
+       console.log("decline", data);
+     },
+     error: function(error) {
+       console.error("errorrrrrr", error);
+     }
+   });
 }
               
   render() {
@@ -345,9 +372,10 @@ class UserProfile extends React.Component {
                 Charities
               </NavLink>
             </NavItem>
+            { this.state.admin ?  
             <NavItem>
               <NavLink
-              disabled={this.state.admin}
+              
                 className={classnames({ active: this.state.activeTab === "4", admin: this.state.admin })}
                 onClick={() => {
                   this.toggleTab("4");
@@ -355,7 +383,7 @@ class UserProfile extends React.Component {
               >
                 Requests
               </NavLink>
-            </NavItem>
+            </NavItem>: null }
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
@@ -385,10 +413,11 @@ class UserProfile extends React.Component {
                           {this.props.buttonLabel}
                           Edit profile
                         </Button>
+                        { this.state.userButton ?
                         <Button href="#" className="btn btn-primary" onClick={this.toggleOR}>
                           Become an Organization
                         </Button>
-
+                        :null}
                         {/* modal add charity */}
                         <Button className="btn btn-success" onClick={this.toggle}>
                           {this.props.buttonLabel}
@@ -669,8 +698,8 @@ class UserProfile extends React.Component {
           <CardSubtitle>{item.location}</CardSubtitle>
         
           <CardText>{item.description}</CardText>
-          <CardLink value = {item.email} href="#" color="success" onClick={this.handleAccept}>Accept</CardLink>
-          <CardLink href="#" onClick={this.handleDecline}>Decline</CardLink>
+          <button id={item.user_id} href="#" color="success" onClick={this.handleAccept}>Accept</button>
+          <button id={item.user_id} href="#" onClick={this.handleDecline}>Decline</button>
         </CardBody>
       </Card>
               ))}
