@@ -18,22 +18,10 @@ class MyNavBar extends Component {
   };
 
   render() {
-    if (this.state.isSignedOut){
-      return (
-      <Redirect to='/home' />
-        <div className="navbar-fixed">
-          <nav className="nav-wrapper purple darken-4 col s1">
-            <Link to='/' className=" brand-logo " style={{ textDecoration: 'none', color: "white" }}>Charitable</Link>
-            <ul className=" right"  >
-              <li><Link to="/" style={{ textDecoration: 'none', color: "white" }}>Home</Link></li>
-              <li><Link to="/Organizations" style={{ textDecoration: 'none', color: "white" }}>Organizations</Link></li>
-              <li><Link to="/Signin" style={{ textDecoration: 'none', color: "white" }}>Log In</Link></li>
-              <li><Link to="/Signup" style={{ textDecoration: 'none', color: "white" }}>Sign Up</Link></li>
-            </ul>
-          </nav>
-        </div>
-      )
-    } else if (localStorage.getItem('token')) {
+    // if (this.state.isSignedOut){
+    //   return <Redirect to='/' />
+    // }
+    if (localStorage.getItem('token')) {
       return (
         <div className="navbar-fixed">
           <nav className="nav-wrapper purple darken-4 col s1">
