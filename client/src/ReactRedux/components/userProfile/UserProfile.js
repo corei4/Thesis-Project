@@ -274,6 +274,14 @@ class UserProfile extends React.Component {
   onChangePage(pageOfItems) {
     this.setState({ pageOfItems: pageOfItems });
   }
+ handleAccept= () => {
+   console.log("accept")
+ };
+
+ handleDecline= () => {
+  console.log("decline")
+}
+              
   render() {
     return (
       <div class="container-fluid">
@@ -631,15 +639,14 @@ class UserProfile extends React.Component {
         <CardBody>
           <CardTitle>{item.name}</CardTitle>
           <CardSubtitle>{item.location}</CardSubtitle>
-        </CardBody>
-        <img width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-        <CardBody>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-          <CardLink href="#">Card Link</CardLink>
-          <CardLink href="#">Another Link</CardLink>
+        
+          <CardText>{item.description}</CardText>
+          <CardLink href="#" color="success" onClick={this.handleAccept}>Accept</CardLink>
+          <CardLink href="#" onClick={this.handleDecline}>Decline</CardLink>
         </CardBody>
       </Card>
               ))}
+              
       
     </div>
             </TabPane>
