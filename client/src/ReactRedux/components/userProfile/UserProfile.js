@@ -229,7 +229,10 @@ class UserProfile extends React.Component {
       about: this.state.aboutOR,
       location: this.state.locationOR,
       description: this.state.descriptionOR,
-      userId: window.localStorage.getItem('id')
+      userId: window.localStorage.getItem('id'),
+      email: window.localStorage.getItem('email'),
+
+      // status: "pending"
     };
 
     console.log("profileObj: ", profileObj);
@@ -285,8 +288,22 @@ class UserProfile extends React.Component {
   onChangePage(pageOfItems) {
     this.setState({ pageOfItems: pageOfItems });
   }
- handleAccept= () => {
-   console.log("accept")
+
+ handleAccept= (event) => {
+   const email = event.target.value
+   console.log("accept", email)
+    $.ajax({
+      url: 'updateRequestTypeAccept',
+      type: "PUT",
+      data: JSON.stringify(email),
+      contentType: "application/json",
+      success: function(data) {
+        console.log("ad charities in Db", data);
+      },
+      error: function(error) {
+        console.error("errorrrrrr", error);
+      }
+    });
  };
 
  handleDecline= () => {
@@ -652,7 +669,7 @@ class UserProfile extends React.Component {
           <CardSubtitle>{item.location}</CardSubtitle>
         
           <CardText>{item.description}</CardText>
-          <CardLink href="#" color="success" onClick={this.handleAccept}>Accept</CardLink>
+          <CardLink value = {item.email} href="#" color="success" onClick={this.handleAccept}>Accept</CardLink>
           <CardLink href="#" onClick={this.handleDecline}>Decline</CardLink>
         </CardBody>
       </Card>

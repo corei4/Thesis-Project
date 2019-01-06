@@ -165,8 +165,23 @@ app.post('/becomeOganization', function(req, res) {
   dbOpt.becomeOrganization(req, res)
   });
 
+  //get all requests to admin
   app.get('/getRequests', function(req, res) {
     dbOpt.getRequests(req, res)
     });
 
+//get bending requests to admin
+    app.get('/getBendingRequests', function(req, res) {
+      dbOpt.getBendingRequests(req, res)
+      });
+
+//Update request type to accepted
+app.put('/updateRequestTypeAccept',function(req, res) {
+  dbOpt.updateRequestTypeAccept(req, res)
+});
+
+//Update request type to decline
+app.put('/updateRequestTypeDecline',function(req, res) {
+  dbOpt.updateRequestTypeDecline(req, res)
+});
 module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));

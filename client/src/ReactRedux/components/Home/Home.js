@@ -39,7 +39,7 @@ class Home extends React.Component {
         <Link to="/CharityCard" style={{ textDecoration: 'none', color: "white" }}>
           <img src={redone} alt='not loading' />
           
-          <a className='btn btn-lg' ><Link to="/AllCharities">Fundraisinggggg</Link></a>
+          <a className='btn btn-lg' ><Link to="/AllCharities">Start Fundraising</Link></a>
           {/* <button className='btn btn-lg' >Start Fundraising</button> */}
         </Link>
       </div>

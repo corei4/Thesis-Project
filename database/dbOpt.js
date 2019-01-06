@@ -252,7 +252,9 @@ module.exports = {
 				// "amount_received": 0,
 				"description":req.body.description,
 				"location": req.body.location,
-				"user_id": Number(req.body.userId)
+				"user_id": Number(req.body.userId),
+				"request_type":"pending" 
+
 			}).then(result => {
 				console.log(`successful insert ${result}`)
 			}).catch(err => {
@@ -283,8 +285,70 @@ getRequests: function (req, res) {
 	getUserInfo: function(req, res) {
 		var email = req.body.email;
 		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'email': email})
-	}
-
+	},
+	getBendingRequests: function (req, res) {
+		knex.select().table('Request').then((err, result) => {
+			console.log('Get all Request');
+			if (result) {
+				res.send(result)
+				return result;
+			} else {
+				res.send(err)
+			}
+		});
+	},
+	updateRequestTypeAccept: function (req, res) {
+		knex('Request')
+			.where({ 'email': req.body.email })
+			.update({
+				userTypeId: "accepted"
+			}).then(result => {
+				console.log(`successful update ${result}`)
+				res.send("update suc.")
+			}).catch(err => {
+				console.log(`error => ${err}`)
+				res.send(err)
+			});
+		},
+		updateRequestTypeAccept: function (req, res) {
+		knex('Request')
+			.where({ 'email': req.body.email })
+			.update({
+				userTypeId: "accepted"
+			}).then(result => {
+				console.log(`successful update ${result}`)
+				res.send("update suc.")
+			}).catch(err => {
+				console.log(`error => ${err}`)
+				res.send(err)
+			});
+		},
+		updateRequestTypeAccept: function (req, res) {
+			knex('Request')
+				.where({ 'email': req.body.email })
+				.update({
+					requesttypeId: "accepted"
+				}).then(result => {
+					console.log(`successful update ${result}`)
+					res.send("update suc.")
+				}).catch(err => {
+					console.log(`error => ${err}`)
+					res.send(err)
+				});
+			},
+			updateRequestTypeDecline: function (req, res) {
+				knex('Request')
+					.where({ 'email': req.body.email })
+					.update({
+						requesttypeId: "Decline"
+					}).then(result => {
+						console.log(`successful update ${result}`)
+						res.send("update suc.")
+					}).catch(err => {
+						console.log(`error => ${err}`)
+						res.send(err)
+					});
+				}
 
 	// donationsMadeByUser: function(req, res){
 	//     knex('Donations')
