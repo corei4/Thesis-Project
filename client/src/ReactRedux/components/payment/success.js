@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
 import Modal from 'react-responsive-modal'
-import './creditCard.css'
 
 class success extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: true,
-    };
-    this.myRef = React.createRef();
+  state = {
+    open: true,
   }
-
   onOpenModal = () => {
     this.setState({ open: true });
   };

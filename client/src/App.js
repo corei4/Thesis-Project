@@ -10,7 +10,8 @@ import Signup from './ReactRedux/components/Signup'
 import SignIn from './ReactRedux/components/SignIn'
 import UserProfile from './ReactRedux/components/userProfile/UserProfile';
 import creditCard from './ReactRedux/components/payment/creditCard';
-import success from './ReactRedux/components/payment/success'
+import Success from './ReactRedux/components/payment/success'
+import Guest from './ReactRedux/components/payment/notSignedIn'
 
 class App extends Component {
   constructor(props) {
@@ -45,7 +46,8 @@ class App extends Component {
             <PrivateRoute path='/profile' component={UserProfile} />
             <Route path='/create' component={CreateEvent} />
             <Route path='/creditcard' component={creditCard} />
-            <Route path='/success' component={success} />
+            <Route path='/success' component={Success} />
+            <Route path='/guest' component={Guest} />
           </Switch>
         </div>
       </BrowserRouter>

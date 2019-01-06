@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css'
 import Modal from "react-responsive-modal";
-import styles from './creditCard.css';
 
 class creditCard extends Component {
   state = {
@@ -40,18 +39,12 @@ class creditCard extends Component {
   render() {
     const { open } = this.state;
     return (
-      <div style={{ styles }}>
+      <div>
         <button className="button_donate btn btn-danger" onClick={this.onOpenModal}>Donate </button>
         <Modal
           open={open}
           onClose={this.onCloseModal}
           center
-          classNames={{
-            transitionEnter: styles.transitionEnter,
-            transitionEnterActive: styles.transitionEnterActive,
-            transitionExit: styles.transitionExitActive,
-            transitionExitActive: styles.transitionExitActive,
-          }}
           animationDuration={1000}
         >
           <h1 className="donation "> Donation </h1>
