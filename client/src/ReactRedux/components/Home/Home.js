@@ -15,7 +15,7 @@ class Home extends React.Component {
     };
   }
   componentDidMount() {
-    var charAll = $.ajax({
+    $.ajax({
       url: '/charities',
       dataType: 'json',
       type: "GET",
@@ -34,19 +34,24 @@ class Home extends React.Component {
 
   render() {
     return (
+      <div>
       <div className="img-container">
-        <img src={redone} alt='not loading' />
         <Link to="/CharityCard" style={{ textDecoration: 'none', color: "white" }}>
-          <button className='btn btn-lg' >Fundraising</button>
+          <img src={redone} alt='not loading' />
+          <button className='btn btn-lg' >Start Fundraising</button>
         </Link>
+      </div>
         <div>
           <Row>
-            <div>
-              {this.state.test.map(item => (
+            <div className="HomeCards">
+              {this.state.test.slice(0, 6).map(item => (
                 < HomeCharities key={item.id} item={item} />
               ))}
-            </div>
+              </div>
           </Row>
+        </div>
+        <div className="ButtonRaise">
+              <button>See All Charities</button>
         </div>
       </div>
     )

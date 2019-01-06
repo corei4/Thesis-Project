@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
 // import './MyNavBar.css'
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
+
 
 class MyNavBar extends Component {
   constructor(props) {
     super(props);
-
   }
   signOut = () => {
     localStorage.removeItem('token');
-    window.location.href = '/';
-  }
+    // window.location.href = '/';
+    this.props.history.push('/');
+  };
+
   render() {
     if (localStorage.getItem('token')) {
       return (
-        <div className="navbar-fixed">
+        <div className="navbar-fixed container-fluid">
           <nav className="nav-wrapper purple darken-4 col s1">
             <Link to='/' className=" brand-logo " style={{ textDecoration: 'none', color: "white" }}>Charitable</Link>
             <ul className=" right"  >
@@ -43,4 +45,4 @@ class MyNavBar extends Component {
     }
   }
 }
-export default MyNavBar;
+export default withRouter(MyNavBar);
