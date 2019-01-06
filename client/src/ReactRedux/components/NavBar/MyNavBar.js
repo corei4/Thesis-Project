@@ -16,7 +16,7 @@ class MyNavBar extends Component {
   render() {
     if (localStorage.getItem('token')) {
       return (
-        <div className="navbar-fixed container-fluid">
+        <div className="navbar-fixed">
           <nav className="nav-wrapper purple darken-4 col s1">
             <Link to='/' className=" brand-logo " style={{ textDecoration: 'none', color: "white" }}>Charitable</Link>
             <ul className=" right"  >
