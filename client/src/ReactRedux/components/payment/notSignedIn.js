@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import 'react-credit-cards/es/styles-compiled.css'
 import Modal from "react-responsive-modal";
-import './creditCard.css';
 
 class NotSignedIn extends Component {
   state = {

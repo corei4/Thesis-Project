@@ -34,24 +34,24 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
-      <div className="img-container">
-        <Link to="/CharityCard" style={{ textDecoration: 'none', color: "white" }}>
-          <img src={redone} alt='not loading' />
-          <button className='btn btn-lg' >Start Fundraising</button>
-        </Link>
-      </div>
+      <div style={{ width: '100%' }}>
+        <div className="img-container container-fluid">
+          <Link to="/CharityCard" style={{ textDecoration: 'none', color: "white" }}>
+            <img src={redone} alt='not loading' />
+            <button className='btn btn-lg' >Start Fundraising</button>
+          </Link>
+        </div>
         <div>
           <Row>
             <div className="HomeCards">
               {this.state.test.slice(0, 6).map(item => (
                 < HomeCharities key={item.id} item={item} />
               ))}
-              </div>
+            </div>
           </Row>
         </div>
         <div className="ButtonRaise">
-              <button>See All Charities</button>
+          <button>See All Charities</button>
         </div>
       </div>
     )

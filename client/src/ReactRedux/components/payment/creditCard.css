@@ -7,30 +7,20 @@
   text-decoration: peru solid overline;
 }
 body > div:nth-child(7) > div > div{
-  background: rgb(212,237,218);
+  background: rgb(212,237,218); 
   font-size: 19px;
   width: auto;
 }
 body > div:nth-child(8) > div > div{
-  background-color: rgb(74,20,140);
+  background-color: rgb(74,20,140)!important;
   border: 2px solid;
   border-radius: 10px;
 }
-/* .button_donate{
-  display: inline-block;
+.button_submit{
   text-align: center;
-  text-decoration: solid;
-  margin: 2px 0;
-
-  border: solid 1px transparent;
-  border-radius: 4px;
-
-  padding: 0.5em 1em;
-  color: #ffffff;
-  background-color: #9c1f00;
-} */
-.button_donate:hover {
-  color: #ff0000;
-  border-color: currentColor;
-  background-color: white;
+}
+.button_submit button{
+  padding: 0px 60px;
+  margin: 10px;
+  font-size: 18px;
 }
