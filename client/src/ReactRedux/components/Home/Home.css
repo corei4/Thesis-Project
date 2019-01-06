@@ -9,7 +9,7 @@
 }
 
 .img-container img {
-    width: 98% ;
+    width: 100% ;
     height: auto;
 }
 
@@ -89,6 +89,6 @@
     color: black;
 }
 
-.row {
+/* .row {
     display: contents !important;
-}
+} */

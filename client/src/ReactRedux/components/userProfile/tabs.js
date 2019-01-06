@@ -39,7 +39,7 @@ export default class Tabs extends React.Component {
   componentDidMount() {
     let that = this;
     axios.post('/userCharities', {
-      owner_id: 1
+      owner_id: window.localStorage.getItem('id')
     })
       .then(function (res) {
         console.log(res);

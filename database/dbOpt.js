@@ -6,10 +6,10 @@ var knex = require('knex')({
 	client: 'mysql',
 	connection: {
 		host: "db4free.net",
-		user: "qusay97",
-		password: '12345678',
+		user: "corei4",
+		password: 'corei4corei4',
 		insecureAuth: true,
-		database: 'test_charity'
+		database: 'charity_rbk'
 	}
 });
 
@@ -83,7 +83,7 @@ module.exports = {
 					"description":req.body.description,
 					"location": req.body.location,
 					"image": req.body.image,
-					"owner_id": 1
+					"owner_id": req.body.owner_id
 				}).then(result => {
 					console.log(`successful insert ${result}`)
 				}).catch(err => {
@@ -103,7 +103,7 @@ module.exports = {
 		});
 	},
 	getUserChar: function (req, res) {
-		knex('charities').select().where('owner_id', 1).then((err, result) => {
+		knex('charities').select().where('owner_id', req.body.owner_id).then((err, result) => {
 			console.log('Get user charities');
 			if (result) {
 				res.send(result)
@@ -112,22 +112,22 @@ module.exports = {
 			}
 		});
 	},
-	addCharity: function (req, res) {
-		console.log(req.body, 'here add charities DB')
-		knex('charities').insert({
-			"name": req.body.name,
-			"amount": req.body.amount,
-			// "amount_received": 0,
-			"description": req.body.description,
-			"location": req.body.location,
-			"image": req.body.image,
-			"owner_id": 1
-		}).then(result => {
-			console.log(`successful insert ${result}`)
-		}).catch(err => {
-			console.log(`error => ${err}`)
-		});
-	},
+	// addCharity: function (req, res) {
+	// 	console.log(req.body, 'here add charities DB')
+	// 	knex('charities').insert({
+	// 		"name": req.body.name,
+	// 		"amount": req.body.amount,
+	// 		// "amount_received": 0,
+	// 		"description": req.body.description,
+	// 		"location": req.body.location,
+	// 		"image": req.body.image,
+	// 		"owner_id": 1
+	// 	}).then(result => {
+	// 		console.log(`successful insert ${result}`)
+	// 	}).catch(err => {
+	// 		console.log(`error => ${err}`)
+	// 	});
+	// },
 	delChar: function (req, res) {
 		knex('charities')
 			.del()
@@ -234,6 +234,43 @@ module.exports = {
 			res.json(decoded.result)
 		})
 	},
+	userOrganizations: function(req, res){
+		knex('users')
+		.innerJoin('usertype','users.userTypeId',"usertype.id")
+		.where('usertype.user_type', "organization")
+		// .select('users')
+		.then(function(data){
+		res.send(data);
+		});
+	},
+	// becomeOrganization
+	becomeOrganization: function (req, res) {
+		console.log(req.body, 'here add charities DB')
+			knex('Request').insert({
+				"name": req.body.name,
+				"about": req.body.about,
+				// "amount_received": 0,
+				"description":req.body.description,
+				"location": req.body.location,
+				"user_id": Number(req.body.userId)
+			}).then(result => {
+				console.log(`successful insert ${result}`)
+			}).catch(err => {
+				console.log(`error => ${err}`)
+			});
+
+},
+getRequests: function (req, res) {
+	knex.select().table('Request').then((err, result) => {
+		console.log('Get all Request');
+		if (result) {
+			res.send(result)
+			return result;
+		} else {
+			res.send(err)
+		}
+	});
+},
 	DonationAmountSummed: function(req, res){
 		knex('charities').sum('payments.amount_pay')
 		.innerJoin('Donations', 'Donations.donation_to','charities.id')

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import './Home.css';
 import redone from './redone.jpg';
 import HomeCharities from './HomeCharities.js';
@@ -32,13 +32,17 @@ class Home extends React.Component {
     });
   }
 
+  allCharities = () => {
+    this.props.history.push('/AllCharities');
+  };
+
   render() {
     return (
       <div>
       <div className="img-container">
-        <Link to="/CharityCard" style={{ textDecoration: 'none', color: "white" }}>
           <img src={redone} alt='not loading' />
-          <button className='btn btn-lg' >Start Fundraising</button>
+          <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
+          <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
         </Link>
       </div>
         <div>
@@ -57,4 +61,4 @@ class Home extends React.Component {
     )
   }
 }
-export default Home;
+export default withRouter(Home);
