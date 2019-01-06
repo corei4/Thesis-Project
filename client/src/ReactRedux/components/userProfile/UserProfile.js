@@ -2,14 +2,9 @@ import React from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 import FileBase64 from "react-file-base64";
-import FavCard from "./FavCard.js";
 import {
   Row,
   Col,
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
   NavLink
@@ -20,11 +15,11 @@ import { TabContent, TabPane } from "reactstrap";
 import classnames from "classnames";
 
 import $ from "jquery";
-import UserInfo from "./UserInfo.js";
-import Pagination from "./Pagination";
+import DonationCard from "./DonationsCard.js";
 import Tabs from "./tabs.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
+import axios from 'axios'
 
 const jwtDecode = require('jwt-decode');
 
@@ -65,6 +60,7 @@ class UserProfile extends React.Component {
       imgUrl: imgUrl,
       modalOR: false,
       requests: [],
+      Donations: [],
       admin: window.localStorage.getItem("userTypeId") === 1 ? true : false
     };
     this.toggle = this.toggle.bind(this);
@@ -74,9 +70,12 @@ class UserProfile extends React.Component {
   }
   componentDidMount() {
     console.log()
+    var userData = jwtDecode(localStorage.getItem('token')).result
+
+    var datadon = { user_id: userData[0].id}
     var data = { owner_id: window.localStorage.getItem('id') };
     console.log("here owner_id: 1", data);
-    var charAll = $.ajax({
+    $.ajax({
       url: "/userCharities",
       type: "POST",
       data: JSON.stringify(data),
@@ -93,7 +92,30 @@ class UserProfile extends React.Component {
       }.bind(this)
     });
 
-    var charAll = $.ajax({
+
+
+    $.ajax({
+      url: "/profile",
+      type: "POST",
+      data: JSON.stringify(datadon),
+      contentType: "application/json",
+      success: function (data) {
+        console.log(data, "Donations data");
+        this.setState({
+          Donations: data
+        });
+        return data;
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+    // axios.post('/profile',){
+
+    // }
+
+
+    $.ajax({
       url: '/getRequests',
       dataType: 'json',
       type: "GET",
@@ -636,7 +658,11 @@ class UserProfile extends React.Component {
               </Row>
             </TabPane>
             <TabPane tabId="2">
-              <h2>here donations for user as component</h2>
+            <div>
+              {this.state.Donations.map((item) =>
+                  <DonationCard key={item.id} item={item}/>
+                )}
+            </div>
             </TabPane>
             <TabPane tabId="3">
               <Tabs />
