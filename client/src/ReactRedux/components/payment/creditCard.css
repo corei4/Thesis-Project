@@ -6,16 +6,6 @@
   -webkit-text-decoration: peru solid overline;
   text-decoration: peru solid overline;
 }
-body > div:nth-child(7) > div > div{
-  background: rgb(212,237,218); 
-  font-size: 19px;
-  width: auto;
-}
-body > div:nth-child(8) > div > div{
-  background-color: rgb(74,20,140)!important;
-  border: 2px solid;
-  border-radius: 10px;
-}
 .button_submit{
   text-align: center;
 }

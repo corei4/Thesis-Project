@@ -13,6 +13,7 @@ import creditCard from './ReactRedux/components/payment/creditCard';
 import Success from './ReactRedux/components/payment/success'
 import Guest from './ReactRedux/components/payment/notSignedIn'
 import HomeCharities from '../../client/src/ReactRedux/components/Home/HomeCharities'
+import AllCharities from './ReactRedux/components/AllCharities'
 
 class App extends Component {
   constructor(props) {
@@ -51,6 +52,7 @@ class App extends Component {
             <Route path='/success' component={Success} />
             <Route path='/guest' component={Guest} />
             <Route path='/homecharities' component={HomeCharities} />
+            <Route path='/AllCharities' component={AllCharities} />
           </Switch>
         </div>
       </BrowserRouter>

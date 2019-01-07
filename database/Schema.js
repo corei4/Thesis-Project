@@ -5,10 +5,10 @@ const importer = require('node-mysql-importer');
 //Note: to insert tht the database credential
 importer.config({
   host: "db4free.net",
-  user: "qusay97",
-  password: '12345678',
+  user: "corei4",
+  password: 'corei4corei4',
   insecureAuth: true,
-  database: 'test_charity'
+  database: 'charity_rbk'
 })
 
 module.exports = {

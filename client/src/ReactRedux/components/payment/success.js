@@ -1,7 +1,8 @@
+
 import React, { Component } from 'react'
 import Modal from 'react-responsive-modal'
 
-class success extends Component {
+class Success extends Component {
   state = {
     open: true,
   }
@@ -30,4 +31,4 @@ class success extends Component {
     )
   }
 }
-export default success;
+export default Success;
