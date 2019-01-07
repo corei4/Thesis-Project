@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 // import './MyNavBar.css'
-import { Link, withRouter, Redirect } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 
 class MyNavBar extends Component {
-  constructor(props) {
-    super(props);
-  }
   signOut = () => {
     localStorage.removeItem('token');
     // window.location.href = '/';

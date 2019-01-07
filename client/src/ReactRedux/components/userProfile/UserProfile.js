@@ -9,7 +9,7 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
-import { Card, CardImg, CardText, CardBody, CardLink,
+import { Card, CardText, CardBody, CardLink,
   CardTitle, CardSubtitle } from 'reactstrap';
 import { TabContent, TabPane } from "reactstrap";
 import classnames from "classnames";
@@ -19,7 +19,7 @@ import DonationCard from "./DonationsCard.js";
 import Tabs from "./tabs.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
-import axios from 'axios'
+
 
 const jwtDecode = require('jwt-decode');
 
@@ -660,7 +660,7 @@ class UserProfile extends React.Component {
             <TabPane tabId="2">
             <div>
               {this.state.Donations.map((item) =>
-                  <DonationCard key={item.id} item={item}/>
+                  <DonationCard key={item.DonId} item={item}/>
                 )}
             </div>
             </TabPane>
@@ -672,7 +672,7 @@ class UserProfile extends React.Component {
              <TabPane tabId="4">
              <div>
               {this.state.requests.map(item => (
-                <Card>
+                <Card key={item.id}>
         <CardBody>
           <CardTitle>{item.name}</CardTitle>
           <CardSubtitle>{item.location}</CardSubtitle>

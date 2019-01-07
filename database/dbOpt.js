@@ -235,7 +235,7 @@ module.exports = {
 		})
 	},
 	userOrganizations: function(req, res){
-		knex('users')
+		knex.column('*', {userId: 'users.id'}).select().from('users')
 		.innerJoin('usertype','users.userTypeId',"usertype.id")
 		.where('usertype.user_type', "organization")
 		// .select('users')
@@ -285,7 +285,7 @@ getRequests: function (req, res) {
 		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'email': email})
 	},
 	donationsMadeByUser: function(req, res){
-		knex('Donations')
+		knex.column('*', {DonId: 'Donations.id'}).select().from('Donations')
 		.innerJoin('charities', 'charities.id','Donations.donation_to')
 		.innerJoin('payments','payments.id','Donations.donated_amount')
 		.innerJoin('users', 'users.id', 'Donations.user_id')

@@ -11,9 +11,6 @@ import {
 
 
 class HomeCharities extends Component {
-  constructor(props) {
-    super(props)
-  }
   progress(){
     var x = Math.floor((this.props.item.amount_received / this.props.item.amount) * 100);
     return x;
@@ -26,7 +23,7 @@ class HomeCharities extends Component {
             <CardTitle>{this.props.item.location}</CardTitle>
             <CardSubtitle>{this.props.item.description}</CardSubtitle>
             <div className="HomeCardImg">
-              <img width="100%" src={this.props.item.image} alt="Card image cap" />
+              <img width="100%" src={this.props.item.image} alt="Card cap" />
             </div>
             <CardSubtitle>Amount to raise: {this.props.item.amount}</CardSubtitle>
             <Progress color="success" value={this.progress()} />
