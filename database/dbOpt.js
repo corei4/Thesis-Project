@@ -115,6 +115,7 @@ module.exports = {
 				res.send(result)
 				return result;
 			} else {
+				console.log(err,'get all charities err')
 				res.send(err)
 			}
 		});
