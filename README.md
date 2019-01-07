@@ -5,8 +5,8 @@ Charitable is a platform built to help promote non-profit organizations and peop
 
 1. [Getting Started](#Getting-Started)
 1. [Prerequisites](#Prerequisites)
-1. [Requirements](#Requirements)
-1. [Installing](#Installing)
+    1. [Requirements](#Requirements)
+    1. [Installing](#Installing)
 1. [Testing](#Running-the-tests)
 1. [Built With](#Built-With)
 1. [Authors/Contributors](#Authors)
