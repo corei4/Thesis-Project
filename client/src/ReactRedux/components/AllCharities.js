@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import SubCharity from './SubCharity';
+
+
 import $ from "jquery";
-import { Row } from 'reactstrap';
+import {
+  Row
+} from 'reactstrap';
 
 
 class AllCharities extends Component {
@@ -13,7 +17,7 @@ class AllCharities extends Component {
     }
   }
   componentDidMount() {
-    var charAll = $.ajax({
+    $.ajax({
       url: '/charities',
       dataType: 'json',
       type: "GET",
@@ -30,6 +34,13 @@ class AllCharities extends Component {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
+  }
+  updateSearch = (e) => {
+    this.setState({
+      search: e.target.value.substr(0, 20)
+    })
+    console.log(e.target.value)
+    console.log(this.state.test.name)
   }
   updateSearch = (e) => {
     this.setState({

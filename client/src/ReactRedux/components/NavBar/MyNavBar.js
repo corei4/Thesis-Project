@@ -3,7 +3,6 @@ import { Link, withRouter } from "react-router-dom";
 
 
 class MyNavBar extends Component {
-
   signOut = () => {
     localStorage.removeItem('token');
     this.props.history.push('/');

@@ -235,7 +235,7 @@ module.exports = {
 		})
 	},
 	userOrganizations: function(req, res){
-		knex('users')
+		knex.column('*', {userId: 'users.id'}).select().from('users')
 		.innerJoin('usertype','users.userTypeId',"usertype.id")
 		.where('usertype.user_type', "organization")
 		// .select('users')
@@ -283,10 +283,23 @@ getRequests: function (req, res) {
 	getUserInfo: function(req, res) {
 		var email = req.body.email;
 		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'email': email})
+	},
+	donationsMadeByUser: function(req, res){
+		knex.column('*', {DonId: 'Donations.id'}).select().from('Donations')
+		.innerJoin('charities', 'charities.id','Donations.donation_to')
+		.innerJoin('payments','payments.id','Donations.donated_amount')
+		.innerJoin('users', 'users.id', 'Donations.user_id')
+		.where('users.id', req.body.user_id)
+		.then(function(data){
+			res.send(data);
+		});
 	}
 
+// SELECT * FROM Donations INNER JOIN charities ON charities.id = Donations.donation_to
+// INNER JOIN payments ON payments.id = Donations.donated_amount INNER JOIN users ON users.id = Donations.user_id WHERE users.id = 2;
+	
 
-	// donationsMadeByUser: function(req, res){
+// donationsMadeByUser: function(req, res){
 	//     knex('Donations')
 	//     .innerJoin('charities','Donations.donation_to',"charities.id")
 	//     .where('Donations.donation_to', req.body.charities_id)
