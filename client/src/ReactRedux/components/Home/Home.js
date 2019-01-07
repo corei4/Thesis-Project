@@ -20,7 +20,7 @@ class Home extends React.Component {
       dataType: 'json',
       type: "GET",
       success: function (data) {
-        console.log(data, "app in ajax ")
+        console.log(JSON.parse( data), "app in ajax ")
         this.setState({
           test: data
         })

@@ -109,9 +109,10 @@ module.exports = {
 
 	},
 	getAllChar: function (req, res) {
-		knex.select().table('charities').then((err, result) => {
+		knex.select().table('charities').then((result, err) => {
 			console.log('Get all charities');
 			if (result) {
+				console.log(result,'result')
 				res.send(result)
 				return result;
 			} else {
