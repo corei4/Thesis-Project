@@ -25,10 +25,11 @@ class Home extends React.Component {
           test: data
         })
         return data;
-      }.bind(this),
+      },
       error: function (xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
+        // console.error(this.props.url, status, err.toString());
+        console.log('homed error',err)
+      }
     });
   }
 
