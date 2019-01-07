@@ -410,7 +410,7 @@ class UserProfile extends React.Component {
                           <ModalBody>
                             <form>
                               <div className="form-group">
-                                <label for="exampleInputEmail1">Name</label>
+                                <label htmlFor="exampleInputEmail1">Name</label>
                                 <input
                                   type="text"
                                   name="name"
@@ -421,7 +421,7 @@ class UserProfile extends React.Component {
                                 />
                               </div>
                               <div className="form-group">
-                                <label for="exampleInputPassword1">
+                                <label htmlFor="exampleInputPassword1">
                                   Amount
                                 </label>
                                 <input
@@ -434,7 +434,7 @@ class UserProfile extends React.Component {
                                 />
                               </div>
                               <div className="form-group">
-                                <label for="exampleInputPassword1">
+                                <label htmlFor="exampleInputPassword1">
                                   Description
                                 </label>
                                 <input
@@ -451,7 +451,7 @@ class UserProfile extends React.Component {
                                 onDone={this.getFiles.bind(this)}
                               />
                               <div className="form-group">
-                                <label for="exampleInputPassword1">
+                                <label htmlFor="exampleInputPassword1">
                                   Location
                                 </label>
                                 <input
@@ -466,10 +466,10 @@ class UserProfile extends React.Component {
                               <div className="form-group form-check">
                                 <input
                                   type="checkbox"
-                                  class="form-check-input"
+                                  className="form-check-input"
                                   id="exampleCheck1"
                                 />
-                                {/* <label class="form-check-label" for="exampleCheck1">
+                                {/* <label className="form-check-label" for="exampleCheck1">
                   Check me out
                 </label> */}
                               </div>
@@ -509,7 +509,7 @@ class UserProfile extends React.Component {
 
                             <form>
                               <div className="form-group">
-                                <label for="exampleInputEmail1">
+                                <label htmlFor="exampleInputEmail1">
                                   First Name
                                 </label>
                                 <input
@@ -519,12 +519,12 @@ class UserProfile extends React.Component {
                                   value={this.state.firstName}
                                   onChange={this.handleInputChangeEP}
                                 />
-                                {/* <small id="emailHelp" class="form-text text-muted">
+                                {/* <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else.
                 </small> */}
                               </div>
                               <div className="form-group">
-                                <label for="exampleInputPassword1">
+                                <label htmlFor="exampleInputPassword1">
                                   Last Name
                                 </label>
                                 <input
@@ -536,7 +536,7 @@ class UserProfile extends React.Component {
                                 />
                               </div>
                               <div className="form-group">
-                                <label for="exampleInputPassword1">
+                                <label htmlFor="exampleInputPassword1">
                                   Phone Number
                                 </label>
                                 <input
@@ -583,8 +583,8 @@ class UserProfile extends React.Component {
                           </ModalHeader>
                           <ModalBody>
                             <form>
-                              <div class="form-group">
-                                <label for="exampleInputEmail1">Name of Organization</label>
+                              <div className="form-group">
+                                <label htmlFor="exampleInputEmail1">Name of Organization</label>
                                 <input
                                   type="text"
                                   name="nameOR"
@@ -594,8 +594,8 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChangeOR}
                                 />
                               </div>
-                              <div class="form-group">
-                                <label for="exampleInputPassword1">
+                              <div className="form-group">
+                                <label htmlFor="exampleInputPassword1">
                                   About the Organization
                                 </label>
                                 <input
@@ -607,8 +607,8 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChangeOR}
                                 />
                               </div>
-                              <div class="form-group">
-                                <label for="exampleInputPassword1">
+                              <div className="form-group">
+                                <label htmlFor="exampleInputPassword1">
                                   Acceptance Reason
                                 </label>
                                 <input
@@ -621,8 +621,8 @@ class UserProfile extends React.Component {
                                 />
                               </div>
                               
-                              <div class="form-group">
-                                <label for="exampleInputPassword1">
+                              <div className="form-group">
+                                <label htmlFor="exampleInputPassword1">
                                   Location
                                 </label>
                                 <input
