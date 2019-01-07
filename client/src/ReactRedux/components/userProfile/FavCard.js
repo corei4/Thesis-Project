@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Card, CardText, CardBody, CardLink,
+  Card, CardText, CardBody,
   CardTitle, CardSubtitle, Row, Col, Container
 } from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -37,7 +37,7 @@ class FavCard extends React.Component {
         // }
         //   } 
           
-      }.bind(this)
+      }
   });
   // window.location.reload()
   }
@@ -49,7 +49,7 @@ class FavCard extends React.Component {
                 <CardTitle>{this.props.item.name}</CardTitle>
                 <CardSubtitle>{this.props.item.name}</CardSubtitle>
               </CardBody>
-              <img width="100%" src={this.props.item.image} alt="Card image cap" />
+              <img width="100%" src={this.props.item.image} alt="Card cap" />
               <CardBody>
                 <CardText>{this.props.item.name}</CardText>
                 <CardText>{this.props.item.description}</CardText>

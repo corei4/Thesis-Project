@@ -3,17 +3,13 @@ import axios from 'axios';
 import FavCard from "./FavCard.js";
 import './style.css';
 import Pagination from './Pagination';
-// import organizations from '../organizations';
-// Row
 import {
-  Card, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle, Row, Col, Container
+   Row, Col
 } from 'reactstrap';
 
 export default class Tabs extends React.Component {
   constructor(props) {
     super(props);
-    var exampleItems = [{ id: 1, name: "Wait to fetch data" }]
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1',

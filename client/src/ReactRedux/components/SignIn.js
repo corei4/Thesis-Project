@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
 
-const jwtDecode = require('jwt-decode');
 
 
 class SignIn extends Component {
@@ -33,9 +32,6 @@ class SignIn extends Component {
     })
     .then(function (response) {
       localStorage.setItem('token', response.data.token);
-      var userData = jwtDecode(localStorage.getItem('token')).result
-
-      // window.location.href = '/profile';
 
       that.setState({
         isLoggedIn: true

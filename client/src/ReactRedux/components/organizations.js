@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import $ from "jquery";
-import { Card, CardText, CardBody, CardLink,
-CardTitle, CardSubtitle, Row, Col, Container } from 'reactstrap';
+import { Card, CardText, CardBody,
+CardTitle, CardSubtitle, Row, Col} from 'reactstrap';
 
 class organizations extends Component {
 constructor(props) {
@@ -15,7 +15,7 @@ test : []
 
 componentDidMount() {
 // console.log("here")
-var charAll = $.ajax({
+$.ajax({
 url: '/userOrganizations',
 dataType: 'json',
 type: "GET",
@@ -40,13 +40,13 @@ return (
 // <div>
 <Row>
 {this.state.test.map(item => (
-<Col sm='3'>
+<Col sm='3' key ={item.userId}>
 <Card body>
 <CardBody>
 <CardTitle>{item.firstName}</CardTitle>
 <CardSubtitle>{item.firstName}</CardSubtitle>
 </CardBody>
-<img width="100%" src={item.image} alt="Card image cap" />
+<img width="100%" src={item.image} alt="Card cap" />
 <CardBody>
 <CardText>{item.email}</CardText>
 <CardText>{item.telephone}</CardText>
