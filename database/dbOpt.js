@@ -272,7 +272,7 @@ getRequests: function (req, res) {
 	});
 },
 	DonationAmountSummed: function(req, res){
-		knex('charities').sum('payments.amount_pay')
+		knex('charities').sum('payments.amount as summed')
 		.innerJoin('Donations', 'Donations.donation_to','charities.id')
 		.innerJoin('payments','payments.id','Donations.donated_amount')
 		.where('charities.id', req.body.charities_id)
@@ -293,6 +293,13 @@ getRequests: function (req, res) {
 		.then(function(data){
 			res.send(data);
 		});
+	},
+	updateAmountRecieved: function(req, res){
+		knex('charities')
+  		.where('charities.id', req.body.charities_id)
+  		.update({
+			amount_received: req.body.summed
+  		})
 	}
 
 // SELECT * FROM Donations INNER JOIN charities ON charities.id = Donations.donation_to
@@ -309,7 +316,7 @@ getRequests: function (req, res) {
 	// }
 
 //   SELECT * FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
-// SELECT sum(payments.amount_pay) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
-// SELECT sum(payments.amount_pay) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
+// SELECT sum(payments.amount) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
+// SELECT sum(payments.amount) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
 	
 }
