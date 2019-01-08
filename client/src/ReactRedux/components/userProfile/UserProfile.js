@@ -31,12 +31,12 @@ class UserProfile extends React.Component {
     var userData = jwtDecode(localStorage.getItem('token')).result
     console.log("userData",userData)
 
-    const email = userData[0].email
-    const firstName = userData[0].firstName
-    const lastName = userData[0].lastName;
-    const telephone = userData[0].telephone;
-    const imgUrl = userData[0].imgUrl;
-    const user_id = userData[0].id;
+    let email = userData[0].email
+    let firstName = userData[0].firstName
+    let lastName = userData[0].lastName;
+    let telephone = userData[0].telephone;
+    let imgUrl = userData[0].imgUrl;
+    let user_id = userData[0].id;
     //userTypeId
   const userType_id = userData[0].userTypeId;
 
@@ -237,7 +237,7 @@ class UserProfile extends React.Component {
       data: JSON.stringify(profileObj),
       contentType: "application/json",
       success: function(data) {
-        console.log("ad charities in Db", data);
+        console.log("FE data of user", data);
       },
       error: function(error) {
         console.error("errorrrrrr", error);

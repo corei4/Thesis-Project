@@ -220,7 +220,8 @@ module.exports = {
 			})
 			.then(result => {
 				console.log(`successful update ${result}`)
-				res.send("update suc.")
+				res.json(result)
+
 			}).catch(err => {
 				console.log(`error => ${err}`)
 				res.send(err)
@@ -230,7 +231,6 @@ module.exports = {
 		var email = req.body.email;
 		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'email': email})
 	},
-
 	decodeJwt: function(req,res){
 		var token = req.body.token;
 		jwt.verify(token,"secret", function(err, decoded) {
