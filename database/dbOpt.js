@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+var mysql = require('mysql');
 
 // var knex = require('knex')({
 // 	client: 'mysql',
@@ -23,6 +24,22 @@ var knex = require('knex')({
 		database: 'test_charity'
 	}
 });
+
+var dbConnection = mysql.createConnection({
+	host: "db4free.net",
+	user: "corei4",
+	password: 'corei4corei4',
+	insecureAuth: true,
+	database: 'charity_rbk'
+})
+
+dbConnection.connect(function(err) {
+	if (err){
+		console.log(err)
+	} else {
+		console.log('Connected')
+	}
+})
 
 function generateJwt() {
 	return jwt.sign({
@@ -103,15 +120,12 @@ module.exports = {
 
 	},
 	getAllChar: function (req, res) {
-		knex.select().table('charities').then((err, result) => {
-			console.log('Get all charities');
-			if (result) {
-				res.send(result)
-				return result;
-			} else {
-				res.send(err)
-			}
-		});
+		knex.select().table('charities').then(result => {
+					console.log(`successful display ${result}`)
+					res.json(result)
+				}).catch(err => {
+					console.log(`error => ${err}`)
+				});
 	},
 	getUserChar: function (req, res) {
 		knex('charities').select().where('owner_id', req.body.owner_id).then((err, result) => {
@@ -237,7 +251,15 @@ module.exports = {
 		var email = req.body.email;
 		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'email': email})
 	},
-
+	getUserInfoID: function(id, res) {
+		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'id': id})
+		.then(result => {
+			console.log(`successful display ${result}`)
+			res.json(result)
+		}).catch(err => {
+			console.log(`error => ${err}`)
+		});
+	},
 	decodeJwt: function(req,res){
 		var token = req.body.token;
 		jwt.verify(token,"secret", function(err, decoded) {
