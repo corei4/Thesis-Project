@@ -37,7 +37,7 @@ class Home extends React.Component {
     axios.get('/charities').then(function(response) {
       console.log(response, 'RESPONSE')
       that.setState({
-        test: response.data
+        test: response.data.slice(0, 6)
       })
     }).catch(function(error){
       console.log(error, 'charities error')
@@ -60,7 +60,7 @@ class Home extends React.Component {
         <div>
           <Row>
             <div className="HomeCards">
-              {this.state.test.slice(0, 6).map(item => (
+              {this.state.test.map(item => (
                 < HomeCharities key={item.id} item={item} />
               ))}
               </div>
