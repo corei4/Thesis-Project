@@ -49,28 +49,52 @@ class Home extends React.Component {
   };
 
   render() {
-    return (
-      <div>
-      <div className="img-container">
-          <img src={redone} alt='not loading' />
-          <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
-          <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
-        </Link>
-      </div>
+    if(this.state.test){
+      return (
         <div>
-          <Row>
-            <div className="HomeCards">
-              {this.state.test.map(item => (
-                < HomeCharities key={item.id} item={item} />
-              ))}
-              </div>
-          </Row>
+        <div className="img-container">
+            <img src={redone} alt='not loading' />
+            <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
+            <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
+          </Link>
         </div>
-        <div className="ButtonRaise">
-              <button>See All Charities</button>
+          <div>
+            <Row>
+              <div className="HomeCards">
+                {this.state.test.map(item => (
+                  < HomeCharities key={item.id} item={item} />
+                ))}
+                </div>
+            </Row>
+          </div>
+          <div className="ButtonRaise">
+                <button>See All Charities</button>
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return(
+      <div>
+        <div className="img-container">
+            <img src={redone} alt='not loading' />
+            <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
+            <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
+          </Link>
+        </div>
+          <div>
+            <Row>
+              <div className="HomeCards">
+                <h1>loading</h1>
+                </div>
+            </Row>
+          </div>
+          <div className="ButtonRaise">
+                <button>See All Charities</button>
+          </div>
+        </div>
+      )
+    }
+    
   }
 }
 export default withRouter(Home);
