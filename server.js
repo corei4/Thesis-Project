@@ -98,13 +98,10 @@ app.post('/addCharities', function (req, res) {
   dbOpt.addCharity(req, res)
 });
 
+// sum and update amount reveived;
 app.post('/charities_sum',function(req,res){  
   dbOpt.DonationAmountSummed(req, res)
 });
-
-// app.get('/charities_sum',function(req,res){  
-//   dbOpt.updateAmountRecieved(req, res)
-// });
 
 app.post('/profile',function(req,res){  
   dbOpt.donationsMadeByUser(req, res)
