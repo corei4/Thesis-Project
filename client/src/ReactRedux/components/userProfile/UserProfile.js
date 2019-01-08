@@ -30,7 +30,7 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     //var result = getAllCh();
-    var userData = jwtDecode(localStorage.getItem('token')).result
+    // var userData = jwtDecode(localStorage.getItem('token')).result
 
     var result = [{ id: 1, name: "Azhar" }];
     var exampleItems = result.map(i => ({
