@@ -272,11 +272,57 @@ module.exports = {
       .then(function (data) {
         res.send(data);
       });
-  }
+  },
 
   // SELECT * FROM Donations INNER JOIN charities ON charities.id = Donations.donation_to
   // INNER JOIN payments ON payments.id = Donations.donated_amount INNER JOIN users ON users.id = Donations.user_id WHERE users.id = 2;
+  getRequests: function (req, res) {
+    knex.select().table('Request').then((err, result) => {
+      console.log('Get all Request');
+      if (result) {
+        res.send(result)
+        return result;
+      } else {
+        res.send(err)
+      }
+    });
+  },
+  DonationAmountSummed: function (req, res) {
+    var that = this;
+    knex('charities').sum('payments.amount as summed')
+      .innerJoin('Donations', 'Donations.donation_to', 'charities.id')
+      .innerJoin('payments', 'payments.id', 'Donations.donated_amount')
+      .where('charities.id', req.body.charities_id)
+      .then(function (data) {
+        console.log(data[0].summed)
+        console.log(req.body.charities_id)
+        var obj = {
+          "summed": data[0].summed,
+          "charities_id": req.body.charities_id
+        }
 
+        return knex('charities')
+          .where('charities.id', req.body.charities_id)
+          .update({
+            amount_received: data[0].summed
+          })
+      });
+  },
+  getUserInfo: function (req, res) {
+    var email = req.body.email;
+    knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({ 'email': email })
+  },
+  donationsMadeByUser: function (req, res) {
+    knex.column('*', { DonId: 'Donations.id' }).select().from('Donations')
+      .innerJoin('charities', 'charities.id', 'Donations.donation_to')
+      .innerJoin('payments', 'payments.id', 'Donations.donated_amount')
+      .innerJoin('users', 'users.id', 'Donations.user_id')
+      .where('users.id', req.body.user_id)
+      .then(function (data) {
+        res.send(data);
+      });
+  }
+}
 
   // donationsMadeByUser: function(req, res){
   //     knex('Donations')
@@ -291,4 +337,8 @@ module.exports = {
   // SELECT sum(payments.amount_pay) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
   // SELECT sum(payments.amount_pay) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
 
-}
+//   SELECT * FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
+// SELECT sum(payments.amount) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
+// SELECT sum(payments.amount) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
+
+
