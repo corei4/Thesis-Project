@@ -28,6 +28,10 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+app.get("path/to/bundle.js", (req, res) => {
+  res.sendFile("path/to/bundle.js");
+});
+
 // Signup User
 app.post('/account/signup', (req, res, next) => {
   const firstName = req.body.firstName;
