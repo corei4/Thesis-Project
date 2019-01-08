@@ -18,19 +18,18 @@ app.post('/api/initializeDB', (req, res) => {
   Schema.initializeDB(req, res);
 });
 
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-if (process.env.NODE_ENV === 'production') {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  // Handle React routing, return all requests to React app
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-}
+// if (process.env.NODE_ENV === 'production') {
+//   // Serve any static files
+//   app.use(express.static(path.join(__dirname, 'client/build')));
+//   // Handle React routing, return all requests to React app
+//   app.get('*', function (req, res) {
+//     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+//   });
+// }
 
-app.get("path/to/bundle.js", (req, res) => {
-  res.sendFile("path/to/bundle.js");
-});
+
 
 // Signup User
 app.post('/account/signup', (req, res, next) => {
