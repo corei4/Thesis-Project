@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+var mysql = require('mysql');
 
 var knex = require('knex')({
   client: 'mysql',
@@ -12,6 +13,22 @@ var knex = require('knex')({
     database: 'charity_rbk'
   }
 });
+
+var dbConnection = mysql.createConnection({
+  host: "db4free.net",
+  user: "corei4",
+  password: 'corei4corei4',
+  insecureAuth: true,
+  database: 'charity_rbk'
+})
+
+dbConnection.connect(function (err) {
+  if (err) {
+    console.log(err)
+  } else {
+    console.log('Connected')
+  }
+})
 
 function generateJwt() {
   return jwt.sign({

@@ -9,8 +9,10 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
-import { Card, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle } from 'reactstrap';
+import {
+  Card, CardText, CardBody, CardLink,
+  CardTitle, CardSubtitle
+} from 'reactstrap';
 import { TabContent, TabPane } from "reactstrap";
 import classnames from "classnames";
 
@@ -30,13 +32,6 @@ class UserProfile extends React.Component {
     //var result = getAllCh();
     var userData = jwtDecode(localStorage.getItem('token')).result
 
-    const email = userData[0].email
-    const firstName = userData[0].firstName
-    const lastName = userData[0].lastName;
-    const telephone = userData[0].telephone;
-    const imgUrl = userData[0].imgUrl;
-
-
     var result = [{ id: 1, name: "Azhar" }];
     var exampleItems = result.map(i => ({
       id: i.id,
@@ -53,11 +48,11 @@ class UserProfile extends React.Component {
       image: "",
       activeTab: "1",
       modalEP: false,
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      telephone: telephone,
-      imgUrl: imgUrl,
+      email: '',
+      firstName: '',
+      lastName: '',
+      telephone: '',
+      imgUrl: '',
       modalOR: false,
       requests: [],
       Donations: [],
@@ -72,7 +67,7 @@ class UserProfile extends React.Component {
     console.log()
     var userData = jwtDecode(localStorage.getItem('token')).result
 
-    var datadon = { user_id: userData[0].id}
+    var datadon = { user_id: userData[0].id }
     var data = { owner_id: window.localStorage.getItem('id') };
     console.log("here owner_id: 1", data);
     $.ajax({
@@ -110,10 +105,6 @@ class UserProfile extends React.Component {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-    // axios.post('/profile',){
-
-    // }
-
 
     $.ajax({
       url: '/getRequests',
@@ -123,16 +114,35 @@ class UserProfile extends React.Component {
         console.log(data, "app in ajax ")
         this.setState({
           requests: data
-          
+
         })
-        console.log("all charities",this.state.test)
+        console.log("all charities", this.state.test)
         return data;
       }.bind(this),
       error: function (xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-  
+
+    // Get User Information through ID from JWT Token
+    $.ajax({
+      url: `/getUserInfoID?userId=${userData[0].id}`,
+      type: "GET",
+      success: data => {
+        console.log(data, 'User Info')
+        console.log(data[0].email, 'EMAIL')
+        this.setState({
+          email: data[0].email,
+          firstName: data[0].firstName,
+          lastName: data[0].lastName,
+          telephone: data[0].telephone,
+          imgUrl: data[0].imgUrl,
+        })
+      },
+      error: err => {
+        console.log("ERROR", err);
+      }
+    });
   }
 
   toggle() {
@@ -170,7 +180,7 @@ class UserProfile extends React.Component {
       location: this.state.location,
       owner_id: window.localStorage.getItem('id'),
       image: this.state.image
-      
+
     };
     // email: "azzttt@azzttt"
     // firstName: "azz"
@@ -210,10 +220,10 @@ class UserProfile extends React.Component {
       type: "PUT",
       data: JSON.stringify(profileObj),
       contentType: "application/json",
-      success: function(data) {
+      success: function (data) {
         console.log("ad charities in Db", data);
       },
-      error: function(error) {
+      error: function (error) {
         console.error("errorrrrrr", error);
       }
     });
@@ -260,10 +270,10 @@ class UserProfile extends React.Component {
       type: "POST",
       data: JSON.stringify(profileObj),
       contentType: "application/json",
-      success: function(data) {
+      success: function (data) {
         console.log("ad charities in Db", data);
       },
-      error: function(error) {
+      error: function (error) {
         console.error("errorrrrrr", error);
       }
     });
@@ -307,14 +317,14 @@ class UserProfile extends React.Component {
   onChangePage(pageOfItems) {
     this.setState({ pageOfItems: pageOfItems });
   }
- handleAccept= () => {
-   console.log("accept")
- };
+  handleAccept = () => {
+    console.log("accept")
+  };
 
- handleDecline= () => {
-  console.log("decline")
-}
-              
+  handleDecline = () => {
+    console.log("decline")
+  }
+
   render() {
     return (
       <div className="container-fluid">
@@ -352,7 +362,7 @@ class UserProfile extends React.Component {
             </NavItem>
             <NavItem>
               <NavLink
-              disabled={this.state.admin}
+                disabled={this.state.admin}
                 className={classnames({ active: this.state.activeTab === "4", admin: this.state.admin })}
                 onClick={() => {
                   this.toggleTab("4");
@@ -385,7 +395,7 @@ class UserProfile extends React.Component {
                         </h4>
                         <h5 className="card-text"> {this.state.email} </h5>
                         <h5 className="card-text"> {this.state.telephone} </h5>
-                        
+
                         <Button className="btn btn-success" onClick={this.toggleEP}>
                           {this.props.buttonLabel}
                           Edit profile
@@ -543,12 +553,12 @@ class UserProfile extends React.Component {
                                   type="number"
                                   name="PhoneNumber"
                                   id="PhoneNumber"
-                                  
+
                                   value={this.state.telephone}
                                   onChange={this.handleInputChangeEP}
                                 />
                               </div>
-                            
+
                               <Button
                                 color="primary"
                                 onClick={this.handleSubmitEP}
@@ -571,7 +581,7 @@ class UserProfile extends React.Component {
 
 
 
-{/* modal become an OR */}
+                        {/* modal become an OR */}
 
                         <Modal
                           isOpen={this.state.modalOR}
@@ -620,7 +630,7 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChangeOR}
                                 />
                               </div>
-                              
+
                               <div className="form-group">
                                 <label htmlFor="exampleInputPassword1">
                                   Location
@@ -658,36 +668,36 @@ class UserProfile extends React.Component {
               </Row>
             </TabPane>
             <TabPane tabId="2">
-            <div>
-              {this.state.Donations.map((item) =>
-                  <DonationCard key={item.DonId} item={item}/>
+              <div>
+                {this.state.Donations.map((item) =>
+                  <DonationCard key={item.DonId} item={item} />
                 )}
-            </div>
+              </div>
             </TabPane>
             <TabPane tabId="3">
               <Tabs />
             </TabPane>
             {/* 
              */}
-             <TabPane tabId="4">
-             <div>
-              {this.state.requests.map(item => (
-                <Card key={item.id}>
-        <CardBody>
-          <CardTitle>{item.name}</CardTitle>
-          <CardSubtitle>{item.location}</CardSubtitle>
-        
-          <CardText>{item.description}</CardText>
-          <CardLink href="#" color="success" onClick={this.handleAccept}>Accept</CardLink>
-          <CardLink href="#" onClick={this.handleDecline}>Decline</CardLink>
-        </CardBody>
-      </Card>
-              ))}
-              
-      
-    </div>
+            <TabPane tabId="4">
+              <div>
+                {this.state.requests.map(item => (
+                  <Card key={item.id}>
+                    <CardBody>
+                      <CardTitle>{item.name}</CardTitle>
+                      <CardSubtitle>{item.location}</CardSubtitle>
+
+                      <CardText>{item.description}</CardText>
+                      <CardLink href="#" color="success" onClick={this.handleAccept}>Accept</CardLink>
+                      <CardLink href="#" onClick={this.handleDecline}>Decline</CardLink>
+                    </CardBody>
+                  </Card>
+                ))}
+
+
+              </div>
             </TabPane>
-            
+
           </TabContent>
         </div>
       </div>
