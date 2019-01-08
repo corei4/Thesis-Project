@@ -29,6 +29,7 @@ dbConnection.connect(function(err) {
 		console.log('Connected')
 	}
 })
+
 function generateJwt() {
 	return jwt.sign({
 		id: this._id,
@@ -108,15 +109,12 @@ module.exports = {
 
 	},
 	getAllChar: function (req, res) {
-		knex.select().table('charities').then((err, result) => {
-			console.log('Get all charities');
-			if (result) {
-				res.send(result)
-				return result;
-			} else {
-				res.send(err)
-			}
-		});
+		knex.select().table('charities').then(result => {
+					console.log(`successful display ${result}`)
+					res.json(result)
+				}).catch(err => {
+					console.log(`error => ${err}`)
+				});;
 	},
 	getUserChar: function (req, res) {
 		knex('charities').select().where('owner_id', req.body.owner_id).then((err, result) => {
