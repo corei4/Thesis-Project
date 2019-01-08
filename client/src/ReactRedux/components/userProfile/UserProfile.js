@@ -2,14 +2,9 @@ import React from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 import FileBase64 from "react-file-base64";
-import FavCard from "./FavCard.js";
 import {
   Row,
   Col,
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
   NavLink
@@ -20,11 +15,11 @@ import { TabContent, TabPane } from "reactstrap";
 import classnames from "classnames";
 
 import $ from "jquery";
-import UserInfo from "./UserInfo.js";
-import Pagination from "./Pagination";
+import DonationCard from "./DonationsCard.js";
 import Tabs from "./tabs.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
+import axios from 'axios'
 
 const jwtDecode = require('jwt-decode');
 
@@ -70,8 +65,10 @@ class UserProfile extends React.Component {
       modalOR: false,
       requests: [],
       admin:  userType_id == 1 ? true : false,
-      userButton:  userType_id == 2 ? true : false
+      userButton:  userType_id == 2 ? true : false,
 
+      Donations: [],
+      user_id: user_id
     };
     this.toggle = this.toggle.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -79,10 +76,14 @@ class UserProfile extends React.Component {
     this.onChangePage = this.onChangePage.bind(this);
   }
   componentDidMount() {
+    
     console.log()
+    var userData = jwtDecode(localStorage.getItem('token')).result
+
+    var datadon = { user_id: userData[0].id}
     var data = { owner_id: window.localStorage.getItem('id') };
     console.log("here owner_id: 1", data);
-    var charAll = $.ajax({
+    $.ajax({
       url: "/userCharities",
       type: "POST",
       data: JSON.stringify(data),
@@ -99,7 +100,30 @@ class UserProfile extends React.Component {
       }.bind(this)
     });
 
-    var charAll = $.ajax({
+
+
+    $.ajax({
+      url: "/profile",
+      type: "POST",
+      data: JSON.stringify(datadon),
+      contentType: "application/json",
+      success: function (data) {
+        console.log(data, "Donations data");
+        this.setState({
+          Donations: data
+        });
+        return data;
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+    // axios.post('/profile',){
+
+    // }
+
+
+    $.ajax({
       url: '/getRequests',
       dataType: 'json',
       type: "GET",
@@ -159,7 +183,8 @@ class UserProfile extends React.Component {
       description: this.state.description,
       location: this.state.location,
       owner_id: window.localStorage.getItem('id'),
-      image: this.state.image
+      image: this.state.image,
+      amount_received: 0
       
     };
     // email: "azzttt@azzttt"
@@ -183,15 +208,26 @@ class UserProfile extends React.Component {
     // window.location.reload();
   }
 
+  handleInputChangeEP = (event) => {
+    let target = event.target;
+    let name = target.name;
+    let value = target.value;
+    this.setState({
+      [name]: value
+    });
+    
+  }
   // Post request to edit profile
-  handleSubmitEP = () => {
+  handleSubmitEP = (event) => {
     this.toggleEP();
+    const user_id = event.target.id
+
     console.log("handleSubmit");
     const profileObj = {
-      firstName: this.state.name,
-      lastName: this.state.amount,
-      phoneNumber: this.state.phoneNumber,
-      image: this.state.image
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      telephone: this.state.telephone,
+      id: user_id
     };
 
     console.log("profileObj: ", profileObj);
@@ -209,8 +245,8 @@ class UserProfile extends React.Component {
     });
     // window.location.reload();
   };
-  // Post request to edit profile
 
+  // Post request to edit profile
   handleInputChange(event) {
     const target = event.target;
     const name = target.name;
@@ -262,14 +298,8 @@ class UserProfile extends React.Component {
     // window.location.reload();
   };
 
-  // handleInputChangeEP(event) {
-  //   const target = event.target;
-  //   const name = target.name;
-  //   const value = target.value;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // }
+
+ 
 
   getFiles(files) {
     this.setState({ files: files[0].base64 });
@@ -402,14 +432,14 @@ class UserProfile extends React.Component {
                           />
                         </div>
                         <div />
-                        <h4 className="card-title">
+                        <br/>
+                        <h5 className="card-title">
                           {" "}
-                          <strong>{this.state.firstName}</strong>{" "}
-                        </h4>
-                        <h5 className="card-text"> {this.state.email} </h5>
-                        <h5 className="card-text"> {this.state.telephone} </h5>
-                        
-                        <Button className="btn btn-success" onClick={this.toggleEP}>
+                          <strong>User name: </strong>{this.state.firstName}  {this.state.lastName} {" "}
+                        </h5>
+                        <h5 className="card-text"><strong>User email: </strong>{this.state.email} </h5>
+                        <h5 className="card-text"><strong>User phone number: </strong>{this.state.telephone} </h5>
+                        <Button className="btn btn-success" onClick={this.toggleEP} color="info">
                           {this.props.buttonLabel}
                           Edit profile
                         </Button>
@@ -518,6 +548,8 @@ class UserProfile extends React.Component {
 
 
                         {/* modal edit profil */}
+                        {/* edit here */}
+
 
                         <Modal
                           isOpen={this.state.modalEP}
@@ -565,8 +597,8 @@ class UserProfile extends React.Component {
                                 </label>
                                 <input
                                   type="number"
-                                  name="PhoneNumber"
-                                  id="PhoneNumber"
+                                  name="telephone"
+                                  id="telephone"
                                   
                                   value={this.state.telephone}
                                   onChange={this.handleInputChangeEP}
@@ -574,9 +606,9 @@ class UserProfile extends React.Component {
                               </div>
                             
                               <Button
+                              id={this.state.user_id}
                                 color="primary"
                                 onClick={this.handleSubmitEP}
-                                disabled={this.state.isNotUpload}
                               >
                                 Submit
                               </Button>{" "}
@@ -682,7 +714,11 @@ class UserProfile extends React.Component {
               </Row>
             </TabPane>
             <TabPane tabId="2">
-              <h2>here donations for user as component</h2>
+            <div>
+              {this.state.Donations.map((item) =>
+                  <DonationCard key={item.id} item={item}/>
+                )}
+            </div>
             </TabPane>
             <TabPane tabId="3">
               <Tabs />

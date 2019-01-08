@@ -85,7 +85,8 @@ module.exports = {
 					"description":req.body.description,
 					"location": req.body.location,
 					"image": req.body.image,
-					"owner_id": req.body.owner_id
+					"owner_id": req.body.owner_id,
+					"amount_received": 0
 				}).then(result => {
 					console.log(`successful insert ${result}`)
 				}).catch(err => {
@@ -208,12 +209,13 @@ module.exports = {
             });
 		},
 		editUserInfo: function(req, res) {
-			knex('charities')
+			console.log("req body: ", req.body)
+			knex('users')
 			.where({'id': req.body.id})
 			.update({
 				"firstName": req.body.firstName,
 				"lastName": req.body.lastName,
-				"phoneNumber":req.body.phoneNumber,
+				"telephone":req.body.telephone,
 				"image": req.body.image,
 			})
 			.then(result => {
@@ -324,9 +326,25 @@ getRequests: function (req, res) {
 				console.log(`error => ${err}`)
 				// res.send(err)
 			});
-		}
+		},
 		
 	// donationsMadeByUser: function(req, res){
+	donationsMadeByUser: function(req, res){
+		knex('Donations')
+		.innerJoin('charities', 'charities.id','Donations.donation_to')
+		.innerJoin('payments','payments.id','Donations.donated_amount')
+		.innerJoin('users', 'users.id', 'Donations.user_id')
+		.where('users.id', req.body.user_id)
+		.then(function(data){
+			res.send(data);
+		});
+	}
+
+// SELECT * FROM Donations INNER JOIN charities ON charities.id = Donations.donation_to
+// INNER JOIN payments ON payments.id = Donations.donated_amount INNER JOIN users ON users.id = Donations.user_id WHERE users.id = 2;
+	
+
+// donationsMadeByUser: function(req, res){
 	//     knex('Donations')
 	//     .innerJoin('charities','Donations.donation_to',"charities.id")
 	//     .where('Donations.donation_to', req.body.charities_id)

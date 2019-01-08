@@ -41,10 +41,10 @@ class SubCharity extends React.Component {
           <Col xs="5">
           <div  style={{backgroundColor: "#F2F3F9", marginLeft:"5px", marginTop:"10px", marginBottom:"10px", float:"inherit"}}>
              <h5 style={{marginLeft:"25px", marginTop:"30px"}}><strong>{this.props.item.name}</strong> </h5> 
-             <p style={{marginLeft:"25px"}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy . </p> 
+            <p style={{marginLeft:"25px"}}>{this.props.item.description}</p> 
              <h6 style={{marginLeft:"25px"}}>{this.props.item.amount}</h6> 
              <p style={{marginLeft:"25px"}}>{this.props.item.location} </p> 
-             <Button style={{float:"left", marginBottom:"23px", marginLeft:"25px", backgroundColor: "#FFC44F !important"}} >DONATE</Button>{' '}
+             <Button style={{float:"left", marginBottom:"23px", marginLeft:"25px", backgroundColor: "#FFC44F !important"}} color="info">DONATE</Button>{' '}
           </div>
           </Col>
           <Col xs="4">
@@ -59,7 +59,7 @@ class SubCharity extends React.Component {
             label:'Amount',
             data:[
               this.props.item.amount,
-              5000,
+              this.props.item.amount_received,
              
              
             ],

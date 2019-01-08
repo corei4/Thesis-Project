@@ -1,4 +1,9 @@
-
+.DonationCard {
+  text-align: center;
+}
+.DonationCard .donate-p{
+  color: aqua;
+}
 
   .userimg {
     padding: 5px;
