@@ -1,16 +1,10 @@
 import React from 'react';
-import AllCharities from './AllCharities';
-import SearchField from "react-search-field";
-import { Media } from 'reactstrap';
-import { Jumbotron } from 'reactstrap';
-import {Bar, Line, Pie} from 'react-chartjs-2'
+import { Pie} from 'react-chartjs-2'
 
 import {
-  Card, CardText, CardBody, CardLink, Button, 
-  CardTitle, CardSubtitle, Row, Col, Container
+  Button, 
+  Row, Col, Container
 } from 'reactstrap';
-import PropTypes from 'prop-types';
-import $ from "jquery";
 
 class SubCharity extends React.Component {
   constructor(props) {

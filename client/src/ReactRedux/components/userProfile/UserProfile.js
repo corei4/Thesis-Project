@@ -9,8 +9,10 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
-import { Card, CardImg, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle } from 'reactstrap';
+import {
+  Card, CardText, CardBody, CardLink,
+  CardTitle, CardSubtitle
+} from 'reactstrap';
 import { TabContent, TabPane } from "reactstrap";
 import classnames from "classnames";
 
@@ -19,7 +21,7 @@ import DonationCard from "./DonationsCard.js";
 import Tabs from "./tabs.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
-import axios from 'axios'
+
 
 const jwtDecode = require('jwt-decode');
 
@@ -30,16 +32,8 @@ class UserProfile extends React.Component {
     //var result = getAllCh();
     var userData = jwtDecode(localStorage.getItem('token')).result
     console.log("userData",userData)
-
-    let email = userData[0].email
-    let firstName = userData[0].firstName
-    let lastName = userData[0].lastName;
-    let telephone = userData[0].telephone;
-    let imgUrl = userData[0].imgUrl;
-    let user_id = userData[0].id;
-    //userTypeId
-  const userType_id = userData[0].userTypeId;
-
+    const user_id = userData[0].id;
+    const userType_id = userData[0].userTypeId;
 
     var result = [{ id: 1, name: "Azhar" }];
     var exampleItems = result.map(i => ({
@@ -57,11 +51,11 @@ class UserProfile extends React.Component {
       image: "",
       activeTab: "1",
       modalEP: false,
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      telephone: telephone,
-      imgUrl: imgUrl,
+      email: '',
+      firstName: '',
+      lastName: '',
+      telephone: '',
+      imgUrl: '',
       modalOR: false,
       requests: [],
       admin:  userType_id == 1 ? true : false,
@@ -80,7 +74,7 @@ class UserProfile extends React.Component {
     console.log()
     var userData = jwtDecode(localStorage.getItem('token')).result
 
-    var datadon = { user_id: userData[0].id}
+    var datadon = { user_id: userData[0].id }
     var data = { owner_id: window.localStorage.getItem('id') };
     console.log("here owner_id: 1", data);
     $.ajax({
@@ -118,10 +112,6 @@ class UserProfile extends React.Component {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-    // axios.post('/profile',){
-
-    // }
-
 
     $.ajax({
       url: '/getRequests',
@@ -137,16 +127,34 @@ class UserProfile extends React.Component {
         }
         this.setState({
           requests: arrayNew
-          
         })
-        console.log("all charities",this.state.test)
+        console.log("all charities", this.state.test)
         return data;
       }.bind(this),
       error: function (xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-  
+
+    // Get User Information through ID from JWT Token
+    $.ajax({
+      url: `/getUserInfoID?userId=${userData[0].id}`,
+      type: "GET",
+      success: data => {
+        console.log(data, 'User Info')
+        console.log(data[0].email, 'EMAIL')
+        this.setState({
+          email: data[0].email,
+          firstName: data[0].firstName,
+          lastName: data[0].lastName,
+          telephone: data[0].telephone,
+          imgUrl: data[0].imgUrl,
+        })
+      },
+      error: err => {
+        console.log("ERROR", err);
+      }
+    });
   }
 
   toggle() {
@@ -239,7 +247,7 @@ class UserProfile extends React.Component {
       success: function(data) {
         console.log("FE data of user", data);
       },
-      error: function(error) {
+      error: function (error) {
         console.error("errorrrrrr", error);
       }
     });
@@ -288,10 +296,10 @@ class UserProfile extends React.Component {
       type: "POST",
       data: JSON.stringify(profileObj),
       contentType: "application/json",
-      success: function(data) {
+      success: function (data) {
         console.log("ad charities in Db", data);
       },
-      error: function(error) {
+      error: function (error) {
         console.error("errorrrrrr", error);
       }
     });
@@ -405,7 +413,7 @@ class UserProfile extends React.Component {
             { this.state.admin ?  
             <NavItem>
               <NavLink
-              
+                disabled={this.state.admin}
                 className={classnames({ active: this.state.activeTab === "4", admin: this.state.admin })}
                 onClick={() => {
                   this.toggleTab("4");
@@ -464,7 +472,7 @@ class UserProfile extends React.Component {
                           <ModalBody>
                             <form>
                               <div className="form-group">
-                                <label for="exampleInputEmail1">Name</label>
+                                <label htmlFor="exampleInputEmail1">Name</label>
                                 <input
                                   type="text"
                                   name="name"
@@ -475,7 +483,7 @@ class UserProfile extends React.Component {
                                 />
                               </div>
                               <div className="form-group">
-                                <label for="exampleInputPassword1">
+                                <label htmlFor="exampleInputPassword1">
                                   Amount
                                 </label>
                                 <input
@@ -488,7 +496,7 @@ class UserProfile extends React.Component {
                                 />
                               </div>
                               <div className="form-group">
-                                <label for="exampleInputPassword1">
+                                <label htmlFor="exampleInputPassword1">
                                   Description
                                 </label>
                                 <input
@@ -505,7 +513,7 @@ class UserProfile extends React.Component {
                                 onDone={this.getFiles.bind(this)}
                               />
                               <div className="form-group">
-                                <label for="exampleInputPassword1">
+                                <label htmlFor="exampleInputPassword1">
                                   Location
                                 </label>
                                 <input
@@ -520,10 +528,10 @@ class UserProfile extends React.Component {
                               <div className="form-group form-check">
                                 <input
                                   type="checkbox"
-                                  class="form-check-input"
+                                  className="form-check-input"
                                   id="exampleCheck1"
                                 />
-                                {/* <label class="form-check-label" for="exampleCheck1">
+                                {/* <label className="form-check-label" for="exampleCheck1">
                   Check me out
                 </label> */}
                               </div>
@@ -565,7 +573,7 @@ class UserProfile extends React.Component {
 
                             <form>
                               <div className="form-group">
-                                <label for="exampleInputEmail1">
+                                <label htmlFor="exampleInputEmail1">
                                   First Name
                                 </label>
                                 <input
@@ -575,12 +583,12 @@ class UserProfile extends React.Component {
                                   value={this.state.firstName}
                                   onChange={this.handleInputChangeEP}
                                 />
-                                {/* <small id="emailHelp" class="form-text text-muted">
+                                {/* <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else.
                 </small> */}
                               </div>
                               <div className="form-group">
-                                <label for="exampleInputPassword1">
+                                <label htmlFor="exampleInputPassword1">
                                   Last Name
                                 </label>
                                 <input
@@ -592,7 +600,7 @@ class UserProfile extends React.Component {
                                 />
                               </div>
                               <div className="form-group">
-                                <label for="exampleInputPassword1">
+                                <label htmlFor="exampleInputPassword1">
                                   Phone Number
                                 </label>
                                 <input
@@ -604,7 +612,7 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChangeEP}
                                 />
                               </div>
-                            
+
                               <Button
                               id={this.state.user_id}
                                 color="primary"
@@ -627,7 +635,7 @@ class UserProfile extends React.Component {
 
 
 
-{/* modal become an OR */}
+                        {/* modal become an OR */}
 
                         <Modal
                           isOpen={this.state.modalOR}
@@ -639,8 +647,8 @@ class UserProfile extends React.Component {
                           </ModalHeader>
                           <ModalBody>
                             <form>
-                              <div class="form-group">
-                                <label for="exampleInputEmail1">Name of Organization</label>
+                              <div className="form-group">
+                                <label htmlFor="exampleInputEmail1">Name of Organization</label>
                                 <input
                                   type="text"
                                   name="nameOR"
@@ -650,8 +658,8 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChangeOR}
                                 />
                               </div>
-                              <div class="form-group">
-                                <label for="exampleInputPassword1">
+                              <div className="form-group">
+                                <label htmlFor="exampleInputPassword1">
                                   About the Organization
                                 </label>
                                 <input
@@ -663,8 +671,8 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChangeOR}
                                 />
                               </div>
-                              <div class="form-group">
-                                <label for="exampleInputPassword1">
+                              <div className="form-group">
+                                <label htmlFor="exampleInputPassword1">
                                   Acceptance Reason
                                 </label>
                                 <input
@@ -676,9 +684,9 @@ class UserProfile extends React.Component {
                                   onChange={this.handleInputChangeOR}
                                 />
                               </div>
-                              
-                              <div class="form-group">
-                                <label for="exampleInputPassword1">
+
+                              <div className="form-group">
+                                <label htmlFor="exampleInputPassword1">
                                   Location
                                 </label>
                                 <input
@@ -714,11 +722,11 @@ class UserProfile extends React.Component {
               </Row>
             </TabPane>
             <TabPane tabId="2">
-            <div>
-              {this.state.Donations.map((item) =>
-                  <DonationCard key={item.id} item={item}/>
+              <div>
+                {this.state.Donations.map((item) =>
+                  <DonationCard key={item.DonId} item={item} />
                 )}
-            </div>
+              </div>
             </TabPane>
             <TabPane tabId="3">
               <Tabs />
@@ -743,7 +751,7 @@ class UserProfile extends React.Component {
       
     </div>
             </TabPane>
-            
+
           </TabContent>
         </div>
       </div>

@@ -4,8 +4,7 @@ import {
   Card,
   CardTitle,
   CardSubtitle,
-  Col,
-  Button
+  Col
 } from 'reactstrap';
 
 
@@ -15,7 +14,7 @@ class DonationCard extends Component {
     return (
         <Col className="HomeCard" sm="4">
           <Card body>
-            <img src={this.props.item.image} />
+            <img src={this.props.item.image} alt="Card Cap"/>
             <div className="DonationCard">
             <CardTitle> Donated To: <p className="donate-p">{this.props.item.name}</p></CardTitle>
             <CardSubtitle>Donated Amount: {this.props.item.amount}</CardSubtitle>

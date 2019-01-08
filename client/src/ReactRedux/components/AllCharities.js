@@ -1,16 +1,12 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import SubCharity from './SubCharity';
 
-import SearchInput, {createFilter} from 'react-search-input'
-import SearchField from "react-search-field";
+
 import $ from "jquery";
 import {
-    Card, CardText, CardBody, CardLink,
-    CardTitle, CardSubtitle, Row, Col, Container
+    Row
   } from 'reactstrap';
-// import emails from './mails'
- 
-// const KEYS_TO_FILTERS = ['user.name', 'subject', 'dest.name']
+
 
 class AllCharities extends Component {
     constructor (props) {
@@ -21,7 +17,7 @@ class AllCharities extends Component {
         }
       }
       componentDidMount() {
-        var charAll = $.ajax({
+        $.ajax({
           url: '/charities',
           dataType: 'json',
           type: "GET",

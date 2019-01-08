@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS payments (
         expire_date VARCHAR(50) NOT NULL,
         owner VARCHAR(30) NOT NULL,
         cvc_code INTEGER(30) NOT NULL,
-        amount_pay INTEGER NOT NULL,
+        amount INTEGER NOT NULL,
         PRIMARY KEY (id) 
       );
 
