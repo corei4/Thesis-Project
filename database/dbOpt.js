@@ -114,7 +114,7 @@ module.exports = {
 					res.json(result)
 				}).catch(err => {
 					console.log(`error => ${err}`)
-				});;
+				});
 	},
 	getUserChar: function (req, res) {
 		knex('charities').select().where('owner_id', req.body.owner_id).then((err, result) => {
@@ -240,7 +240,15 @@ module.exports = {
 		var email = req.body.email;
 		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'email': email})
 	},
-
+	getUserInfoID: function(id, res) {
+		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'id': id})
+		.then(result => {
+			console.log(`successful display ${result}`)
+			res.json(result)
+		}).catch(err => {
+			console.log(`error => ${err}`)
+		});
+	},
 	decodeJwt: function(req,res){
 		var token = req.body.token;
 		jwt.verify(token,"secret", function(err, decoded) {
