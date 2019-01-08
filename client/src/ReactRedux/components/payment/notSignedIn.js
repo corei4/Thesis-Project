@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import 'react-credit-cards/es/styles-compiled.css'
-import Modal from "react-responsive-modal";
 import { Link } from 'react-router-dom'
 
 class NotSignedIn extends Component {
@@ -41,21 +40,3 @@ class NotSignedIn extends Component {
   }
 }
 export default NotSignedIn;
-
-{/* <Modal
-          open={open}
-          onClose={this.onCloseModal}
-          center
-          animationDuration={1000}
-        >
-          <div className="row justify-content-center">
-            <Link to='signin'>
-              <button className="sign_in  btn-primary btn-lg ">
-                Please Sign In
-            </button>
-            </Link>
-            <div className="col-6 ">
-              <button className="guest btn-danger btn-lg">Continue as Guest</button>
-            </div>
-          </div>
-        </Modal> */}

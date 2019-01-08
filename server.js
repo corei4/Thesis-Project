@@ -102,7 +102,7 @@ app.post('/addCharities', function (req, res) {
 });
 
 // sum and update amount reveived;
-app.post('/charities_sum',function(req,res){  
+app.post('/charities_sum', function (req, res) {
   dbOpt.DonationAmountSummed(req, res)
 });
 
