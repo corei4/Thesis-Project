@@ -26,11 +26,11 @@ this.setState({
 test: data
 })
 return data;
-},
+}.bind(this),
 error: function(xhr, status, err) {
 // console.error(this.props.url, status, err.toString());
 console.log('organisation err',err)
-}
+}.bind(this)
 });
 // window.location.reload()
 }
