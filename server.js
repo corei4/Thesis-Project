@@ -3,9 +3,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const Schema = require('./database/Schema');
 const dbOpt = require('./database/dbOpt');
-const stripe = require('stripe')("sk_test_S3OtpMpuhIGF1KuyUMJaVtNN")
-// const hbs = require('hbs');
-
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -19,16 +16,6 @@ app.post('/api/initializeDB', (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname, 'client/build')));
-
-// if (process.env.NODE_ENV === 'production') {
-//   // Serve any static files
-//   app.use(express.static(path.join(__dirname, 'client/build')));
-//   // Handle React routing, return all requests to React app
-//   app.get('*', function (req, res) {
-//     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-//   });
-// }
-
 
 
 // Signup User
@@ -101,15 +88,21 @@ app.post('/addCharities', function (req, res) {
   dbOpt.addCharity(req, res)
 });
 
+app.post('/add_donation', function (req, res) {
+  dbOpt.addDonation(req, res)
+});
+
 // sum and update amount reveived;
 app.post('/charities_sum', function (req, res) {
   dbOpt.DonationAmountSummed(req, res)
 });
 
+// Show the donations made by the user
 app.post('/profile', function (req, res) {
   dbOpt.donationsMadeByUser(req, res)
 });
 
+// Donations made to specific Charity
 app.post('/charities_don', function (req, res) {
   dbOpt.donationsToCharity(req, res)
 });
@@ -122,7 +115,6 @@ app.post('/userCharities', function (req, res) {
 
 // Get all charities
 app.get('/charities', function (req, res) {
-  // console.log(req.body,"get all charities")
   // ORDER BY date DESC
   dbOpt.getAllChar(req, res)
 });
@@ -169,18 +161,19 @@ app.get('/userOrganizations', function (req, res) {
   dbOpt.userOrganizations(req, res)
 });
 
-
+// Upgrade usertype to organization
 app.post('/becomeOganization', function (req, res) {
   dbOpt.becomeOrganization(req, res)
 });
 
+// Show requests to upgrade user to organization
 app.get('/getRequests', function (req, res) {
   dbOpt.getRequests(req, res)
 });
 
+// Show user profile information
 app.get('/getUserInfoID', function (req, res) {
   dbOpt.getUserInfoID(req.query.userId, res)
-  console.log('User Info', req.query.userId)
 });
 
 module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));
