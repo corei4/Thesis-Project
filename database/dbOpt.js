@@ -3,30 +3,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const mysql = require('mysql');
 
-<<<<<<< HEAD
-var knex = require('knex')({
-	client: 'mysql',
-	connection: {
-		host: "db4free.net",
-		user: "corei4",
-		password: 'corei4corei4',
-		insecureAuth: true,
-		database: 'charity_rbk'
-	}
-});
-
-// var knex = require('knex')({
-// 	client: 'mysql',
-// 	connection: {
-// 		host: "db4free.net",
-// 		user: "qusay97",
-// 		password: '12345678',
-// 		insecureAuth: true,
-// 		database: 'test_charity'
-// 	}
-// });
-
-=======
 const knex = require('knex')({
   client: 'mysql',
   connection: {
@@ -51,7 +27,6 @@ dbConnection.connect(function (err) {
     console.log('Connected')
   }
 })
->>>>>>> cb477420dcd87c40ec21d4317fbad8bf7b6c0fde
 function generateJwt() {
   return jwt.sign({
     id: this._id,
