@@ -123,12 +123,21 @@ module.exports = {
 
 	},
 	getAllChar: function (req, res) {
-		knex.select().table('charities').then(result => {
+		// let date =  moment().format('YYYY-MM-DD')
+		    let time = new Date();
+
+        // let time = moment().format('HH:mm')
+		// console.log('date',date)	
+		knex.select().table('charities').where(function() {
+			     this.where('created_at','=',time)
+			  }).then(result => {
 					console.log(`successful display ${result}`)
 					res.json(result)
 				}).catch(err => {
 					console.log(`error => ${err}`)
 				});
+
+				// let date =  moment().format('YYYY-MM-DD')
 	},
 	getUserChar: function (req, res) {
 		knex('charities').select().where('owner_id', req.body.owner_id).then((err, result) => {
