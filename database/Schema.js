@@ -2,22 +2,22 @@ var mysql = require('mysql');
 const importer = require('node-mysql-importer');
 //install my sql
 
-//Note: to insert tht the database credential
-// importer.config({
-//   host: "db4free.net",
-//   user: "corei4",
-//   password: 'corei4corei4',
-//   insecureAuth: true,
-//   database: 'charity_rbk'
-// })
-
+// Note: to insert tht the database credential
 importer.config({
   host: "db4free.net",
-  user: "qusay97",
-  password: '12345678',
+  user: "corei4",
+  password: 'corei4corei4',
   insecureAuth: true,
-  database: 'test_charity'
+  database: 'charity_rbk'
 })
+
+// importer.config({
+//   host: "db4free.net",
+//   user: "qusay97",
+//   password: '12345678',
+//   insecureAuth: true,
+//   database: 'test_charity'
+// })
 
 module.exports = {
   initializeDB: function(req, res){

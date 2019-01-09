@@ -4,7 +4,6 @@ import { Link, withRouter } from 'react-router-dom';
 import './Home.css';
 import redone from './redone.jpg';
 import HomeCharities from './HomeCharities.js';
-import $ from "jquery";
 import axios from 'axios';
 
 
@@ -17,22 +16,6 @@ class Home extends React.Component {
     };
   }
   componentDidMount() {
-    // $.ajax({
-    //   url: '/charities',
-    //   dataType: 'json',
-    //   type: "GET",
-    //   success: function (data) {
-    //     console.log(data, "app in ajax ")
-    //     this.setState({
-    //       test: data
-    //     })
-    //     return data;
-    //   }.bind(this),
-    //   error: function (xhr, status, err) {
-    //     // console.error(this.props.url, status, err.toString());
-    //     console.log('homed error',err)
-    //   }.bind(this)
-    // });
     let that = this;
     axios.get('/charities').then(function(response) {
       console.log(response, 'RESPONSE')
