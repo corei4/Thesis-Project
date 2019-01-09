@@ -282,9 +282,8 @@ module.exports = {
 	},
 	DonationAmountSummed: function (req, res) {
 		var that = this;
-		knex('charities').sum('payments.amount as summed')
-			.innerJoin('Donations', 'Donations.donation_to', 'charities.id')
-			.innerJoin('payments', 'payments.id', 'Donations.donated_amount')
+		knex('charities').sum('payments.donation_amount as summed')
+			.innerJoin('payments', 'charity_to_id', 'charities.id')
 			.where('charities.id', req.body.charities_id)
 			.then(function (data) {
 				console.log(data[0].summed)
@@ -302,10 +301,9 @@ module.exports = {
 			});
 	},
 	donationsMadeByUser: function (req, res) {
-		knex.column('*', { DonId: 'Donations.id' }).select().from('Donations')
-			.innerJoin('charities', 'charities.id', 'Donations.donation_to')
-			.innerJoin('payments', 'payments.id', 'Donations.donated_amount')
-			.innerJoin('users', 'users.id', 'Donations.user_id')
+		knex.column('*', { DonId: 'payments.id' }).select().from('payments')
+			.innerJoin('charities', 'charities.id', 'payments.charity_to_id')
+			.innerJoin('users', 'users.id', 'payments.user_id')
 			.where('users.id', req.body.user_id)
 			.then(function (data) {
 				res.send(data);
