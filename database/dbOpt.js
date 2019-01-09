@@ -2,27 +2,27 @@ const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 
-// var knex = require('knex')({
-// 	client: 'mysql',
-// 	connection: {
-// 		host: "db4free.net",
-// 		user: "corei4",
-// 		password: 'corei4corei4',
-// 		insecureAuth: true,
-// 		database: 'charity_rbk'
-// 	}
-// });
-
 var knex = require('knex')({
 	client: 'mysql',
 	connection: {
 		host: "db4free.net",
-		user: "qusay97",
-		password: '12345678',
+		user: "corei4",
+		password: 'corei4corei4',
 		insecureAuth: true,
-		database: 'test_charity'
+		database: 'charity_rbk'
 	}
 });
+
+// var knex = require('knex')({
+// 	client: 'mysql',
+// 	connection: {
+// 		host: "db4free.net",
+// 		user: "qusay97",
+// 		password: '12345678',
+// 		insecureAuth: true,
+// 		database: 'test_charity'
+// 	}
+// });
 
 function generateJwt() {
 	return jwt.sign({
