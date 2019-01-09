@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS charities  (
 CREATE TABLE IF NOT EXISTS payments (
         id INTEGER NOT NULL AUTO_INCREMENT,
         user_id integer,
-        card_number INTEGER NOT NULL,
+        card_number BIGINT(16) NOT NULL,
         expire_date VARCHAR(50) NOT NULL,
         owner VARCHAR(30) NOT NULL,
         cvc_code INTEGER(30) NOT NULL,

@@ -20,7 +20,6 @@ class SubCharity extends React.Component {
     displayLegend: true,
     legendPosition: 'right',
   }
-
   render() {
     return (
 
@@ -56,8 +55,6 @@ class SubCharity extends React.Component {
                       data: [
                         this.props.item.amount,
                         5000,
-
-
                       ],
                       backgroundColor: [
                         'rgba(74, 20, 140,0.6)',
