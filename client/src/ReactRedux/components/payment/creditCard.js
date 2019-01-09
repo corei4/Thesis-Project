@@ -6,7 +6,19 @@ import Modal from "react-responsive-modal";
 import swal from 'sweetalert'
 import NotSignedIn from './notSignedIn'
 import './creditCard.css'
+import Axios from 'axios'
 
+const jwtDecode = require('jwt-decode');
+//TODO...
+const charityId = function () {
+  Axios.get('/creditcard')
+    .then(function (res) {
+      console.log(res, 'response123')
+      return res;
+    }).catch(function (error) {
+      console.log(error, 'error in donate button')
+    })
+}
 class creditCard extends Component {
   state = {
     number: '',
@@ -24,7 +36,7 @@ class creditCard extends Component {
 
   onCloseModal = () => {
     this.setState({ open: false });
-    this.props.history.push('/')
+    this.props.history.push('/AllCharities')
   };
 
   handleChange = (e) => {
@@ -49,7 +61,7 @@ class creditCard extends Component {
         title: 'Thank you ',
         text: 'for finish donating we Hope you have a good day'
       }).then(
-        this.props.history.push('/'))
+        this.props.history.push('/AllCharities'))
     } else {
       swal({
         icon: "error",
@@ -57,7 +69,29 @@ class creditCard extends Component {
         text: 'Please fill all the feild'
       });
     }
-
+  }
+  click = (e) => {
+    this.sweetAlert(e);
+    this.addDonation();
+  }
+  addDonation = () => {
+    console.log(this.props, 'propsaaaa')
+    var userData = jwtDecode(localStorage.getItem('token')).result
+    console.log(userData[0].id, 'user data')
+    var datadon = { user_id: userData[0].id }
+    Axios.post('/add_donation', {
+      "user_id": datadon,
+      "card_number": this.state.number,
+      "expire_date": this.state.expiry,
+      "owner": this.state.name,
+      "cvc_code": this.state.cvc,
+      "donation_amount": this.state.amount,
+      //TODO..
+      "charity_to_id": charityId
+    })
+      .catch(function (error) {
+        console.log(error, 'error add donation')
+      })
   }
   render() {
     if (localStorage.getItem('token')) {
@@ -93,7 +127,7 @@ class creditCard extends Component {
                     <input type="tel" id="amount" placeholder="$Amount" maxLength='6' minLength='1' onChange={this.handleChange} />
                   </div>
                   <div className="button_submit">
-                    <button onClick={this.sweetAlert} className='btn btn-warning'> submit</button>
+                    <button onClick={this.click} className='btn btn-warning'> submit</button>
                   </div>
                 </form>
               </div>

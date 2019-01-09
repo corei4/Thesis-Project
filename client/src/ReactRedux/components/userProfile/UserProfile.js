@@ -29,9 +29,6 @@ const jwtDecode = require('jwt-decode');
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
-    //var result = getAllCh();
-    // var userData = jwtDecode(localStorage.getItem('token')).result
-
     var result = [{ id: 1, name: "Azhar" }];
     var exampleItems = result.map(i => ({
       id: i.id,
@@ -64,9 +61,7 @@ class UserProfile extends React.Component {
     this.onChangePage = this.onChangePage.bind(this);
   }
   componentDidMount() {
-    console.log()
     var userData = jwtDecode(localStorage.getItem('token')).result
-
     var datadon = { user_id: userData[0].id }
     var data = { owner_id: window.localStorage.getItem('id') };
     console.log("here owner_id: 1", data);

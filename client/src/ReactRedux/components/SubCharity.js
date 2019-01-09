@@ -6,8 +6,6 @@ import {
   Button,
   Row, Col, Container
 } from 'reactstrap';
-import CreditCard from './payment/creditCard';
-import NotSignedIn from './payment/notSignedIn';
 
 class SubCharity extends React.Component {
   constructor(props) {
@@ -41,7 +39,7 @@ class SubCharity extends React.Component {
               <h6 style={{ marginLeft: "25px" }}>{this.props.item.amount}</h6>
               <p style={{ marginLeft: "25px" }}>{this.props.item.location} </p>
               <Link to='/creditcard' >
-                <Button style={{ float: "left", marginBottom: "23px", marginLeft: "25px", backgroundColor: "#FFC44F !important" }} onClick={this.signedIn} >DONATE</Button>{' '}
+                <Button style={{ float: "left", marginBottom: "23px", marginLeft: "25px", backgroundColor: "#FFC44F !important" }} >DONATE</Button>{' '}
               </Link>
             </div>
           </Col>
