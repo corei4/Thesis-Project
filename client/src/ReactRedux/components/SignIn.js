@@ -49,7 +49,7 @@ class SignIn extends Component {
     }
     return (
       <div className="container ">
-      <h3 className='row black-text'>Sign In</h3>
+      <h3 className='row black-text' style={{paddingTop: '15px'}}>Sign In</h3>
         <div className="row  ">
           <form className="col s12 " id="reg-form" onSubmit={this.handleSubmit}>
             <div className="row ">

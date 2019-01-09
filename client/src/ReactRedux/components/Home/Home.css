@@ -20,7 +20,7 @@
 
 .img-container .btn {
   position: absolute;
-  top: 60%;
+  top: 75%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -92,4 +92,9 @@
 .ButtonRaise button:hover {
     background-color: rgba(231, 169, 0, 0.986);
     color: black;
+}
+
+body {
+    overflow-x: hidden;
+    max-width: 100%;
 }
