@@ -163,28 +163,6 @@ module.exports = {
 				res.send(err)
 			});
 	},
-	addDonation: function (req, res) {
-		knex('Donations').insert({
-			"donated_amount": req.body.donated_amount,
-			"user_id": 1,
-			"charities_id": req.body.charities_id
-		}).then(result => {
-			console.log(`successful insert ${result}`)
-		}).catch(err => {
-			console.log(`error => ${err}`)
-		});
-	},
-	sumDonationByCharId: function (req, res) {
-		knex('Donations')
-			.sum('donated_amount')
-			.where({ 'charities_id': req.body.charities_id }).then(result => {
-				console.log(`successful Sum Amounts ${result}`)
-				res.send(result)
-			}).catch(err => {
-				console.log(`error => ${err}`)
-				res.send(err)
-			});
-	},
 	updateUserType: function (req, res) {
 		knex('users')
 			.where({ 'email': req.body.email })
@@ -322,6 +300,23 @@ module.exports = {
       }
     });
   },
+  addDonation: function (req, res) {
+	console.log(req.body, 'here add charities DB')
+	knex('payments').insert({
+		"user_id": req.body.user_id,
+		"card_number": req.body.card_number,
+		"expire_date": req.body.expire_date,
+		"owner": req.body.owner,
+		"cvc_code": req.body.cvc_code,
+		"donation_amount": req.body.donation_amount,
+		"charity_to_id": req.body.charity_to_id
+	}).then(result => {
+		res.send(result);
+		console.log(`successful insert ${result}`)
+	}).catch(err => {
+		console.log(`error => ${err}`)
+	});
+}
 
 
 }

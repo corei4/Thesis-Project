@@ -17,7 +17,7 @@ class DonationCard extends Component {
             <img src={this.props.item.image} alt="Card Cap"/>
             <div className="DonationCard">
             <CardTitle> Donated To: <p className="donate-p">{this.props.item.name}</p></CardTitle>
-            <CardSubtitle>Donated Amount: {this.props.item.amount}</CardSubtitle>
+            <CardSubtitle>Donated Amount: {this.props.item.donation_amount}</CardSubtitle>
             </div>
           </Card>
         </Col>
