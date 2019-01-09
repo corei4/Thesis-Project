@@ -2,7 +2,7 @@ var mysql = require('mysql');
 const importer = require('node-mysql-importer');
 //install my sql
 
-//Note: to insert tht the database credential
+// Note: to insert tht the database credential
 importer.config({
   host: "db4free.net",
   user: "corei4",
