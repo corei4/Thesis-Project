@@ -213,11 +213,6 @@ module.exports = {
         res.send(err)
       });
   },
-  getUserInfo: function (req, res) {
-    var email = req.body.email;
-    knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({ 'email': email })
-  },
-
   decodeJwt: function (req, res) {
     var token = req.body.token;
     jwt.verify(token, "secret", function (err, decoded) {
