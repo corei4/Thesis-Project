@@ -20,7 +20,6 @@ class SubCharity extends React.Component {
     displayLegend: true,
     legendPosition: 'right',
   }
-
   render() {
     return (
 

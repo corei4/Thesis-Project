@@ -4,14 +4,14 @@ const config = require('../config');
 const mysql = require('mysql');
 
 var knex = require('knex')({
-	client: 'mysql',
-	connection: {
-		host: "db4free.net",
-		user: "corei4",
-		password: 'corei4corei4',
-		insecureAuth: true,
-		database: 'charity_rbk'
-	}
+  client: 'mysql',
+  connection: {
+    host: "db4free.net",
+    user: "corei4",
+    password: 'corei4corei4',
+    insecureAuth: true,
+    database: 'charity_rbk'
+  }
 });
 
 // var knex = require('knex')({
@@ -40,12 +40,12 @@ dbConnection.connect(function (err) {
   }
 })
 function generateJwt() {
-	return jwt.sign({
-		id: this._id,
-		email: this.email,
-		firstName: this.firstName,
-		lastName: this.lastName,
-	}, config.jwtSecret);
+  return jwt.sign({
+    id: this._id,
+    email: this.email,
+    firstName: this.firstName,
+    lastName: this.lastName,
+  }, config.jwtSecret);
 };
 
 function generateHashPassword(password) {
@@ -329,23 +329,23 @@ module.exports = {
 					"charities_id": req.body.charities_id
 				}
 
-				return knex('charities')
-					.where('charities.id', req.body.charities_id)
-					.update({
-						amount_received: data[0].summed
-					})
-			});
-	},
-	donationsMadeByUser: function (req, res) {
-		knex.column('*', { DonId: 'payments.id' }).select().from('payments')
-			.innerJoin('charities', 'charities.id', 'payments.charity_to_id')
-			.innerJoin('users', 'users.id', 'payments.user_id')
-			.where('users.id', req.body.user_id)
-			.then(function (data) {
-				res.send(data);
-			});
-	},
-	 // SELECT * FROM Donations INNER JOIN charities ON charities.id = Donations.donation_to
+        return knex('charities')
+          .where('charities.id', req.body.charities_id)
+          .update({
+            amount_received: data[0].summed
+          })
+      });
+  },
+  donationsMadeByUser: function (req, res) {
+    knex.column('*', { DonId: 'payments.id' }).select().from('payments')
+      .innerJoin('charities', 'charities.id', 'payments.charity_to_id')
+      .innerJoin('users', 'users.id', 'payments.user_id')
+      .where('users.id', req.body.user_id)
+      .then(function (data) {
+        res.send(data);
+      });
+  },
+  // SELECT * FROM Donations INNER JOIN charities ON charities.id = Donations.donation_to
   // INNER JOIN payments ON payments.id = Donations.donated_amount INNER JOIN users ON users.id = Donations.user_id WHERE users.id = 2;
   getRequests: function (req, res) {
     knex.select().table('Request').then((err, result) => {
@@ -359,22 +359,28 @@ module.exports = {
     });
   },
   addDonation: function (req, res) {
-	console.log(req.body, 'here add charities DB')
-	knex('payments').insert({
-		"user_id": req.body.user_id,
-		"card_number": req.body.card_number,
-		"expire_date": req.body.expire_date,
-		"owner": req.body.owner,
-		"cvc_code": req.body.cvc_code,
-		"donation_amount": req.body.donation_amount,
-		"charity_to_id": req.body.charity_to_id
-	}).then(result => {
-		res.send(result);
-		console.log(`successful insert ${result}`)
-	}).catch(err => {
-		console.log(`error => ${err}`)
-	});
-}
+    console.log(req.body, 'here add charities DB')
+    knex('payments').insert({
+      "user_id": req.body.user_id,
+      "card_number": req.body.card_number,
+      "expire_date": req.body.expire_date,
+      "owner": req.body.owner,
+      "cvc_code": req.body.cvc_code,
+      "donation_amount": req.body.donation_amount,
+      "charity_to_id": req.body.charity_to_id
+    }).then(result => {
+      res.send(result);
+      console.log(`successful insert ${result}`)
+    }).catch(err => {
+      console.log(`error => ${err}`)
+    });
+  },
+  getCharityId: function (req, res) {
+    knex('charities').where('charities.id', req.body.charity_to_id)
+      .then(result => {
+        res.send(result)
+      })
+  }
 
 
 }

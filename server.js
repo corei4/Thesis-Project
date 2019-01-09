@@ -174,6 +174,10 @@ app.get('/userOrganizations', function (req, res) {
 app.post('/becomeOganization', function (req, res) {
   dbOpt.becomeOrganization(req, res)
 });
+//get charities id
+app.post('/creditcard', function (req, res) {
+  dbOpt.getCharityId(req, res)
+});
 
 // Show requests to upgrade user to organization
 app.get('/getRequests', function (req, res) {

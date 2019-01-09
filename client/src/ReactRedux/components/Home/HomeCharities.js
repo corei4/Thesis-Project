@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import Axios from 'axios'
 import {
   Card,
   CardTitle,
@@ -9,13 +10,20 @@ import {
   Progress
 } from 'reactstrap';
 
-
 class HomeCharities extends Component {
+  getID = () => {
+    Axios.post('/creditcard', {
+      "charity_to_id": this.props.item.id
+    }).catch(function (error) {
+      console.log(error, 'error in donate button')
+    })
+  }
   progress() {
     var x = Math.floor((this.props.item.amount_received / this.props.item.amount) * 100);
     return x;
   }
   render() {
+    console.log(this.props.item.id, 'propsss')
     return (
       <Col className="HomeCard" sm="4">
         <Card body>
@@ -29,12 +37,11 @@ class HomeCharities extends Component {
           <Progress color="success" value={this.progress()} />
           <CardSubtitle>Total received: {this.props.item.amount_received}</CardSubtitle>
           <Link to='/creditcard'>
-            <Button>Donate</Button>
+            <Button onClick={this.getID}>Donate</Button>
           </Link>
         </Card>
       </Col>
     );
   }
 }
-
 export default HomeCharities;

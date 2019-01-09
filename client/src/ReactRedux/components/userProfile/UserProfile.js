@@ -71,10 +71,8 @@ class UserProfile extends React.Component {
     this.onChangePage = this.onChangePage.bind(this);
   }
   componentDidMount() {
-    
     console.log()
     var userData = jwtDecode(localStorage.getItem('token')).result
-
     var datadon = { user_id: userData[0].id }
     var data = { owner_id: window.localStorage.getItem('id') };
     console.log("here owner_id: 1", data);
@@ -197,11 +195,6 @@ class UserProfile extends React.Component {
       amount_received: 0
       
     };
-    // email: "azzttt@azzttt"
-    // firstName: "azz"
-    // id: "10"
-    // length: 4
-    // telephone: "1234567"
     console.log("charityObj: ", charityObj);
     $.ajax({
       url: "/addCharities",
@@ -215,7 +208,6 @@ class UserProfile extends React.Component {
         console.error("errorrrrrr/*/*/*/*/*/*/*/*/*/", error);
       }
     });
-    // window.location.reload();
   }
 
   handleInputChangeEP = (event) => {
@@ -253,7 +245,6 @@ class UserProfile extends React.Component {
         console.error("errorrrrrr", error);
       }
     });
-    // window.location.reload();
   };
 
   // Post request to edit profile
@@ -291,7 +282,6 @@ class UserProfile extends React.Component {
 
       // status: "pending"
     };
-
     console.log("profileObj: ", profileObj);
     $.ajax({
       url: "/becomeOganization",
@@ -305,11 +295,7 @@ class UserProfile extends React.Component {
         console.error("errorrrrrr", error);
       }
     });
-    // window.location.reload();
   };
-
-
- 
 
   getFiles(files) {
     this.setState({ files: files[0].base64 });
