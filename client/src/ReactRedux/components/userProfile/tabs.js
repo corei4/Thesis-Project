@@ -6,6 +6,7 @@ import Pagination from './Pagination';
 import {
    Row, Col
 } from 'reactstrap';
+const jwtDecode = require('jwt-decode');
 
 export default class Tabs extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ export default class Tabs extends React.Component {
   componentDidMount() {
     let that = this;
     axios.post('/userCharities', {
-      owner_id: window.localStorage.getItem('id')
+      owner_id: jwtDecode(localStorage.getItem('token')).result[0].id
     })
       .then(function (res) {
         console.log(res);
