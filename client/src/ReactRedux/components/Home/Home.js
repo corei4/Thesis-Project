@@ -17,12 +17,12 @@ class Home extends React.Component {
   }
   componentDidMount() {
     let that = this;
-    axios.get('/charities').then(function(response) {
+    axios.get('/charities').then(function (response) {
       console.log(response, 'RESPONSE')
       that.setState({
         test: response.data.slice(0, 6)
       })
-    }).catch(function(error){
+    }).catch(function (error) {
       console.log(error, 'charities error')
     })
   }
@@ -32,52 +32,51 @@ class Home extends React.Component {
   };
 
   render() {
-    if(this.state.test){
+    if (this.state.test) {
       return (
         <div>
-        <div className="img-container">
+          <div className="img-container">
             <img src={redone} alt='not loading' />
             <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
-            <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
-          </Link>
-        </div>
+              <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
+            </Link>
+          </div>
           <div>
             <Row>
               <div className="HomeCards">
                 {this.state.test.map(item => (
                   < HomeCharities key={item.id} item={item} />
                 ))}
-                </div>
+              </div>
             </Row>
           </div>
           <div className="ButtonRaise">
-                <button>See All Charities</button>
+            <Link to='/AllCharities'><button>See All Charities</button></Link>
           </div>
-        </div>
+        </div >
       )
     } else {
-      return(
-      <div>
-        <div className="img-container">
+      return (
+        <div>
+          <div className="img-container">
             <img src={redone} alt='not loading' />
             <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
-            <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
-          </Link>
-        </div>
+              <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
+            </Link>
+          </div>
           <div>
             <Row>
               <div className="HomeCards">
                 <h1>loading</h1>
-                </div>
+              </div>
             </Row>
           </div>
           <div className="ButtonRaise">
-                <button>See All Charities</button>
+            <Link to='/AllCharities'><button>See All Charities</button></Link>
           </div>
         </div>
       )
     }
-    
   }
 }
 export default withRouter(Home);

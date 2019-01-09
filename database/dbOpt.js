@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-var mysql = require('mysql');
+const mysql = require('mysql');
 
 var knex = require('knex')({
 	client: 'mysql',
@@ -26,21 +26,19 @@ var knex = require('knex')({
 // });
 
 var dbConnection = mysql.createConnection({
-	host: "db4free.net",
-	user: "corei4",
-	password: 'corei4corei4',
-	insecureAuth: true,
-	database: 'charity_rbk'
+  host: "db4free.net",
+  user: "corei4",
+  password: 'corei4corei4',
+  insecureAuth: true,
+  database: 'charity_rbk'
 })
-
 dbConnection.connect(function (err) {
-	if (err) {
-		console.log(err)
-	} else {
-		console.log('Connected')
-	}
+  if (err) {
+    console.log(err)
+  } else {
+    console.log('Connected')
+  }
 })
-
 function generateJwt() {
 	return jwt.sign({
 		id: this._id,
@@ -51,10 +49,8 @@ function generateJwt() {
 };
 
 function generateHashPassword(password) {
-	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
-
-
 module.exports = {
 	signUp: function (req, res) {
 		const password = generateHashPassword(req.body.password);
@@ -108,7 +104,7 @@ module.exports = {
 		knex('charities').insert({
 			"name": req.body.name,
 			"amount": req.body.amount,
-			// "amount_received": 0,
+			"amount_received": 0,
 			"description": req.body.description,
 			"location": req.body.location,
 			"image": req.body.image,
@@ -142,10 +138,7 @@ module.exports = {
 			.del()
 			.where({ 'id': req.body.id }).then(result => {
 				console.log(`successful delete ${result}`)
-				//console.log();
-
 				res.send(true);
-
 			}).catch(err => {
 				console.log(`error => ${err}`)
 				res.send(err)
@@ -207,8 +200,7 @@ module.exports = {
 	},
 	donationsToCharity: function (req, res) {
 		knex('charities')
-			.innerJoin('Donations', 'Donations.donation_to', 'charities.id')
-			.innerJoin('payments', 'payments.id', 'Donations.donated_amount')
+			.innerJoin('payments', 'payments.id', 'charity_to_id')
 			.where('charities.id', req.body.charities_id)
 			.then(function (data) {
 				res.send(data);
@@ -309,10 +301,6 @@ module.exports = {
 					})
 			});
 	},
-	getUserInfo: function (req, res) {
-		var email = req.body.email;
-		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({ 'email': email })
-	},
 	donationsMadeByUser: function (req, res) {
 		knex.column('*', { DonId: 'Donations.id' }).select().from('Donations')
 			.innerJoin('charities', 'charities.id', 'Donations.donation_to')
@@ -322,23 +310,20 @@ module.exports = {
 			.then(function (data) {
 				res.send(data);
 			});
-	}
+	},
+	 // SELECT * FROM Donations INNER JOIN charities ON charities.id = Donations.donation_to
+  // INNER JOIN payments ON payments.id = Donations.donated_amount INNER JOIN users ON users.id = Donations.user_id WHERE users.id = 2;
+  getRequests: function (req, res) {
+    knex.select().table('Request').then((err, result) => {
+      console.log('Get all Request');
+      if (result) {
+        res.send(result)
+        return result;
+      } else {
+        res.send(err)
+      }
+    });
+  },
 
-	// SELECT * FROM Donations INNER JOIN charities ON charities.id = Donations.donation_to
-	// INNER JOIN payments ON payments.id = Donations.donated_amount INNER JOIN users ON users.id = Donations.user_id WHERE users.id = 2;
-
-
-	// donationsMadeByUser: function(req, res){
-	//     knex('Donations')
-	//     .innerJoin('charities','Donations.donation_to',"charities.id")
-	//     .where('Donations.donation_to', req.body.charities_id)
-	//     .then(function(data){
-	//         res.send(data);
-	//     });
-	// }
-
-	//   SELECT * FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
-	// SELECT sum(payments.amount) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
-	// SELECT sum(payments.amount) as 'summed' FROM charities INNER JOIN Donations ON Donations.donation_to = charities.id join payments on payments.id=Donations.donated_amount WHERE charities.id = 2;
 
 }

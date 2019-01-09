@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS payments (
         expire_date VARCHAR(50) NOT NULL,
         owner VARCHAR(30) NOT NULL,
         cvc_code INTEGER(30) NOT NULL,
-        amount INTEGER NOT NULL,
+        donation_amount INTEGER NOT NULL,
+        charity_to_id INTEGER NOT NULL,
         PRIMARY KEY (id) 
       );
 
@@ -58,14 +59,14 @@ CREATE TABLE IF NOT EXISTS address (
       PRIMARY KEY (id)
     );
 
-CREATE TABLE IF NOT EXISTS Donations (
-      id INTEGER AUTO_INCREMENT NOT NULL,
-      donation_to INTEGER(155) NOT NULL,
-      donated_amount INTEGER(15) NOT NULL,
-      user_id integer,
-      payment_id integer,
-      PRIMARY KEY (id)
-    );
+-- CREATE TABLE IF NOT EXISTS Donations (
+--       id INTEGER AUTO_INCREMENT NOT NULL,
+--       donation_to INTEGER(155) NOT NULL,
+--       donated_amount INTEGER(15) NOT NULL,
+--       user_id integer,
+--       payment_id integer,
+--       PRIMARY KEY (id)
+--     );
 
 CREATE TABLE IF NOT EXISTS Request (
       id INTEGER AUTO_INCREMENT NOT NULL,
@@ -80,9 +81,6 @@ CREATE TABLE IF NOT EXISTS Request (
 ALTER TABLE users ADD FOREIGN KEY (userTypeId) REFERENCES usertype(id);
 ALTER TABLE payments ADD FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE address ADD FOREIGN KEY (user_id) REFERENCES users(id);
-ALTER TABLE Donations ADD FOREIGN KEY (user_id) REFERENCES users(id);
-ALTER TABLE Donations ADD FOREIGN KEY (payment_id) REFERENCES payments(id);
-ALTER TABLE Donations ADD FOREIGN KEY (donation_to) REFERENCES charities(id);
-ALTER TABLE Donations ADD FOREIGN KEY (donated_amount) REFERENCES payments(id);
+ALTER TABLE payments ADD FOREIGN KEY (charity_to_id) REFERENCES charities(id);
 ALTER TABLE charities ADD FOREIGN KEY (owner_id) REFERENCES users(id);
 ALTER TABLE Request ADD FOREIGN KEY (user_id) REFERENCES users(id);
