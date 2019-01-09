@@ -4,7 +4,8 @@ import { Link, withRouter } from 'react-router-dom';
 import './Home.css';
 import redone from './redone.jpg';
 import HomeCharities from './HomeCharities.js';
-import $ from "jquery";
+import axios from 'axios';
+
 
 class Home extends React.Component {
   constructor(props) {
@@ -15,21 +16,15 @@ class Home extends React.Component {
     };
   }
   componentDidMount() {
-    $.ajax({
-      url: '/charities',
-      dataType: 'json',
-      type: "GET",
-      success: function (data) {
-        console.log(data, "app in ajax ")
-        this.setState({
-          test: data
-        })
-        return data;
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
+    let that = this;
+    axios.get('/charities').then(function (response) {
+      console.log(response, 'RESPONSE')
+      that.setState({
+        test: response.data.slice(0, 6)
+      })
+    }).catch(function (error) {
+      console.log(error, 'charities error')
+    })
   }
 
   allCharities = () => {
@@ -37,28 +32,51 @@ class Home extends React.Component {
   };
 
   render() {
-    return (
-      <div>
-      <div className="img-container">
-          <img src={redone} alt='not loading' />
-          <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
-          <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
-        </Link>
-      </div>
+    if (this.state.test) {
+      return (
         <div>
-          <Row>
-            <div className="HomeCards">
-              {this.state.test.slice(0, 6).map(item => (
-                < HomeCharities key={item.id} item={item} />
-              ))}
+          <div className="img-container">
+            <img src={redone} alt='not loading' />
+            <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
+              <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
+            </Link>
+          </div>
+          <div>
+            <Row>
+              <div className="HomeCards">
+                {this.state.test.map(item => (
+                  < HomeCharities key={item.id} item={item} />
+                ))}
               </div>
-          </Row>
+            </Row>
+          </div>
+          <div className="ButtonRaise">
+            <Link to='/AllCharities'><button>See All Charities</button></Link>
+          </div>
+        </div >
+      )
+    } else {
+      return (
+        <div>
+          <div className="img-container">
+            <img src={redone} alt='not loading' />
+            <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
+              <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
+            </Link>
+          </div>
+          <div>
+            <Row>
+              <div className="HomeCards">
+                <h1>loading</h1>
+              </div>
+            </Row>
+          </div>
+          <div className="ButtonRaise">
+            <Link to='/AllCharities'><button>See All Charities</button></Link>
+          </div>
         </div>
-        <div className="ButtonRaise">
-              <button>See All Charities</button>
-        </div>
-      </div>
-    )
+      )
+    }
   }
 }
 export default withRouter(Home);

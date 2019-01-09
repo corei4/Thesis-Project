@@ -2,11 +2,10 @@
   "name": "example-create-react-app-express",
   "version": "1.0.0",
   "scripts": {
-    "client": "cd client && yarn start",
+    "client": "cd client && npm run start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "start": "nodemon server.js",
     "test": "mocha"
   },
   "dependencies": {
@@ -24,11 +23,13 @@
     "mocha": "^5.2.0",
     "mysql": "^2.16.0",
     "node-mysql-importer": "0.0.10",
+    "nodemon": "^1.18.9",
     "react": "^16.6.3",
     "react-chartjs-2": "^2.1.0",
     "react-credit-cards": "^0.7.0",
     "react-dom": "^16.7.0",
     "react-file-base64": "^1.0.3",
+    "react-responsive-modal": "^3.5.1",
     "react-router-dom": "^4.3.1",
     "react-search-input": "^0.11.3",
     "react-stripe-elements": "^2.0.1",

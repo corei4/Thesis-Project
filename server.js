@@ -18,15 +18,18 @@ app.post('/api/initializeDB', (req, res) => {
   Schema.initializeDB(req, res);
 });
 
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-if (process.env.NODE_ENV === 'production') {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  // Handle React routing, return all requests to React app
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-}
+// if (process.env.NODE_ENV === 'production') {
+//   // Serve any static files
+//   app.use(express.static(path.join(__dirname, 'client/build')));
+//   // Handle React routing, return all requests to React app
+//   app.get('*', function (req, res) {
+//     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+//   });
+// }
+
+
 
 // Signup User
 app.post('/account/signup', (req, res, next) => {
@@ -99,15 +102,15 @@ app.post('/addCharities', function (req, res) {
 });
 
 // sum and update amount reveived;
-app.post('/charities_sum',function(req,res){  
+app.post('/charities_sum', function (req, res) {
   dbOpt.DonationAmountSummed(req, res)
 });
 
-app.post('/profile',function(req,res){  
+app.post('/profile', function (req, res) {
   dbOpt.donationsMadeByUser(req, res)
 });
 
-app.post('/charities_don',function(req,res){  
+app.post('/charities_don', function (req, res) {
   dbOpt.donationsToCharity(req, res)
 });
 
@@ -135,7 +138,7 @@ app.put('/account/usertype', function (req, res) {
 });
 
 //Delete charities
-app.delete('/delCharities',function(req, res) {
+app.delete('/delCharities', function (req, res) {
   dbOpt.delChar(req, res)
 });
 
@@ -152,27 +155,32 @@ app.post('/totalDonation', function (req, res) {
 });
 
 //Update user information
-app.put('/editUserInfo',function(req, res) {
+app.put('/editUserInfo', function (req, res) {
   dbOpt.editUserInfo(req, res)
 });
 
 //JWT decode token
-app.post('/decodeToken', function(req, res) {
+app.post('/decodeToken', function (req, res) {
   dbOpt.decodeJwt(req, res)
 });
 
 // Get all the organizations
-app.get('/userOrganizations',function(req, res) {
+app.get('/userOrganizations', function (req, res) {
   dbOpt.userOrganizations(req, res)
-  });
+});
 
-  
-app.post('/becomeOganization', function(req, res) {
+
+app.post('/becomeOganization', function (req, res) {
   dbOpt.becomeOrganization(req, res)
-  });
+});
 
-  app.get('/getRequests', function(req, res) {
-    dbOpt.getRequests(req, res)
-    });
+app.get('/getRequests', function (req, res) {
+  dbOpt.getRequests(req, res)
+});
+
+app.get('/getUserInfoID', function (req, res) {
+  dbOpt.getUserInfoID(req.query.userId, res)
+  console.log('User Info', req.query.userId)
+});
 
 module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));
