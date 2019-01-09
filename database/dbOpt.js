@@ -116,15 +116,16 @@ module.exports = {
 		});
 	},
 	getAllChar: function (req, res) {
-		knex.select().table('charities').then(result => {
+		knex.select().table('charities').orderBy('created_at', 'DESC').then(result => {
 			console.log(`successful display ${result}`)
 			res.json(result)
 		}).catch(err => {
 			console.log(`error => ${err}`)
 		});
+
 	},
 	getUserChar: function (req, res) {
-		knex('charities').select().where('owner_id', req.body.owner_id).then((err, result) => {
+		knex('charities').select().where('owner_id', req.body.owner_id).orderBy('created_at', 'DESC').then((err, result) => {
 			console.log('Get user charities');
 			if (result) {
 				res.send(result)

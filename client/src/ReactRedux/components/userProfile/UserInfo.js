@@ -22,7 +22,7 @@ class UserInfo extends React.Component{
                   <Col>
                       <CardBody>
                             <div className="imgdiv" >
-                                <img className="userImage"  src={exampleUser.imgUrl} alt="User" />
+                                <img style={{ width: "30%"}} className="userImage"  src={exampleUser.imgUrl} alt="User" />
                             </div>
                           <CardTitle>Profile</CardTitle>
                           <CardSubtitle><span><b>Name</b><p id="info" >{exampleUser.name}</p></span></CardSubtitle>

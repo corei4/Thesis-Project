@@ -436,6 +436,7 @@ class UserProfile extends React.Component {
                       <div className="card-body" id="profile">
                         <div>
                           <img
+                          style={{boxSizing: "border-box",display: "inline-block", padding:"0px",height:"30%", width:"20%", borderRadius: "60%", boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}
                             src={this.state.imgUrl}
                             alt="User"
                             height="none"

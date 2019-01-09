@@ -29,7 +29,7 @@ class SubCharity extends React.Component {
 
         <Row className="subRow" style={{ backgroundColor: "#F2F3F9", width: "1200px" }}>
           <Col xs="3"><div style={{ backgroundColor: "#F2F3F9", marginLeft: "5px", marginTop: "10px", marginBottom: "10px", float: "inherit" }}>
-            <img style={{ width: "100%", marginLeft: "25px", marginTop: "25px", marginBottom: "25px" }} src={this.props.item.image} alt="" />
+            <img style={{ width: "100%", marginLeft: "25px", marginTop: "25px", marginBottom: "25px", border:"5px solid white", boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)" }} src={this.props.item.image} alt="" />
           </div>
 
           </Col>
