@@ -1,0 +1,16 @@
+.donation{
+  padding: inherit;
+  color :rgb(236,181,13);
+  text-shadow: 2px;
+  text-align: center;
+  -webkit-text-decoration: peru solid overline;
+  text-decoration: peru solid overline;
+}
+.button_submit{
+  text-align: center;
+}
+.button_submit button{
+  padding: 0px 60px;
+  margin: 10px;
+  font-size: 18px;
+}

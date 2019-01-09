@@ -35,6 +35,7 @@ export default class Tabs extends React.Component {
   }
   componentDidMount() {
     let that = this;
+    console.log(jwtDecode(localStorage.getItem('token')).result[0].id,)
     axios.post('/userCharities', {
       owner_id: jwtDecode(localStorage.getItem('token')).result[0].id
     })

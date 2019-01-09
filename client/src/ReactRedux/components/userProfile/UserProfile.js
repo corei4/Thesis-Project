@@ -34,6 +34,7 @@ class UserProfile extends React.Component {
     console.log("userData",userData)
     const user_id = userData[0].id;
     const userType_id = userData[0].userTypeId;
+    // var userData = jwtDecode(localStorage.getItem('token')).result
 
     var result = [{ id: 1, name: "Azhar" }];
     var exampleItems = result.map(i => ({
@@ -185,12 +186,13 @@ class UserProfile extends React.Component {
   handleSubmit() {
     this.toggle();
     // console.log("handleSubmit");
-    const charityObj = {
+    let charityObj = {
       name: this.state.name,
       amount: this.state.amount,
       description: this.state.description,
       location: this.state.location,
-      owner_id: window.localStorage.getItem('id'),
+     
+    owner_id: jwtDecode(localStorage.getItem('token')).result[0].id,
       image: this.state.image,
       amount_received: 0
       

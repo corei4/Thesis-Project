@@ -1,8 +1,9 @@
 import React from 'react';
-import { Pie} from 'react-chartjs-2'
+import { Pie } from 'react-chartjs-2'
+import { Link } from 'react-router-dom'
 
 import {
-  Button, 
+  Button,
   Row, Col, Container
 } from 'reactstrap';
 
@@ -15,22 +16,22 @@ class SubCharity extends React.Component {
     }
   };
   static defaultProps = {
-    displayTitle:true,
+    displayTitle: true,
     displayLegend: true,
-    legendPosition:'right',
+    legendPosition: 'right',
   }
 
   render() {
-      return (
-      
+    return (
+
 
       <Container>
-     
-        <Row className="subRow" style={{backgroundColor: "#F2F3F9", width:"1200px"}}>
-          <Col xs="3"><div style={{backgroundColor: "#F2F3F9", marginLeft:"5px", marginTop:"10px", marginBottom:"10px", float:"inherit"}}>
-              <img style={{width: "100%", marginLeft:"25px", marginTop:"25px", marginBottom:"25px"}} src={this.props.item.image} alt=""/>
+
+        <Row className="subRow" style={{ backgroundColor: "#F2F3F9", width: "1200px" }}>
+          <Col xs="3"><div style={{ backgroundColor: "#F2F3F9", marginLeft: "5px", marginTop: "10px", marginBottom: "10px", float: "inherit" }}>
+            <img style={{ width: "100%", marginLeft: "25px", marginTop: "25px", marginBottom: "25px" }} src={this.props.item.image} alt="" />
           </div>
-          
+
           </Col>
           <Col xs="5">
           <div  style={{backgroundColor: "#F2F3F9", marginLeft:"5px", marginTop:"10px", marginBottom:"10px", float:"inherit"}}>
@@ -83,12 +84,12 @@ class SubCharity extends React.Component {
         />
           </div>
 
+                      
           </Col>
         </Row>
-       
       </Container>
-      );
-    }
+    );
+  }
 };
 
 export default SubCharity;
