@@ -14,6 +14,8 @@ import Success from './ReactRedux/components/payment/success'
 import Guest from './ReactRedux/components/payment/notSignedIn'
 import HomeCharities from '../../client/src/ReactRedux/components/Home/HomeCharities'
 import AllCharities from './ReactRedux/components/AllCharities'
+import FooterPage from './ReactRedux/components/Home/Footer'
+import Content from './ReactRedux/components/Home/Content'
 
 class App extends Component {
   constructor(props) {
@@ -48,12 +50,13 @@ class App extends Component {
             <Route path='/SignIn' component={SignIn} />
             <PrivateRoute path='/profile' component={UserProfile} />
             <Route path='/create' component={CreateEvent} />
-            <Route path='/creditcard' component={creditCard} />
+            <Route path='/creditcard/:handel' component={creditCard} />
             <Route path='/success' component={Success} />
             <Route path='/guest' component={Guest} />
             <Route path='/homecharities' component={HomeCharities} />
             <Route path='/AllCharities' component={AllCharities} />
           </Switch>
+          <FooterPage />
         </div>
       </BrowserRouter>
     );

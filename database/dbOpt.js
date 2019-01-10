@@ -4,14 +4,14 @@ const config = require('../config');
 const mysql = require('mysql');
 
 var knex = require('knex')({
-	client: 'mysql',
-	connection: {
-		host: "db4free.net",
-		user: "corei4",
-		password: 'corei4corei4',
-		insecureAuth: true,
-		database: 'charity_rbk'
-	}
+  client: 'mysql',
+  connection: {
+    host: "db4free.net",
+    user: "corei4",
+    password: 'corei4corei4',
+    insecureAuth: true,
+    database: 'charity_rbk'
+  }
 });
 
 // var knex = require('knex')({
@@ -40,12 +40,12 @@ dbConnection.connect(function (err) {
   }
 })
 function generateJwt() {
-	return jwt.sign({
-		id: this._id,
-		email: this.email,
-		firstName: this.firstName,
-		lastName: this.lastName,
-	}, config.jwtSecret);
+  return jwt.sign({
+    id: this._id,
+    email: this.email,
+    firstName: this.firstName,
+    lastName: this.lastName,
+  }, config.jwtSecret);
 };
 
 function generateHashPassword(password) {
@@ -116,15 +116,16 @@ module.exports = {
 		});
 	},
 	getAllChar: function (req, res) {
-		knex.select().table('charities').then(result => {
+		knex.select().table('charities').orderBy('created_at', 'DESC').then(result => {
 			console.log(`successful display ${result}`)
 			res.json(result)
 		}).catch(err => {
 			console.log(`error => ${err}`)
 		});
+
 	},
 	getUserChar: function (req, res) {
-		knex('charities').select().where('owner_id', req.body.owner_id).then((err, result) => {
+		knex('charities').select().where('owner_id', req.body.owner_id).orderBy('created_at', 'DESC').then((err, result) => {
 			console.log('Get user charities');
 			if (result) {
 				res.send(result)
@@ -165,7 +166,7 @@ module.exports = {
 	},
 	updateUserType: function (req, res) {
 		knex('users')
-			.where({ 'email': req.body.email })
+			.where({ 'id': req.body.user_id })
 			.update({
 				userTypeId: 3
 			}).then(result => {
@@ -184,18 +185,20 @@ module.exports = {
 				res.send(data);
 			});
 	},
-	editUserInfo: function (req, res) {
-		knex('charities')
-			.where({ 'id': req.body.id })
-			.update({
-				"firstName": req.body.firstName,
-				"lastName": req.body.lastName,
-				"phoneNumber": req.body.phoneNumber,
+	editUserInfo: function(req, res) {
+		console.log("req body: ", req.body)
+		knex('users')
+		.where({'id': req.body.id})
+		.update({
+			"firstName": req.body.firstName,
+			"lastName": req.body.lastName,
+			"telephone":req.body.telephone,
 				"image": req.body.image,
 			})
 			.then(result => {
 				console.log(`successful update ${result}`)
-				res.send("update suc.")
+				res.json(result)
+
 			}).catch(err => {
 				console.log(`error => ${err}`)
 				res.send(err)
@@ -233,18 +236,20 @@ module.exports = {
 	// becomeOrganization
 	becomeOrganization: function (req, res) {
 		console.log(req.body, 'here add charities DB')
-		knex('Request').insert({
-			"name": req.body.name,
-			"about": req.body.about,
-			// "amount_received": 0,
-			"description": req.body.description,
-			"location": req.body.location,
-			"user_id": Number(req.body.userId)
-		}).then(result => {
-			console.log(`successful insert ${result}`)
-		}).catch(err => {
-			console.log(`error => ${err}`)
-		});
+			knex('Request').insert({
+				"name": req.body.name,
+				"about": req.body.about,
+				// "amount_received": 0,
+				"description":req.body.description,
+				"location": req.body.location,
+				"user_id": Number(req.body.userId),
+				"status":"pending" 
+
+			}).then(result => {
+				console.log(`successful insert ${result}`)
+			}).catch(err => {
+				console.log(`error => ${err}`)
+			});
 
 	},
 	getRequests: function (req, res) {
@@ -256,6 +261,59 @@ module.exports = {
 			} else {
 				res.send(err)
 			}
+		});
+	},
+	getUserInfo: function(req, res) {
+		var email = req.body.email;
+		knex.select('firstName', 'lastName', 'email', 'telephone', 'imgUrl', 'userTypeId').from('users').where({'email': email})
+	},
+	getBendingRequests: function (req, res) {
+		knex.select().table('Request').then((err, result) => {
+			console.log('Get all Request');
+			if (result) {
+				res.send(result)
+				return result;
+			} else {
+				res.send(err)
+			}
+		});
+	},
+	updateRequestTypeAccept: function (req, res) {
+		knex('Request')
+			.where({ 'user_id': req.body.user_id})
+			.update({
+				status: "accepted"
+			}).then(result => {
+				console.log(`successful update status ${result}`)
+				// res.send("update suc.")
+			}).catch(err => {
+				console.log(`error => ${err}`)
+				// res.send(err)
+			});
+		},
+		updateRequestTypeDecline: function (req, res) {
+			knex('Request')
+			.where({ 'user_id': req.body.user_id})
+			.update({
+				status: "decline"
+			}).then(result => {
+				console.log(`successful update status ${result}`)
+				// res.send("update suc.")
+			}).catch(err => {
+				console.log(`error => ${err}`)
+				// res.send(err)
+			});
+		},
+		
+	// donationsMadeByUser: function(req, res){
+	donationsMadeByUser: function(req, res){
+		knex.column('*', {DonId: 'Donations.id'}).select().from('Donations')
+		.innerJoin('charities', 'charities.id','Donations.donation_to')
+		.innerJoin('payments','payments.id','Donations.donated_amount')
+		.innerJoin('users', 'users.id', 'Donations.user_id')
+		.where('users.id', req.body.user_id)
+		.then(function(data){
+			res.send(data);
 		});
 	},
 	DonationAmountSummed: function (req, res) {
@@ -271,23 +329,23 @@ module.exports = {
 					"charities_id": req.body.charities_id
 				}
 
-				return knex('charities')
-					.where('charities.id', req.body.charities_id)
-					.update({
-						amount_received: data[0].summed
-					})
-			});
-	},
-	donationsMadeByUser: function (req, res) {
-		knex.column('*', { DonId: 'payments.id' }).select().from('payments')
-			.innerJoin('charities', 'charities.id', 'payments.charity_to_id')
-			.innerJoin('users', 'users.id', 'payments.user_id')
-			.where('users.id', req.body.user_id)
-			.then(function (data) {
-				res.send(data);
-			});
-	},
-	 // SELECT * FROM Donations INNER JOIN charities ON charities.id = Donations.donation_to
+        return knex('charities')
+          .where('charities.id', req.body.charities_id)
+          .update({
+            amount_received: data[0].summed
+          })
+      });
+  },
+  donationsMadeByUser: function (req, res) {
+    knex.column('*', { DonId: 'payments.id' }).select().from('payments')
+      .innerJoin('charities', 'charities.id', 'payments.charity_to_id')
+      .innerJoin('users', 'users.id', 'payments.user_id')
+      .where('users.id', req.body.user_id)
+      .then(function (data) {
+        res.send(data);
+      });
+  },
+  // SELECT * FROM Donations INNER JOIN charities ON charities.id = Donations.donation_to
   // INNER JOIN payments ON payments.id = Donations.donated_amount INNER JOIN users ON users.id = Donations.user_id WHERE users.id = 2;
   getRequests: function (req, res) {
     knex.select().table('Request').then((err, result) => {
@@ -301,22 +359,28 @@ module.exports = {
     });
   },
   addDonation: function (req, res) {
-	console.log(req.body, 'here add charities DB')
-	knex('payments').insert({
-		"user_id": req.body.user_id,
-		"card_number": req.body.card_number,
-		"expire_date": req.body.expire_date,
-		"owner": req.body.owner,
-		"cvc_code": req.body.cvc_code,
-		"donation_amount": req.body.donation_amount,
-		"charity_to_id": req.body.charity_to_id
-	}).then(result => {
-		res.send(result);
-		console.log(`successful insert ${result}`)
-	}).catch(err => {
-		console.log(`error => ${err}`)
-	});
-}
+    console.log(req.body, 'here add charities DB')
+    knex('payments').insert({
+      "user_id": req.body.user_id,
+      "card_number": req.body.card_number,
+      "expire_date": req.body.expire_date,
+      "owner": req.body.owner,
+      "cvc_code": req.body.cvc_code,
+      "donation_amount": req.body.donation_amount,
+      "charity_to_id": req.body.charity_to_id
+    }).then(result => {
+      res.send(result);
+      console.log(`successful insert ${result}`)
+    }).catch(err => {
+      console.log(`error => ${err}`)
+    });
+  },
+  getCharityId: function (req, res) {
+    knex('charities').where('charities.id', req.body.charity_to_id)
+      .then(result => {
+        res.send(result)
+      })
+  }
 
 
 }

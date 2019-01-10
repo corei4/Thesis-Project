@@ -30,6 +30,10 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     //var result = getAllCh();
+    var userData = jwtDecode(localStorage.getItem('token')).result
+    console.log("userData",userData)
+    const user_id = userData[0].id;
+    const userType_id = userData[0].userTypeId;
     // var userData = jwtDecode(localStorage.getItem('token')).result
 
     var result = [{ id: 1, name: "Azhar" }];
@@ -55,8 +59,11 @@ class UserProfile extends React.Component {
       imgUrl: '',
       modalOR: false,
       requests: [],
+      admin:  userType_id == 1 ? true : false,
+      userButton:  userType_id == 2 ? true : false,
+
       Donations: [],
-      admin: window.localStorage.getItem("userTypeId") === 1 ? true : false
+      user_id: user_id
     };
     this.toggle = this.toggle.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -66,7 +73,6 @@ class UserProfile extends React.Component {
   componentDidMount() {
     console.log()
     var userData = jwtDecode(localStorage.getItem('token')).result
-
     var datadon = { user_id: userData[0].id }
     var data = { owner_id: window.localStorage.getItem('id') };
     console.log("here owner_id: 1", data);
@@ -112,9 +118,14 @@ class UserProfile extends React.Component {
       type: "GET",
       success: function (data) {
         console.log(data, "app in ajax ")
+        let arrayNew = [];
+        for(var i = 0; i<data.length; i++) {
+          if (data[i].status==="pending") {
+            arrayNew.push(data[i])
+          }
+        }
         this.setState({
-          requests: data
-
+          requests: arrayNew
         })
         console.log("all charities", this.state.test)
         return data;
@@ -173,20 +184,17 @@ class UserProfile extends React.Component {
   handleSubmit() {
     this.toggle();
     // console.log("handleSubmit");
-    const charityObj = {
+    let charityObj = {
       name: this.state.name,
       amount: this.state.amount,
       description: this.state.description,
       location: this.state.location,
-      owner_id: window.localStorage.getItem('id'),
-      image: this.state.image
-
+     
+    owner_id: jwtDecode(localStorage.getItem('token')).result[0].id,
+      image: this.state.image,
+      amount_received: 0
+      
     };
-    // email: "azzttt@azzttt"
-    // firstName: "azz"
-    // id: "10"
-    // length: 4
-    // telephone: "1234567"
     console.log("charityObj: ", charityObj);
     $.ajax({
       url: "/addCharities",
@@ -200,18 +208,28 @@ class UserProfile extends React.Component {
         console.error("errorrrrrr/*/*/*/*/*/*/*/*/*/", error);
       }
     });
-    // window.location.reload();
   }
 
+  handleInputChangeEP = (event) => {
+    let target = event.target;
+    let name = target.name;
+    let value = target.value;
+    this.setState({
+      [name]: value
+    });
+    
+  }
   // Post request to edit profile
-  handleSubmitEP = () => {
+  handleSubmitEP = (event) => {
     this.toggleEP();
+    const user_id = event.target.id
+
     console.log("handleSubmit");
     const profileObj = {
-      firstName: this.state.name,
-      lastName: this.state.amount,
-      phoneNumber: this.state.phoneNumber,
-      image: this.state.image
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      telephone: this.state.telephone,
+      id: user_id
     };
 
     console.log("profileObj: ", profileObj);
@@ -220,17 +238,16 @@ class UserProfile extends React.Component {
       type: "PUT",
       data: JSON.stringify(profileObj),
       contentType: "application/json",
-      success: function (data) {
-        console.log("ad charities in Db", data);
+      success: function(data) {
+        console.log("FE data of user", data);
       },
       error: function (error) {
         console.error("errorrrrrr", error);
       }
     });
-    // window.location.reload();
   };
-  // Post request to edit profile
 
+  // Post request to edit profile
   handleInputChange(event) {
     const target = event.target;
     const name = target.name;
@@ -261,9 +278,10 @@ class UserProfile extends React.Component {
       about: this.state.aboutOR,
       location: this.state.locationOR,
       description: this.state.descriptionOR,
-      userId: window.localStorage.getItem('id')
-    };
+      userId: jwtDecode(localStorage.getItem('token')).result[0].id
 
+      // status: "pending"
+    };
     console.log("profileObj: ", profileObj);
     $.ajax({
       url: "/becomeOganization",
@@ -277,17 +295,7 @@ class UserProfile extends React.Component {
         console.error("errorrrrrr", error);
       }
     });
-    // window.location.reload();
   };
-
-  // handleInputChangeEP(event) {
-  //   const target = event.target;
-  //   const name = target.name;
-  //   const value = target.value;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // }
 
   getFiles(files) {
     this.setState({ files: files[0].base64 });
@@ -317,14 +325,44 @@ class UserProfile extends React.Component {
   onChangePage(pageOfItems) {
     this.setState({ pageOfItems: pageOfItems });
   }
-  handleAccept = () => {
-    console.log("accept")
-  };
 
-  handleDecline = () => {
-    console.log("decline")
-  }
+ handleAccept= (event) => {
+   const user_id = event.target.id
+   console.log("accept event", user_id)
+    $.ajax({
+      url: 'account/usertype',
+      type: "PUT",
+      data: JSON.stringify({"user_id":user_id
+      }),
+      contentType: "application/json",
+      success: function(data) {
+        console.log("/account/usertype", data);
+      },
+      error: function(error) {
+        console.error("errorrrrrr", error);
+      }
+    });
+ };
 
+ handleDecline= (event) => {
+  console.log("decline")
+  const user_id = event.target.id
+  console.log("accept event", user_id)
+   $.ajax({
+     url: '/updateRequestTypeDecline',
+     type: "PUT",
+     data: JSON.stringify({"user_id":user_id
+     }),
+     contentType: "application/json",
+     success: function(data) {
+       console.log("decline", data);
+     },
+     error: function(error) {
+       console.error("errorrrrrr", error);
+     }
+   });
+}
+              
   render() {
     return (
       <div className="container-fluid">
@@ -360,6 +398,7 @@ class UserProfile extends React.Component {
                 Charities
               </NavLink>
             </NavItem>
+            { this.state.admin ?  
             <NavItem>
               <NavLink
                 disabled={this.state.admin}
@@ -370,7 +409,7 @@ class UserProfile extends React.Component {
               >
                 Requests
               </NavLink>
-            </NavItem>
+            </NavItem>: null }
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
@@ -383,27 +422,29 @@ class UserProfile extends React.Component {
                       <div className="card-body" id="profile">
                         <div>
                           <img
+                          style={{boxSizing: "border-box",display: "inline-block", padding:"0px",height:"30%", width:"20%", borderRadius: "60%", boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}
                             src={this.state.imgUrl}
                             alt="User"
                             height="none"
                           />
                         </div>
                         <div />
-                        <h4 className="card-title">
+                        <br/>
+                        <h5 className="card-title">
                           {" "}
-                          <strong>{this.state.firstName}</strong>{" "}
-                        </h4>
-                        <h5 className="card-text"> {this.state.email} </h5>
-                        <h5 className="card-text"> {this.state.telephone} </h5>
-
-                        <Button className="btn btn-success" onClick={this.toggleEP}>
+                          <strong>User name: </strong>{this.state.firstName}  {this.state.lastName} {" "}
+                        </h5>
+                        <h5 className="card-text"><strong>User email: </strong>{this.state.email} </h5>
+                        <h5 className="card-text"><strong>User phone number: </strong>{this.state.telephone} </h5>
+                        <Button className="btn btn-success" onClick={this.toggleEP} color="info">
                           {this.props.buttonLabel}
                           Edit profile
                         </Button>
+                        { this.state.userButton ?
                         <Button href="#" className="btn btn-primary" onClick={this.toggleOR}>
                           Become an Organization
                         </Button>
-
+                        :null}
                         {/* modal add charity */}
                         <Button className="btn btn-success" onClick={this.toggle}>
                           {this.props.buttonLabel}
@@ -504,6 +545,8 @@ class UserProfile extends React.Component {
 
 
                         {/* modal edit profil */}
+                        {/* edit here */}
+
 
                         <Modal
                           isOpen={this.state.modalEP}
@@ -551,18 +594,18 @@ class UserProfile extends React.Component {
                                 </label>
                                 <input
                                   type="number"
-                                  name="PhoneNumber"
-                                  id="PhoneNumber"
-
+                                  name="telephone"
+                                  id="telephone"
+                                  
                                   value={this.state.telephone}
                                   onChange={this.handleInputChangeEP}
                                 />
                               </div>
 
                               <Button
+                              id={this.state.user_id}
                                 color="primary"
                                 onClick={this.handleSubmitEP}
-                                disabled={this.state.isNotUpload}
                               >
                                 Submit
                               </Button>{" "}
@@ -679,23 +722,23 @@ class UserProfile extends React.Component {
             </TabPane>
             {/* 
              */}
-            <TabPane tabId="4">
-              <div>
-                {this.state.requests.map(item => (
-                  <Card key={item.id}>
-                    <CardBody>
-                      <CardTitle>{item.name}</CardTitle>
-                      <CardSubtitle>{item.location}</CardSubtitle>
-
-                      <CardText>{item.description}</CardText>
-                      <CardLink href="#" color="success" onClick={this.handleAccept}>Accept</CardLink>
-                      <CardLink href="#" onClick={this.handleDecline}>Decline</CardLink>
-                    </CardBody>
-                  </Card>
-                ))}
-
-
-              </div>
+             <TabPane tabId="4">
+             <div>
+              {this.state.requests.map(item => (
+                <Card>
+        <CardBody>
+          <CardTitle>{item.name}</CardTitle>
+          <CardSubtitle>{item.location}</CardSubtitle>
+        
+          <CardText>{item.description}</CardText>
+          <button id={item.user_id} href="#" color="success" onClick={this.handleAccept}>Accept</button>
+          <button id={item.user_id} href="#" onClick={this.handleDecline}>Decline</button>
+        </CardBody>
+      </Card>
+              ))}
+              
+      
+    </div>
             </TabPane>
 
           </TabContent>
