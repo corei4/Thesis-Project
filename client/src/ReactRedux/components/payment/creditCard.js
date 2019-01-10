@@ -9,16 +9,6 @@ import './creditCard.css'
 import Axios from 'axios'
 
 const jwtDecode = require('jwt-decode');
-//TODO...
-// const charityId = function () {
-//   Axios.get('/creditcard')
-//     .then(function (res) {
-//       console.log(res, 'response123')
-//       return res;
-//     }).catch(function (error) {
-//       console.log(error, 'error in donate button')
-//     })
-// }
 class creditCard extends Component {
   state = {
     number: '',
@@ -29,12 +19,10 @@ class creditCard extends Component {
     focused: '',
     open: true
   }
-componentDidMount() {
-  let charityId = Number(this.props.match.params.handel)
-  console.log(charityId,"this.props.match.params");
-
-  
-}
+  componentDidMount() {
+    let charityId = Number(this.props.match.params.handel)
+    console.log(charityId, "this.props.match.params");
+  }
   onOpenModal = () => {
     this.setState({ open: true });
   };
@@ -81,25 +69,24 @@ componentDidMount() {
   }
   addDonation = () => {
     let charityId = Number(this.props.match.params.handel)
-    console.log(charityId, 'propsaaaand,msndad,m,adnam,dnm')
     var userData = jwtDecode(localStorage.getItem('token')).result
-    console.log(userData[0].id, 'user data')
-    var datadon =  userData[0].id 
     Axios.post('/add_donation', {
-      "user_id": datadon,
+      "user_id": userData[0].id,
       "card_number": this.state.number,
       "expire_date": this.state.expiry,
       "owner": this.state.name,
       "cvc_code": this.state.cvc,
       "donation_amount": this.state.amount,
-      //TODO..
       "charity_to_id": charityId
-    })
-      .catch(function (error) {
-        console.log(error, 'error add donation')
+    }).then(function () {
+      Axios.post('/charities_sum', {
+        "charities_id": charityId
       })
+    })
   }
+
   render() {
+
     if (localStorage.getItem('token')) {
       const { open } = this.state;
       return (

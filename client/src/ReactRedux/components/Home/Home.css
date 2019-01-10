@@ -7,10 +7,6 @@
 
   width: 100%;
    height: auto;
-
-  /* top: 0;
-  left: 0px;
-  right: 0px; */
 }
 
 .img-container img {
@@ -53,12 +49,6 @@
   .h1, h1 {
     font-size: 57px !important;
 }
-  /* .bottom-right {
-    position: absolute;
-    bottom: 8px;
-    right: 50%;
-  } */
-  
 .HomeCards {
     text-align: center;
     width: 100%;
@@ -95,8 +85,6 @@
 .ButtonRaise {
     text-align: center;
 }
-
-
 .ButtonRaise button {
     background-color: rgb(160, 34, 132);
     color: white;
@@ -107,7 +95,6 @@
     border-radius: 5px;
     text-align: center;
 }
-
 .ButtonRaise button:hover {
     background-color: rgba(231, 169, 0, 0.986);
     color: black;

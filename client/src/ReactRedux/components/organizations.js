@@ -5,7 +5,6 @@ import {
 } from 'reactstrap';
 import axios from 'axios';
 
-
 class organizations extends Component {
   constructor(props) {
     super(props)
@@ -13,7 +12,6 @@ class organizations extends Component {
       test: []
     };
   }
-
   componentDidMount() {
     let that = this;
     axios.get('/userOrganizations').then(function (response) {
@@ -25,7 +23,6 @@ class organizations extends Component {
       console.log(error, 'charities error')
     })
   }
-
   render() {
     return (
       <div>
