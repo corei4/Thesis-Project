@@ -30,26 +30,25 @@ class SignIn extends Component {
       url: '/account/signin',
       data: obj
     })
-    .then(function (response) {
-      localStorage.setItem('token', response.data.token);
+      .then(function (response) {
+        localStorage.setItem('token', response.data.token);
 
-      that.setState({
-        isLoggedIn: true
+        that.setState({
+          isLoggedIn: true
+        })
       })
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .catch(function (error) {
+        console.log(error);
+      });
     e.preventDefault();
-    console.log(this.state)
   }
   render() {
-    if(this.state.isLoggedIn){
+    if (this.state.isLoggedIn) {
       return <Redirect to='/profile' />
     }
     return (
       <div className="container ">
-      <h3 className='row black-text'>Sign In</h3>
+        <h3 className='row black-text'>Sign In</h3>
         <div className="row  ">
           <form className="col s12 " id="reg-form" onSubmit={this.handleSubmit}>
             <div className="row ">

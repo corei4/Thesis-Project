@@ -4,8 +4,9 @@ import FavCard from "./FavCard.js";
 import './style.css';
 import Pagination from './Pagination';
 import {
-   Row, Col
+  Row, Col
 } from 'reactstrap';
+const jwtDecode = require('jwt-decode');
 
 export default class Tabs extends React.Component {
   constructor(props) {
@@ -22,7 +23,6 @@ export default class Tabs extends React.Component {
   onChangePage(pageOfItems) {
     // update state with new page of items
     this.setState({ pageOfItems: pageOfItems });
-    console.log(pageOfItems)
   }
 
   toggle(tab) {
@@ -35,10 +35,9 @@ export default class Tabs extends React.Component {
   componentDidMount() {
     let that = this;
     axios.post('/userCharities', {
-      owner_id: window.localStorage.getItem('id')
+      owner_id: jwtDecode(localStorage.getItem('token')).result[0].id
     })
       .then(function (res) {
-        console.log(res);
         that.setState({
           exampleItems: res.data
         });
@@ -46,26 +45,25 @@ export default class Tabs extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-    console.log(this.state.exampleItems, 'exampleItems')
   }
 
   render() {
     return (
       <div className="centerTab">
+        <Row>
+          <Col sm="12">
+            {/* <h4 className="h4pagi">Charities</h4> */}
             <Row>
-              <Col sm="12">
-              {/* <h4 className="h4pagi">Charities</h4> */}
-              <Row>
               {this.state.pageOfItems.map(item =>
-				        <FavCard key={item.id} item={item}/>	
-                )}
-			      </Row>
-			      <div>
-            <Pagination items={this.state.exampleItems} onChangePage={this.onChangePage} />
-            </div>
-              </Col>
+                <FavCard key={item.id} item={item} />
+              )}
             </Row>
-         
+            <div>
+              <Pagination items={this.state.exampleItems} onChangePage={this.onChangePage} />
+            </div>
+          </Col>
+        </Row>
+
       </div>
     );
   }

@@ -10,7 +10,7 @@ import {
   NavLink
 } from "reactstrap";
 import {
-  Card, CardText, CardBody, CardLink,
+  Card, CardText, CardBody,
   CardTitle, CardSubtitle
 } from 'reactstrap';
 import { TabContent, TabPane } from "reactstrap";
@@ -29,6 +29,13 @@ const jwtDecode = require('jwt-decode');
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
+    //var result = getAllCh();
+    var userData = jwtDecode(localStorage.getItem('token')).result
+    console.log("userData", userData)
+    const user_id = userData[0].id;
+    const userType_id = userData[0].userTypeId;
+    // var userData = jwtDecode(localStorage.getItem('token')).result
+
     var result = [{ id: 1, name: "Azhar" }];
     var exampleItems = result.map(i => ({
       id: i.id,
@@ -52,8 +59,11 @@ class UserProfile extends React.Component {
       imgUrl: '',
       modalOR: false,
       requests: [],
+      admin: userType_id == 1 ? true : false,
+      userButton: userType_id == 2 ? true : false,
+
       Donations: [],
-      admin: window.localStorage.getItem("userTypeId") === 1 ? true : false
+      user_id: user_id
     };
     this.toggle = this.toggle.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -64,14 +74,12 @@ class UserProfile extends React.Component {
     var userData = jwtDecode(localStorage.getItem('token')).result
     var datadon = { user_id: userData[0].id }
     var data = { owner_id: window.localStorage.getItem('id') };
-    console.log("here owner_id: 1", data);
     $.ajax({
       url: "/userCharities",
       type: "POST",
       data: JSON.stringify(data),
       contentType: "application/json",
       success: function (data) {
-        console.log(data, "/charities/charities/charities/charities");
         this.setState({
           test: data
         });
@@ -90,7 +98,6 @@ class UserProfile extends React.Component {
       data: JSON.stringify(datadon),
       contentType: "application/json",
       success: function (data) {
-        console.log(data, "Donations data");
         this.setState({
           Donations: data
         });
@@ -106,12 +113,15 @@ class UserProfile extends React.Component {
       dataType: 'json',
       type: "GET",
       success: function (data) {
-        console.log(data, "app in ajax ")
+        let arrayNew = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].status === "pending") {
+            arrayNew.push(data[i])
+          }
+        }
         this.setState({
-          requests: data
-
+          requests: arrayNew
         })
-        console.log("all charities", this.state.test)
         return data;
       }.bind(this),
       error: function (xhr, status, err) {
@@ -124,8 +134,6 @@ class UserProfile extends React.Component {
       url: `/getUserInfoID?userId=${userData[0].id}`,
       type: "GET",
       success: data => {
-        console.log(data, 'User Info')
-        console.log(data[0].email, 'EMAIL')
         this.setState({
           email: data[0].email,
           firstName: data[0].firstName,
@@ -167,57 +175,58 @@ class UserProfile extends React.Component {
 
   handleSubmit() {
     this.toggle();
-    // console.log("handleSubmit");
-    const charityObj = {
+    let charityObj = {
       name: this.state.name,
       amount: this.state.amount,
       description: this.state.description,
       location: this.state.location,
-      owner_id: window.localStorage.getItem('id'),
-      image: this.state.image
+
+      owner_id: jwtDecode(localStorage.getItem('token')).result[0].id,
+      image: this.state.image,
+      amount_received: 0
 
     };
-    console.log("charityObj: ", charityObj);
     $.ajax({
       url: "/addCharities",
       type: "POST",
       data: JSON.stringify(charityObj),
       contentType: "application/json",
       success: function (data) {
-        console.log("ad charities in Db", data);
-      },
-      error: function (error) {
-        console.error("errorrrrrr/*/*/*/*/*/*/*/*/*/", error);
       }
     });
   }
+
+  handleInputChangeEP = (event) => {
+    let target = event.target;
+    let name = target.name;
+    let value = target.value;
+    this.setState({
+      [name]: value
+    });
+
+  }
   // Post request to edit profile
-  handleSubmitEP = () => {
+  handleSubmitEP = (event) => {
     this.toggleEP();
-    console.log("handleSubmit");
+    const user_id = event.target.id
     const profileObj = {
-      firstName: this.state.name,
-      lastName: this.state.amount,
-      phoneNumber: this.state.phoneNumber,
-      image: this.state.image
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      telephone: this.state.telephone,
+      id: user_id
     };
 
-    console.log("profileObj: ", profileObj);
     $.ajax({
       url: "/editUserInfo",
       type: "PUT",
       data: JSON.stringify(profileObj),
       contentType: "application/json",
       success: function (data) {
-        console.log("ad charities in Db", data);
-      },
-      error: function (error) {
-        console.error("errorrrrrr", error);
       }
     });
   };
-  // Post request to edit profile
 
+  // Post request to edit profile
   handleInputChange(event) {
     const target = event.target;
     const name = target.name;
@@ -229,28 +238,24 @@ class UserProfile extends React.Component {
 
   //handle post to become ORgaanization
   handleInputChangeOR = (event) => {
-    console.log('hi')
     const target = event.target;
     const name = target.name;
     const value = target.value;
     this.setState({
       [name]: value
     });
-    console.log('this.state.nameOR', this.state.nameOR)
   }
 
   // Post request to become organization
   handleSubmitOR = () => {
     this.toggleOR();
-    console.log("handleSubmit");
     const profileObj = {
       name: this.state.nameOR,
       about: this.state.aboutOR,
       location: this.state.locationOR,
       description: this.state.descriptionOR,
-      userId: window.localStorage.getItem('id')
+      userId: jwtDecode(localStorage.getItem('token')).result[0].id
     };
-    console.log("profileObj: ", profileObj);
     $.ajax({
       url: "/becomeOganization",
       type: "POST",
@@ -264,11 +269,10 @@ class UserProfile extends React.Component {
       }
     });
   };
+
   getFiles(files) {
     this.setState({ files: files[0].base64 });
     var baseStr = files[0].base64.substr(22);
-    console.log("files new: ", baseStr);
-
     $.ajax({
       url: "https://api.imgur.com/3/image",
       type: "POST",
@@ -292,13 +296,45 @@ class UserProfile extends React.Component {
   onChangePage(pageOfItems) {
     this.setState({ pageOfItems: pageOfItems });
   }
-  handleAccept = () => {
-    console.log("accept")
+
+  handleAccept = (event) => {
+    const user_id = event.target.id
+    $.ajax({
+      url: 'account/usertype',
+      type: "PUT",
+      data: JSON.stringify({
+        "user_id": user_id
+      }),
+      contentType: "application/json",
+      success: function (data) {
+        console.log("/account/usertype", data);
+      },
+      error: function (error) {
+        console.error("errorrrrrr", error);
+      }
+    });
   };
 
-  handleDecline = () => {
+  handleDecline = (event) => {
     console.log("decline")
+    const user_id = event.target.id
+    console.log("accept event", user_id)
+    $.ajax({
+      url: '/updateRequestTypeDecline',
+      type: "PUT",
+      data: JSON.stringify({
+        "user_id": user_id
+      }),
+      contentType: "application/json",
+      success: function (data) {
+        console.log("decline", data);
+      },
+      error: function (error) {
+        console.error("errorrrrrr", error);
+      }
+    });
   }
+
   render() {
     return (
       <div className="container-fluid">
@@ -334,50 +370,51 @@ class UserProfile extends React.Component {
                 Charities
               </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink
-                disabled={this.state.admin}
-                className={classnames({ active: this.state.activeTab === "4", admin: this.state.admin })}
-                onClick={() => {
-                  this.toggleTab("4");
-                }}
-              >
-                Requests
+            {this.state.admin ?
+              <NavItem>
+                <NavLink
+                  disabled={this.state.admin}
+                  className={classnames({ active: this.state.activeTab === "4", admin: this.state.admin })}
+                  onClick={() => {
+                    this.toggleTab("4");
+                  }}
+                >
+                  Requests
               </NavLink>
-            </NavItem>
+              </NavItem> : null}
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
               <Row>
                 <Col sm="12">
-                  {/* <h4>Tab 1 Contents</h4> */}
-
                   <div className="card text-center">
                     <div className="card-header">
                       <div className="card-body" id="profile">
                         <div>
                           <img
+                            style={{ boxSizing: "border-box", display: "inline-block", padding: "0px", height: "30%", width: "20%", borderRadius: "60%", boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)" }}
                             src={this.state.imgUrl}
                             alt="User"
                             height="none"
                           />
                         </div>
                         <div />
-                        <h4 className="card-title">
+                        <br />
+                        <h5 className="card-title">
                           {" "}
-                          <strong>{this.state.firstName}</strong>{" "}
-                        </h4>
-                        <h5 className="card-text"> {this.state.email} </h5>
-                        <h5 className="card-text"> {this.state.telephone} </h5>
-
-                        <Button className="btn btn-success" onClick={this.toggleEP}>
+                          <strong>User name: </strong>{this.state.firstName}  {this.state.lastName} {" "}
+                        </h5>
+                        <h5 className="card-text"><strong>User email: </strong>{this.state.email} </h5>
+                        <h5 className="card-text"><strong>User phone number: </strong>{this.state.telephone} </h5>
+                        <Button className="btn btn-success" onClick={this.toggleEP} color="info">
                           {this.props.buttonLabel}
                           Edit profile
                         </Button>
-                        <Button href="#" className="btn btn-primary" onClick={this.toggleOR}>
-                          Become an Organization
+                        {this.state.userButton ?
+                          <Button href="#" className="btn btn-primary" onClick={this.toggleOR}>
+                            Become an Organization
                         </Button>
-
+                          : null}
                         {/* modal add charity */}
                         <Button className="btn btn-success" onClick={this.toggle}>
                           {this.props.buttonLabel}
@@ -453,9 +490,6 @@ class UserProfile extends React.Component {
                                   className="form-check-input"
                                   id="exampleCheck1"
                                 />
-                                {/* <label className="form-check-label" for="exampleCheck1">
-                  Check me out
-                </label> */}
                               </div>
                               <Button
                                 color="primary"
@@ -468,17 +502,9 @@ class UserProfile extends React.Component {
                                 Cancel
                               </Button>
                             </form>
-
-                            {/* name, amount, description, location, owner_id */}
                           </ModalBody>
                           <ModalFooter />
                         </Modal>
-                        {/* modal add charity */}
-
-
-
-                        {/* modal edit profil */}
-
                         <Modal
                           isOpen={this.state.modalEP}
                           toggle={this.toggleEP}
@@ -488,9 +514,6 @@ class UserProfile extends React.Component {
                             Edit Profile
                           </ModalHeader>
                           <ModalBody>
-                            {/* <input type="text"/>
-           <input type="text"/> */}
-
                             <form>
                               <div className="form-group">
                                 <label htmlFor="exampleInputEmail1">
@@ -503,9 +526,6 @@ class UserProfile extends React.Component {
                                   value={this.state.firstName}
                                   onChange={this.handleInputChangeEP}
                                 />
-                                {/* <small id="emailHelp" className="form-text text-muted">
-                  We'll never share your email with anyone else.
-                </small> */}
                               </div>
                               <div className="form-group">
                                 <label htmlFor="exampleInputPassword1">
@@ -525,8 +545,8 @@ class UserProfile extends React.Component {
                                 </label>
                                 <input
                                   type="number"
-                                  name="PhoneNumber"
-                                  id="PhoneNumber"
+                                  name="telephone"
+                                  id="telephone"
 
                                   value={this.state.telephone}
                                   onChange={this.handleInputChangeEP}
@@ -534,9 +554,9 @@ class UserProfile extends React.Component {
                               </div>
 
                               <Button
+                                id={this.state.user_id}
                                 color="primary"
                                 onClick={this.handleSubmitEP}
-                                disabled={this.state.isNotUpload}
                               >
                                 Submit
                               </Button>{" "}
@@ -544,19 +564,10 @@ class UserProfile extends React.Component {
                                 Cancel
                               </Button>
                             </form>
-
-                            {/* name, amount, description, location, owner_id */}
                           </ModalBody>
                           <ModalFooter />
                         </Modal>
-
-                        {/* modal edit profil */}
-
-
-
-
                         {/* modal become an OR */}
-
                         <Modal
                           isOpen={this.state.modalOR}
                           toggle={this.toggleOR}
@@ -628,13 +639,9 @@ class UserProfile extends React.Component {
                                 Cancel
                               </Button>
                             </form>
-
-                            {/* name, amount, description, location, owner_id */}
                           </ModalBody>
                           <ModalFooter />
                         </Modal>
-                        {/* modal become an org */}
-
                       </div>
                     </div>
                   </div>
@@ -656,19 +663,17 @@ class UserProfile extends React.Component {
             <TabPane tabId="4">
               <div>
                 {this.state.requests.map(item => (
-                  <Card key={item.id}>
+                  <Card>
                     <CardBody>
                       <CardTitle>{item.name}</CardTitle>
                       <CardSubtitle>{item.location}</CardSubtitle>
 
                       <CardText>{item.description}</CardText>
-                      <CardLink href="#" color="success" onClick={this.handleAccept}>Accept</CardLink>
-                      <CardLink href="#" onClick={this.handleDecline}>Decline</CardLink>
+                      <button id={item.user_id} href="#" color="success" onClick={this.handleAccept}>Accept</button>
+                      <button id={item.user_id} href="#" onClick={this.handleDecline}>Decline</button>
                     </CardBody>
                   </Card>
                 ))}
-
-
               </div>
             </TabPane>
 

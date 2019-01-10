@@ -9,7 +9,6 @@ import './creditCard.css'
 import Axios from 'axios'
 
 const jwtDecode = require('jwt-decode');
-
 class creditCard extends Component {
   state = {
     number: '',
@@ -19,6 +18,10 @@ class creditCard extends Component {
     amount: '',
     focused: '',
     open: true
+  }
+  componentDidMount() {
+    let charityId = Number(this.props.match.params.handel)
+    console.log(charityId, "this.props.match.params");
   }
   onOpenModal = () => {
     this.setState({ open: true });
@@ -65,8 +68,8 @@ class creditCard extends Component {
     this.addDonation();
   }
   addDonation = () => {
+    let charityId = Number(this.props.match.params.handel)
     var userData = jwtDecode(localStorage.getItem('token')).result
-    console.log(userData[0].id, 'user data')
     Axios.post('/add_donation', {
       "user_id": userData[0].id,
       "card_number": this.state.number,
@@ -74,16 +77,14 @@ class creditCard extends Component {
       "owner": this.state.name,
       "cvc_code": this.state.cvc,
       "donation_amount": this.state.amount,
-      //TODO..
-      "charity_to_id": this.match.params.charity_id
-    })
-      .catch(function (error) {
-        console.log(error, 'error add donation')
+      "charity_to_id": charityId
+    }).then(function () {
+      Axios.post('/charities_sum', {
+        "charities_id": charityId
       })
+    })
   }
-  componentDidMount() {
-    console.log(this.props.match.params, 'paramsss')
-  }
+
   render() {
 
     if (localStorage.getItem('token')) {
