@@ -36,7 +36,7 @@ class HomeCharities extends Component {
           <Progress color="success" value={this.progress()} />
           <CardSubtitle>Total received: {this.props.item.amount_received}</CardSubtitle>
           <Link to={`/creditcard/${this.props.item.id}`}>
-            <Button onClick={this.getID}>Donate</Button>
+            <Button id="donateHome" onClick={this.getID}>Donate</Button>
           </Link>
         </Card>
       </Col>

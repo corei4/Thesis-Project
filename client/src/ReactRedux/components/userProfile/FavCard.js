@@ -40,6 +40,7 @@ class FavCard extends React.Component {
     // window.location.reload()
   };
   render() {
+    let date = this.props.item.created_at.split("T")[0]
     return (
       <Col sm="3">
         <Card body>
@@ -55,6 +56,9 @@ class FavCard extends React.Component {
             <CardText><strong>What we support: </strong>{this.props.item.description}</CardText>
             <CardText><strong>Amount: </strong>{this.props.item.amount}</CardText>
             <CardText><strong>Location: </strong> {this.props.item.location}</CardText>
+            <CardText><strong>start date: </strong> {date}</CardText>
+
+            {/* <button >Remove</button> */}
             <Button
               color="danger"
               href="#"

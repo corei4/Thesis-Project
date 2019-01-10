@@ -44,10 +44,10 @@
     font-weight: bold;
     color: white;
     text-align: center;
-    font-size: 40px;
+    font-size: 45px;
   }
   .h1, h1 {
-    font-size: 57px !important;
+    font-size: 40px !important;
 }
 .HomeCards {
     text-align: center;
@@ -100,6 +100,26 @@
     color: black;
 }
 
+#BO {
+    background-color: rgb(74, 20, 140);
+    color: white;
+}
+
+#DONATE {
+    background-color: rgb(74, 20, 140);
+    color: white;
+}
+
+#See {
+    padding: .7%;
+    background-color: rgb(74, 20, 140);
+    color: white;
+}
+
+#donateHome {
+    background-color: rgb(74, 20, 140);
+    color: white;
+}
 body {
     overflow-x: hidden;
     max-width: 100%;
