@@ -2,15 +2,15 @@
   position: relative;
   margin-top: 0px; 
   padding: 0; 
-  min-height: 100%;
-  min-width: 1024px;
+   min-height: 100%; 
+   min-width: 1024px;
 
   width: 100%;
-  height: auto;
+   height: auto;
 
-  top: 0;
+  /* top: 0;
   left: 0px;
-  right: 0px;
+  right: 0px; */
 }
 
 .img-container img {
@@ -19,9 +19,9 @@
 }
 
 .img-container .btn {
-  position: absolute;
-  top: 60%;
-  left: 50%;
+    position: absolute;
+    bottom: 29px;
+    right: 23%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   background-color: rgb(74,20,140);
@@ -38,8 +38,27 @@
 .img-container .btn:hover {
     background-color: rgba(231, 169, 0, 0.986);
     color: black;
+    
 }
-
+.centered {
+    position: absolute;
+    top: 40%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    font-size: 40px;
+  }
+  .h1, h1 {
+    font-size: 57px !important;
+}
+  /* .bottom-right {
+    position: absolute;
+    bottom: 8px;
+    right: 50%;
+  } */
+  
 .HomeCards {
     text-align: center;
     width: 100%;

@@ -90,6 +90,8 @@ app.post("/addCharities", function(req, res) {
 });
 
 app.post('/add_donation', function (req, res) {
+  console.log(req.body,"/add_donation/add_donation/add_donation/add_donation/add_donation");
+  
   dbOpt.addDonation(req, res)
 });
 
