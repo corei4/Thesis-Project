@@ -7,10 +7,6 @@
 
   width: 100%;
    height: auto;
-
-  /* top: 0;
-  left: 0px;
-  right: 0px; */
 }
 
 .img-container img {
@@ -48,17 +44,11 @@
     font-weight: bold;
     color: white;
     text-align: center;
-    font-size: 40px;
+    font-size: 45px;
   }
   .h1, h1 {
-    font-size: 57px !important;
+    font-size: 40px !important;
 }
-  /* .bottom-right {
-    position: absolute;
-    bottom: 8px;
-    right: 50%;
-  } */
-  
 .HomeCards {
     text-align: center;
     width: 100%;
@@ -95,8 +85,6 @@
 .ButtonRaise {
     text-align: center;
 }
-
-
 .ButtonRaise button {
     background-color: rgb(160, 34, 132);
     color: white;
@@ -107,12 +95,31 @@
     border-radius: 5px;
     text-align: center;
 }
-
 .ButtonRaise button:hover {
     background-color: rgba(231, 169, 0, 0.986);
     color: black;
 }
 
+#BO {
+    background-color: rgb(74, 20, 140);
+    color: white;
+}
+
+#DONATE {
+    background-color: rgb(74, 20, 140);
+    color: white;
+}
+
+#See {
+    padding: .7%;
+    background-color: rgb(74, 20, 140);
+    color: white;
+}
+
+#donateHome {
+    background-color: rgb(74, 20, 140);
+    color: white;
+}
 body {
     overflow-x: hidden;
     max-width: 100%;

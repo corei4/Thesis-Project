@@ -31,24 +31,16 @@ class FavCard extends React.Component {
       url: "/delCharities" /* THIS URL IS CALLING CORRECTLY ie. /items/8 */,
       dataType: "text",
       data: { id: id },
-      success: function(response) {
+      success: function (response) {
         console.log("successfully deleted");
         // return ;
         console.log("response", response);
-        //   if (response === true) {
-        //     for(var i = 0; i < this.props.item.length; i++) {
-        //     if(this.props.item[i].id == id) {
-        //       console.log('index', i)
-        //       this.props.item.splice(i, 1);
-        //         break;
-        //     }
-        // }
-        //   }
-      }.bind(this)
+      }
     });
     // window.location.reload()
   };
   render() {
+    let date = this.props.item.created_at.split("T")[0]
     return (
       <Col sm="3">
         <Card body>
@@ -57,11 +49,15 @@ class FavCard extends React.Component {
               <strong>{this.props.item.name}</strong>
             </CardTitle>
           </CardBody>
-          <img width="100%" src={this.props.item.image} alt="Card image cap" />
+          <div className="HomeCardImg">
+              <img width="100%" src={this.props.item.image} alt="Card cap" />
+          </div>
           <CardBody>
             <CardText><strong>What we support: </strong>{this.props.item.description}</CardText>
             <CardText><strong>Amount: </strong>{this.props.item.amount}</CardText>
             <CardText><strong>Location: </strong> {this.props.item.location}</CardText>
+            <CardText><strong>start date: </strong> {date}</CardText>
+
             {/* <button >Remove</button> */}
             <Button
               color="danger"
@@ -72,7 +68,7 @@ class FavCard extends React.Component {
               Remove
             </Button>{" "}
             <Button
-            color="info"
+              color="info"
               href="#"
               id={this.props.item.id}
               onClick={this.handleRemove}
@@ -111,10 +107,6 @@ const columnProps = PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string
     ]),
-    // example size values:
-    // 12 || "12" => col-12 or col-`width`-12
-    // auto => col-auto or col-`width`-auto
-    // true => col or col-`width`
     order: stringOrNumberProp,
     offset: stringOrNumberProp
   })
@@ -126,8 +118,6 @@ Col.propTypes = {
   md: columnProps,
   lg: columnProps,
   xl: columnProps,
-  // override the predefined width (the ones above) with your own custom widths.
-  // see https://github.com/reactstrap/reactstrap/issues/297#issuecomment-273556116
   widths: PropTypes.array
 };
 
