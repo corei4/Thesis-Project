@@ -112,3 +112,8 @@
     background-color: rgba(231, 169, 0, 0.986);
     color: black;
 }
+
+body {
+    overflow-x: hidden;
+    max-width: 100%;
+}

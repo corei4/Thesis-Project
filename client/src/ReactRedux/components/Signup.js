@@ -77,7 +77,7 @@ class Signup extends Component {
   render() {
     return (
       <div className="container">
-        <h3 className="row black-text">Sign Up</h3>
+        <h3 className="row black-text" style={{paddingTop: '15px'}}>Sign Up</h3>
         <div className="row ">
           <form className="col s12" onSubmit={this.handleSubmit}>
             <div className="row">
