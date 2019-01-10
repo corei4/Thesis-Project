@@ -6,6 +6,7 @@ import redone from './redone.jpg';
 import HomeCharities from './HomeCharities.js';
 import axios from 'axios';
 import Spinner from 'react-spinner-material';
+import Content from './Content'
 
 class Home extends React.Component {
  constructor(props) {
@@ -55,6 +56,7 @@ class Home extends React.Component {
          <div className="ButtonRaise">
            <Link to='/AllCharities'><button>See All Charities</button></Link>
          </div>
+         <Content />
        </div >
      )
    } else {
@@ -78,6 +80,7 @@ class Home extends React.Component {
          <div className="ButtonRaise">
            <Link to='/AllCharities'><button>See All Charities</button></Link>
          </div>
+         <Content />
        </div>
      )
    }
