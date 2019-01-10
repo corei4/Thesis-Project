@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS charities  (
 CREATE TABLE IF NOT EXISTS payments (
         id INTEGER NOT NULL AUTO_INCREMENT,
         user_id integer,
-        card_number INTEGER NOT NULL,
+        card_number BIGINT(16) NOT NULL,
         expire_date VARCHAR(50) NOT NULL,
         owner VARCHAR(30) NOT NULL,
         cvc_code INTEGER(30) NOT NULL,
@@ -68,17 +68,31 @@ CREATE TABLE IF NOT EXISTS address (
 --       PRIMARY KEY (id)
 --     );
 
+-- CREATE TABLE IF NOT EXISTS requesttype (
+--       id INTEGER NOT NULL AUTO_INCREMENT,
+--       request_type VARCHAR(25) NOT NULL,
+--       PRIMARY KEY (id)
+--     );
+
+-- insert into requesttype(request_type)
+--       values('pending'),
+--       ('accepted'),
+--       ('declined');
+
 CREATE TABLE IF NOT EXISTS Request (
       id INTEGER AUTO_INCREMENT NOT NULL,
       about VARCHAR(255) NOT NULL,
       name VARCHAR(255) NOT NULL,
       description VARCHAR(255) NOT NULL,
       location VARCHAR(255) NOT NULL,
-      user_id integer, 
+      status VARCHAR(20), 
+      user_id integer,
       PRIMARY KEY (id)
     );
 
+
 ALTER TABLE users ADD FOREIGN KEY (userTypeId) REFERENCES usertype(id);
+-- ALTER TABLE Request ADD FOREIGN KEY (requestTypeId) REFERENCES requesttype(id);
 ALTER TABLE payments ADD FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE address ADD FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE payments ADD FOREIGN KEY (charity_to_id) REFERENCES charities(id);

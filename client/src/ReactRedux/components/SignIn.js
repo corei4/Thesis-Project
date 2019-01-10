@@ -31,6 +31,7 @@ class SignIn extends Component {
       data: obj
     })
     .then(function (response) {
+      console.log(response.data,"aa@aaaa@aaaa@aaaa@aaaa@aaaa@aaaa@aaaa@aa")
       localStorage.setItem('token', response.data.token);
 
       that.setState({
