@@ -261,7 +261,7 @@ module.exports = {
 	DonationAmountSummed: function (req, res) {
 		var that = this;
 		knex('charities').sum('payments.donation_amount as summed')
-			.innerJoin('payments', 'charity_to_id', 'charities.id')
+			.innerJoin('payments', 'payments.charity_to_id', 'charities.id')
 			.where('charities.id', req.body.charities_id)
 			.then(function (data) {
 				console.log(data[0].summed)

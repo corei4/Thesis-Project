@@ -2,7 +2,7 @@
   text-align: center;
 }
 .DonationCard .donate-p{
-  color: aqua;
+  color: #E74242;
 }
 
   .userimg {
@@ -97,4 +97,30 @@
   border-radius: 5px;
   transition: background-color .3s;
   border: 1px solid #ddd;
+}
+
+/* ///// */
+
+.HomeCards {
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.HomeCards .HomeCard {
+  width: 30%;
+  margin-top: 50px;
+  margin-right: 30px;
+  margin-left: 20px;
+  float:left;
+}
+.HomeCardImg {
+  width: auto;
+  height: 250px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+.HomeCardImg img {
+  width: 100%;
+  height: 100%;
 }

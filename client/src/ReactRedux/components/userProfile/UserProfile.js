@@ -668,7 +668,7 @@ class UserProfile extends React.Component {
               </Row>
             </TabPane>
             <TabPane tabId="2">
-              <div>
+              <div className="HomeCards">
                 {this.state.Donations.map((item) =>
                   <DonationCard key={item.DonId} item={item} />
                 )}

@@ -31,7 +31,7 @@ class HomeCharities extends Component {
           <Card body>
             <CardTitle>{this.props.item.name}</CardTitle>
             <CardTitle>{this.props.item.name}</CardTitle>
-            <img width="100%" src={this.props.item.image} alt="Card image cap" />
+            <img width="100%" src={this.props.item.image} alt="Card cap" />
             <Button>Start Fundraising</Button>
             <div>
           <Pie
