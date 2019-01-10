@@ -48,7 +48,9 @@ class FavCard extends React.Component {
               <strong>{this.props.item.name}</strong>
             </CardTitle>
           </CardBody>
-          <img width="100%" src={this.props.item.image} alt="Card image cap" />
+          <div className="HomeCardImg">
+              <img width="100%" src={this.props.item.image} alt="Card cap" />
+          </div>
           <CardBody>
             <CardText><strong>What we support: </strong>{this.props.item.description}</CardText>
             <CardText><strong>Amount: </strong>{this.props.item.amount}</CardText>
