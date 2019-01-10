@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Container, Row, Footer } from "mdbreact";
+import { Link, withRouter } from 'react-router-dom';
 
 class FooterPage extends React.Component {
 render() {
@@ -8,26 +9,22 @@ return (
   <Container fluid className="text-center text-md-left">
     <Row>
       <Col md="6">
-      <h5 className="title">Footer Content</h5>
+      <h5 className="title">Charitable</h5>
       <p>
-        Here you can use rows and columns here to organize your footer
-        content.
+        Charitable is a web platform that encourages people and organizations to promote charities all around the world.
       </p>
       </Col>
       <Col md="6">
-      <h5 className="title">Links</h5>
+      <h5 className="title">For Charities</h5>
       <ul>
         <li className="list-unstyled">
-          <a href="#!">Link 1</a>
+          <Link to="/Signup">Join Charitable</Link>
         </li>
         <li className="list-unstyled">
-          <a href="#!">Link 2</a>
+          <Link to="/Signin">Log in to your account</Link>
         </li>
         <li className="list-unstyled">
-          <a href="#!">Link 3</a>
-        </li>
-        <li className="list-unstyled">
-          <a href="#!">Link 4</a>
+          <Link to="/AllCharities">View all charities</Link>
         </li>
       </ul>
       </Col>
@@ -44,4 +41,4 @@ return (
 }
 }
 
-export default FooterPage;
+export default withRouter(FooterPage);

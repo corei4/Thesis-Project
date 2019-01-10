@@ -15,6 +15,7 @@ import Guest from './ReactRedux/components/payment/notSignedIn'
 import HomeCharities from '../../client/src/ReactRedux/components/Home/HomeCharities'
 import AllCharities from './ReactRedux/components/AllCharities'
 import FooterPage from './ReactRedux/components/Home/Footer'
+import Content from './ReactRedux/components/Home/Content'
 
 class App extends Component {
   constructor(props) {
