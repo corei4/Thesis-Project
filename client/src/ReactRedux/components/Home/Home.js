@@ -37,8 +37,8 @@ class Home extends React.Component {
         <div>
           <div className="img-container">
             <img src={redone} alt='not loading' />
-            <div className="centered"><h1>Make good things happen</h1>
-            <h3>Join over 22 million people supporting charity and personal causes</h3></div>
+            <div className="centered"><h1 style={{fontFamily: "Roboto, sans-serif", paddingTop:"200px", textAlign:"center"}}>Give a helping hand to those in need</h1>
+            <h4>Join us today to start raising funds for a charitable cause</h4></div>
             <Link to="/AllCharities" className="bottom-right" style={{ textDecoration: 'none', color: "white" }}>
               <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
             </Link>
@@ -53,7 +53,7 @@ class Home extends React.Component {
             </Row>
           </div>
           <div className="ButtonRaise">
-            <Link to='/AllCharities'><button>See All Charities</button></Link>
+            <Link to='/AllCharities'><button id="See">See All Charities</button></Link>
           </div>
         </div >
       )

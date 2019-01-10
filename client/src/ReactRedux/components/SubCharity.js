@@ -38,7 +38,7 @@ class SubCharity extends React.Component {
             <p style={{marginLeft:"25px"}}>{this.props.item.description}</p> 
              <h6 style={{marginLeft:"25px"}}>{this.props.item.amount}</h6> 
              <p style={{marginLeft:"25px"}}>{this.props.item.location} </p> 
-             <Button style={{float:"left", marginBottom:"23px", marginLeft:"25px", backgroundColor: "#FFC44F !important"}} color="info">DONATE</Button>{' '}
+             <Button style={{float:"left", marginBottom:"23px", marginLeft:"25px", backgroundColor: "#FFC44F !important"}} id="DONATE">DONATE</Button>{' '}
           </div>
           </Col>
           <Col xs="4">

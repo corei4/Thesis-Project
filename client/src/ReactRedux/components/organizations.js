@@ -13,7 +13,6 @@ class organizations extends Component {
       test: []
     };
   }
-
   componentDidMount() {
     let that = this;
     axios.get('/userOrganizations').then(function (response) {

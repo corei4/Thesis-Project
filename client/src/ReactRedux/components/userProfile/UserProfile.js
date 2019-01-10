@@ -436,17 +436,17 @@ class UserProfile extends React.Component {
                         </h5>
                         <h5 className="card-text"><strong>User email: </strong>{this.state.email} </h5>
                         <h5 className="card-text"><strong>User phone number: </strong>{this.state.telephone} </h5>
-                        <Button className="btn btn-success" onClick={this.toggleEP} color="info">
+                        <Button className="btn btn-success" onClick={this.toggleEP} color="info" style={{margin:"10px"}}>
                           {this.props.buttonLabel}
                           Edit profile
                         </Button>
                         { this.state.userButton ?
-                        <Button href="#" className="btn btn-primary" onClick={this.toggleOR}>
+                        <Button href="#" className="btn btn-primary" id="BO" onClick={this.toggleOR} style={{margin:"10px"}}>
                           Become an Organization
                         </Button>
                         :null}
                         {/* modal add charity */}
-                        <Button className="btn btn-success" onClick={this.toggle}>
+                        <Button className="btn btn-success" onClick={this.toggle} style={{margin:"10px"}}>
                           {this.props.buttonLabel}
                           Add Charity
                         </Button>
@@ -731,8 +731,8 @@ class UserProfile extends React.Component {
           <CardSubtitle>{item.location}</CardSubtitle>
         
           <CardText>{item.description}</CardText>
-          <button id={item.user_id} href="#" color="success" onClick={this.handleAccept}>Accept</button>
-          <button id={item.user_id} href="#" onClick={this.handleDecline}>Decline</button>
+          <Button id={item.user_id} href="#" color="success" onClick={this.handleAccept}>Accept</Button>
+          <Button id={item.user_id} href="#" color="danger" onClick={this.handleDecline}>Decline</Button>
         </CardBody>
       </Card>
               ))}
