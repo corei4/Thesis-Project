@@ -124,3 +124,19 @@ body {
     overflow-x: hidden;
     max-width: 100%;
 }
+
+#content {
+    background-color: rgb(74,20,140);
+
+}
+
+#join {
+    background-color: rgb(74,20,140);
+    color: white;
+    font-size: 25px;
+    padding:10px 30px 50px 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}

@@ -370,16 +370,16 @@ class UserProfile extends React.Component {
                 Charities
               </NavLink>
             </NavItem>
-            {this.state.admin ?
-              <NavItem>
-                <NavLink
-                  disabled={this.state.admin}
-                  className={classnames({ active: this.state.activeTab === "4", admin: this.state.admin })}
-                  onClick={() => {
-                    this.toggleTab("4");
-                  }}
-                >
-                  Requests
+            { this.state.admin ?  
+            <NavItem>
+              <NavLink
+                
+                className={classnames({ active: this.state.activeTab === "4", admin: this.state.admin })}
+                onClick={() => {
+                  this.toggleTab("4");
+                }}
+              >
+                Requests
               </NavLink>
               </NavItem> : null}
           </Nav>
