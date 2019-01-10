@@ -14,8 +14,6 @@ class HomeCharities extends Component {
   getID = () => {
     Axios.post('/creditcard', {
       "charity_to_id": this.props.item.id
-    }).catch(function (error) {
-      console.log(error, 'error in donate button')
     })
   }
   progress() {
@@ -23,14 +21,12 @@ class HomeCharities extends Component {
     return x;
   }
   render() {
-    console.log(this.props.item, 'propsss898989898989989998989')
     let date = this.props.item.created_at.split("T")[0]
     return (
       <Col className="HomeCard" sm="4">
         <Card body>
           <CardTitle>{this.props.item.name}</CardTitle>
           <CardTitle>{date}</CardTitle>
-
           <CardTitle>{this.props.item.location}</CardTitle>
           <CardSubtitle>{this.props.item.description}</CardSubtitle>
           <div className="HomeCardImg">
@@ -39,7 +35,6 @@ class HomeCharities extends Component {
           <CardSubtitle>Amount to raise: {this.props.item.amount}</CardSubtitle>
           <Progress color="success" value={this.progress()} />
           <CardSubtitle>Total received: {this.props.item.amount_received}</CardSubtitle>
-          {/* to={`/b/${_id}` */}
           <Link to={`/creditcard/${this.props.item.id}`}>
             <Button onClick={this.getID}>Donate</Button>
           </Link>

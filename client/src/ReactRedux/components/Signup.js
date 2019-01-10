@@ -22,7 +22,7 @@ class Signup extends Component {
     this.setState({ files: files[0].base64 });
     var baseStr = files[0].base64.substr(22);
     console.log("files new: ", baseStr);
-  
+
     $.ajax({
       url: "https://api.imgur.com/3/image",
       type: "POST",
@@ -32,19 +32,18 @@ class Signup extends Component {
       },
       contentType: "undefined",
       success: data => {
-        console.log("image uploaded", data.data.link);
         this.setState({
           isNotUpload: false,
           image: data.data.link
         });
       },
-      error: function(error) {
+      error: function (error) {
         console.error("image not uploaded", error);
       }
     });
-  
+
   }
-   
+
   handleChange = e => {
     this.setState({
       [e.target.id]: e.target.value
@@ -65,10 +64,10 @@ class Signup extends Component {
       url: "/account/signup",
       data: obj
     })
-      .then(function(response) {
+      .then(function (response) {
         console.log(response);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
     e.preventDefault();
@@ -139,7 +138,7 @@ class Signup extends Component {
             </div>
             <FileBase64 multiple={true} onDone={this.getFiles.bind(this)} />
             <div className="input-field">
-              <button className="btn purple lighten-1 z-depth-0"  disabled={this.state.isNotUpload}>
+              <button className="btn purple lighten-1 z-depth-0" disabled={this.state.isNotUpload}>
                 Sign Up
               </button>
             </div>

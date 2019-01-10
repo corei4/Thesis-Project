@@ -4,13 +4,11 @@
 .DonationCard .donate-p{
   color: aqua;
 }
-
   .userimg {
     padding: 5px;
     width: 33.33%;
     border-radius: 8px;
   }
-
   .imgdiv{
     display:inline-block;
       width: auto;
@@ -18,35 +16,26 @@
       margin-right:10px;
       float:left;
   }
-  
-/* //// */
 .profile {
 	margin-top: -100px;
 	height: 550px;
 	width: 100%;
 }
-
-
 .profileBox {
 	margin-top: -400px;
 	width: 1000px;
 	margin-left: 450px;
 }
-
 .userImage {
 	padding: 70px;
 	width: 400px;
 	height: 500px; 
 }
-
-
-
 #info {
 	margin-left: 190px;
 	text-align: center;
 	margin-top: -20px;
 }
-
 .edit {
 	outline: none;
 	border-radius: 10px;
@@ -54,25 +43,20 @@
 	color: white;
 	background-color: #b43932;
 }
-
 .edit:hover {
 	outline: none;
 	background-color: white;
 	border: 1px solid #b43932;
 	color: #b43932;
 }
-
 .h4pagi {
     text-align: center;
 }
-
 .pagination {
   display: inline-block;
   margin-top: 50px;
   margin-left: 30%;
 }
-
-
 .pagination button {
   color: black;
   float: left;
@@ -82,12 +66,10 @@
   transition: background-color .3s;
   border: 1px solid #ddd;
 }
-
 .centerTab {
   margin-left: 10%;
   margin-right: 10%;
 }
-
 .btnTab {
   background-color: #D6EE06;
   color: black;
