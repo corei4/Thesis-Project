@@ -1,32 +1,40 @@
-import React from 'react';
+import React from "react";
 import {
-  Card, CardText, CardBody,
-  CardTitle, CardSubtitle, Row, Col, Container
-} from 'reactstrap';
-import PropTypes from 'prop-types';
-import './style.css';
+  Card,
+  CardText,
+  CardBody,
+  CardLink,
+  CardTitle,
+  CardSubtitle,
+  Row,
+  Col,
+  Container,
+  Button
+} from "reactstrap";
+import PropTypes from "prop-types";
+import "./style.css";
 import $ from "jquery";
 
 class FavCard extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       toggle: false
-    }
+    };
   }
-  handleRemove = (event) => {
-    console.log("removeBTN", event.target.id)
+  handleRemove = event => {
+    console.log("removeBTN", event.target.id);
     const target = event.target;
     const id = JSON.parse(target.id);
     $.ajax({
       type: "DELETE",
-      url: "/delCharities", /* THIS URL IS CALLING CORRECTLY ie. /items/8 */
+      url: "/delCharities" /* THIS URL IS CALLING CORRECTLY ie. /items/8 */,
       dataType: "text",
-      data: {id:id},
+      data: { id: id },
       success: function(response) {
-          console.log("successfully deleted");
-          // return ;
-          console.log('response', response)
+        console.log("successfully deleted");
+        // return ;
+        console.log("response", response);
         //   if (response === true) {
         //     for(var i = 0; i < this.props.item.length; i++) {
         //     if(this.props.item[i].id == id) {
@@ -35,57 +43,74 @@ class FavCard extends React.Component {
         //         break;
         //     }
         // }
-        //   } 
-          
-      }
-  });
-  // window.location.reload()
-  }
+        //   }
+      }.bind(this)
+    });
+    // window.location.reload()
+  };
   render() {
-      return (
-            <Col sm='3'>
-              <Card body>
-              <CardBody>
-                <CardTitle>{this.props.item.name}</CardTitle>
-                <CardSubtitle>{this.props.item.name}</CardSubtitle>
-              </CardBody>
-              <img width="100%" src={this.props.item.image} alt="Card cap" />
-              <CardBody>
-                <CardText>{this.props.item.name}</CardText>
-                <CardText>{this.props.item.description}</CardText>
-                <CardText>{this.props.item.amount}</CardText>
-                <CardText>{this.props.item.location}</CardText>
-                <button href="#" id={this.props.item.id} onClick={this.handleRemove}>Remove</button>
-                <button href="#" id={this.props.item.id} onClick={this.handleRemove}>Edit</button>
-              </CardBody >
-              </Card>
-              </Col>
-      );
-    }
-};
-
-
-
+    return (
+      <Col sm="3">
+        <Card body>
+          <CardBody>
+            <CardTitle>
+              <strong>{this.props.item.name}</strong>
+            </CardTitle>
+          </CardBody>
+          <img width="100%" src={this.props.item.image} alt="Card image cap" />
+          <CardBody>
+            <CardText><strong>What we support: </strong>{this.props.item.description}</CardText>
+            <CardText><strong>Amount: </strong>{this.props.item.amount}</CardText>
+            <CardText><strong>Location: </strong> {this.props.item.location}</CardText>
+            {/* <button >Remove</button> */}
+            <Button
+              color="danger"
+              href="#"
+              id={this.props.item.id}
+              onClick={this.handleRemove}
+            >
+              Remove
+            </Button>{" "}
+            <Button
+            color="info"
+              href="#"
+              id={this.props.item.id}
+              onClick={this.handleRemove}
+            >
+              Edit
+            </Button>
+          </CardBody>
+        </Card>
+      </Col>
+    );
+  }
+}
 
 Container.propTypes = {
   fluid: PropTypes.bool
   // applies .container-fluid class
-}
+};
 
 Row.propTypes = {
   noGutters: PropTypes.bool,
   // see https://reactstrap.github.io/components/form Form Grid with Form Row
   form: PropTypes.bool
-}
+};
 
-
-const stringOrNumberProp = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);
+const stringOrNumberProp = PropTypes.oneOfType([
+  PropTypes.number,
+  PropTypes.string
+]);
 const columnProps = PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.number,
   PropTypes.bool,
   PropTypes.shape({
-    size: PropTypes.oneOfType([PropTypes.bool, PropTypes.number, PropTypes.string]),
+    size: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.number,
+      PropTypes.string
+    ]),
     // example size values:
     // 12 || "12" => col-12 or col-`width`-12
     // auto => col-auto or col-`width`-auto
@@ -103,9 +128,7 @@ Col.propTypes = {
   xl: columnProps,
   // override the predefined width (the ones above) with your own custom widths.
   // see https://github.com/reactstrap/reactstrap/issues/297#issuecomment-273556116
-  widths: PropTypes.array,
-}
-
-
+  widths: PropTypes.array
+};
 
 export default FavCard;
