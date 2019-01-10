@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2'
 import { Link } from 'react-router-dom'
+// import {BrowserRouter} from 'react-router'
 
 import {
   Button,
@@ -22,15 +23,11 @@ class SubCharity extends React.Component {
   }
   render() {
     return (
-
-
       <Container>
-
         <Row className="subRow" style={{ backgroundColor: "#F2F3F9", width: "1200px" }}>
           <Col xs="3"><div style={{ backgroundColor: "#F2F3F9", marginLeft: "5px", marginTop: "10px", marginBottom: "10px", float: "inherit" }}>
             <img style={{ width: "100%", marginLeft: "25px", marginTop: "25px", marginBottom: "25px" }} src={this.props.item.image} alt="" />
           </div>
-
           </Col>
           <Col xs="5">
             <div style={{ backgroundColor: "#F2F3F9", marginLeft: "5px", marginTop: "10px", marginBottom: "10px", float: "inherit" }}>
@@ -38,9 +35,9 @@ class SubCharity extends React.Component {
               <p style={{ marginLeft: "25px" }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy . </p>
               <h6 style={{ marginLeft: "25px" }}>{this.props.item.amount}</h6>
               <p style={{ marginLeft: "25px" }}>{this.props.item.location} </p>
-              <Link to='/creditcard' >
-                <Button style={{ float: "left", marginBottom: "23px", marginLeft: "25px", backgroundColor: "#FFC44F !important" }} >DONATE</Button>{' '}
-              </Link>
+              {/* <Link > */}
+              <Button href={`/creditcard/${this.props.item.id}`} style={{ float: "left", marginBottom: "23px", marginLeft: "25px", backgroundColor: "#FFC44F !important" }} >DONATE</Button>{' '}
+              {/* </Link> */}
             </div>
           </Col>
           <Col xs="4">
