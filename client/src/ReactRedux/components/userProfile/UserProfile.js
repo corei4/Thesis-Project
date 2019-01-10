@@ -401,7 +401,7 @@ class UserProfile extends React.Component {
             { this.state.admin ?  
             <NavItem>
               <NavLink
-                disabled={this.state.admin}
+                
                 className={classnames({ active: this.state.activeTab === "4", admin: this.state.admin })}
                 onClick={() => {
                   this.toggleTab("4");

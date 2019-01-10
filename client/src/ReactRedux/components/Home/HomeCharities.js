@@ -36,9 +36,9 @@ class HomeCharities extends Component {
           <div className="HomeCardImg">
             <img width="100%" src={this.props.item.image} alt="Card cap" />
           </div>
-          <CardSubtitle>Amount to raise: {this.props.item.amount}</CardSubtitle>
+          <CardSubtitle>Amount to raise: {this.props.item.amount}$</CardSubtitle>
           <Progress color="success" value={this.progress()} />
-          <CardSubtitle>Total received: {this.props.item.amount_received}</CardSubtitle>
+          <CardSubtitle>Total received: {this.props.item.amount_received}$</CardSubtitle>
           {/* to={`/b/${_id}` */}
           <Link to={`/creditcard/${this.props.item.id}`}>
             <Button onClick={this.getID}>Donate</Button>
