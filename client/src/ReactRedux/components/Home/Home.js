@@ -2,7 +2,7 @@ import React from 'react';
 import { Row } from 'reactstrap';
 import { Link, withRouter } from 'react-router-dom';
 import './Home.css';
-import redone from './homepic.jpg';
+import redone from './homepic10.png';
 import HomeCharities from './HomeCharities.js';
 import axios from 'axios';
 import Spinner from 'react-spinner-material';
@@ -37,8 +37,7 @@ class Home extends React.Component {
        <div>
          <div id="centered1" className="img-container">
            <img src={redone} alt='not loading' />
-           <div className="centered" ><h1>Give a helping hand to those in need</h1>
-           <h3>Join us today to start raising funds for a charitable cause</h3></div>
+           <div className="centered" ></div>
            <Link to="/AllCharities" className="bottom-right" style={{ textDecoration: 'none', color: "white" }}>
              <button onClick={this.allCharities} className='btn btn-lg ' >Start Fundraising</button>
            </Link>
@@ -68,8 +67,7 @@ class Home extends React.Component {
        <div>
          <div id="centered1" className="img-container">
            <img src={redone} alt='not loading' />
-           <div className="centered" ><h1>Give a helping hand to those in need</h1>
-           <h3>Join us today to start raising funds for a charitable cause</h3></div>
+           <div className="centered" ></div>
            <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
              <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
            </Link>
