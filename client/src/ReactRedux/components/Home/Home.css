@@ -3,16 +3,42 @@ html, body {
     margin: 0;
 }
 
+#centered1 {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    
+}
+#centered1 h1 {
+    position: relative;
+    top: 0; right: 0;
+    bottom: 0; left: 0;
+
+    text-align: center;
+    vertical-align:middle;
+  /* line-height:200px;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    font-size: 50px;
+    text-align: center ; */
+}
+#centered1 h3 {
+    color: white;
+}
+
 .img-container {
   position: relative;
+  text-align: center;
   margin-top: 0px; 
   padding: 0; 
    min-height: 100%; 
-   min-width: 1024px;
-
+   min-width: 100%;
   width: 100%;
    height: auto;
 }
+
 
 .img-container img {
     width: 100% ;
@@ -51,9 +77,9 @@ html, body {
     text-align: center;
     font-size: 45px;
   }
-  .h1, h1 {
+  /* .h1, h1 {
     font-size: 40px !important;
-}
+} */
 .HomeCards {
     text-align: center;
     width: 100%;

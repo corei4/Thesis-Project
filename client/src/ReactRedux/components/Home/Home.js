@@ -35,10 +35,10 @@ class Home extends React.Component {
    if (this.state.test.length > 0) {
      return (
        <div>
-         <div className="img-container">
+         <div id="centered1" className="img-container">
            <img src={redone} alt='not loading' />
-           <div className="centered" style={{paddingTop:"200px"}}><h1 style={{ paddingTop:"200px", textAlign:"left"}}>Give a helping hand to those in need</h1>
-           <h3 style={{ textAlign:"left"}}>Join us today to start raising funds for a charitable cause</h3></div>
+           <div className="centered" ><h1>Give a helping hand to those in need</h1>
+           <h3>Join us today to start raising funds for a charitable cause</h3></div>
            <Link to="/AllCharities" className="bottom-right" style={{ textDecoration: 'none', color: "white" }}>
              <button onClick={this.allCharities} className='btn btn-lg ' >Start Fundraising</button>
            </Link>
@@ -66,9 +66,9 @@ class Home extends React.Component {
    } else {
      return (
        <div>
-         <div className="img-container">
+         <div id="centered1" className="img-container">
            <img src={redone} alt='not loading' />
-           <div className="centered"><h1 style={{fontFamily: "Roboto, sans-serif", paddingTop:"200px", textAlign:"center"}}>Give a helping hand to those in need</h1>
+           <div className="centered" ><h1>Give a helping hand to those in need</h1>
            <h3>Join us today to start raising funds for a charitable cause</h3></div>
            <Link to="/AllCharities" style={{ textDecoration: 'none', color: "white" }}>
              <button onClick={this.allCharities} className='btn btn-lg' >Start Fundraising</button>
