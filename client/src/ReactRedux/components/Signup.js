@@ -4,6 +4,7 @@ import FileBase64 from "react-file-base64";
 import { signUp } from "../store/actions/index";
 import axios from "axios";
 import $ from "jquery";
+import { Redirect } from "react-router-dom";
 
 
 class Signup extends Component {
@@ -15,13 +16,13 @@ class Signup extends Component {
       firstName: "",
       lastName: "",
       phoneNumber: "",
-      isNotUpload: true
+      isNotUpload: true,
+      isSignedUp: false
     };
   }
   getFiles(files) {
     this.setState({ files: files[0].base64 });
     var baseStr = files[0].base64.substr(22);
-    console.log("files new: ", baseStr);
 
     $.ajax({
       url: "https://api.imgur.com/3/image",
@@ -59,21 +60,30 @@ class Signup extends Component {
       telephone: this.state.phoneNumber,
       image: this.state.image
     };
+    var that = this;
     axios({
       method: "post",
       url: "/account/signup",
       data: obj
     })
-      .then(function (response) {
+      .then((response) => {
         console.log(response);
+        
       })
       .catch(function (error) {
         console.log(error);
       });
+      console.log(this.state.isSignedUp)
+      this.setState({
+        isSignedUp: true
+      })
     e.preventDefault();
   };
 
   render() {
+    if (this.state.isSignedUp) {
+      return <Redirect to='/SignIn' />
+    }
     return (
       <div className="container">
         <h3 className="row black-text" style={{paddingTop: '15px'}}>Sign Up</h3>
@@ -148,16 +158,5 @@ class Signup extends Component {
     );
   }
 }
-const mapStateToProps = state => {
-  console.log(state, "state");
-  return { state: state.articles };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    signUp: payload => dispatch(signUp(payload))
-  };
-};
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Signup);
+
+export default Signup

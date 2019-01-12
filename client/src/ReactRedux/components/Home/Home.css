@@ -1,3 +1,8 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 .img-container {
   position: relative;
   margin-top: 0px; 
@@ -139,4 +144,17 @@ body {
     cursor: pointer;
     border-radius: 5px;
     text-align: center;
+}
+
+#footer1 {
+    margin-top: -10px;
+    position: relative;
+    height:312px;
+    margin-bottom: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+#content1 {
+    padding-top: 50px;
 }

@@ -5,8 +5,8 @@ import { Link, withRouter } from 'react-router-dom';
 class FooterPage extends React.Component {
 	render() {
 		return (
-			<Footer color="purple darken-4" className="font-small pt-4 mt-4">
-				<Container fluid className="text-center text-md-left">
+			<Footer id="footer1" color="purple darken-4" className="font-small pt-4 mt-4">
+				<Container id="content1" fluid className="text-center text-md-left">
 					<Row>
 						<Col md="6">
 							<h5 className="title">Charitable</h5>

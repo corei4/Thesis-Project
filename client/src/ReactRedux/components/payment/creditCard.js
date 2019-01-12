@@ -29,7 +29,7 @@ class creditCard extends Component {
 
   onCloseModal = () => {
     this.setState({ open: false });
-    this.props.history.push('/AllCharities')
+    this.props.history.push('/')
   };
 
   handleChange = (e) => {
